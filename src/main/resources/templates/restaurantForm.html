@@ -22,10 +22,7 @@
 
 <body>
     <section class="view-body">
-        <!-- <div th:if="${mess!=null}"
-				class="alert alert-primary container box-mess" role="alert">
-				<i>[[${mess}]]</i>
-			</div> -->
+         
         <aside> 
             <div class="list-group list-tabs list-tabs-off" id="list-tabs-off">
                 <a href="#" onclick="displayTabs()">
@@ -61,6 +58,10 @@
                 </div>
             </div>
         </aside>
+        <div th:if="${mess!=null}"
+				class="alert alert-primary container box-mess" role="alert">
+				<i>[[${mess}]]</i>
+			</div>
         <div layout:fragment="body"></div>
     </section>
 
