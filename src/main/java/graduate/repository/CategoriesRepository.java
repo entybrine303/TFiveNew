@@ -12,7 +12,7 @@ import graduate.domain.Categories;
 
 
 @Repository
-public interface CategoriesRepository extends JpaRepository<Categories, Long>{
+public interface CategoriesRepository extends JpaRepository<Categories, String>{
 	List<Categories> findByNameContaining(String name);
 	Page<Categories> findByNameContaining(String name, Pageable pageable);
 }

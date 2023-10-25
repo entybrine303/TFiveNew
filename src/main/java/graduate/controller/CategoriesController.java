@@ -66,14 +66,14 @@ public class CategoriesController {
    }
    
    @GetMapping("delete/{categoriesId}")
-   public ModelAndView delete( ModelMap model, @PathVariable("categoriesId") Long categoriesId) {
+   public ModelAndView delete( ModelMap model, @PathVariable("categoriesId") String categoriesId) {
 	   categoriesService.deleteById(categoriesId);
 	   model.addAttribute("message", "Category id delete");
 	   return new ModelAndView("redirect:/admin/list", model);
    }
 
    @GetMapping("edit/{categoriesId}")
-   public ModelAndView edit( ModelMap model, @PathVariable("categoriesId") Long categoriesId) {
+   public ModelAndView edit( ModelMap model, @PathVariable("categoriesId") String categoriesId) {
 	   Optional<Categories> opt = categoriesService.findById(categoriesId);
 	   CategoriesDTO dto = new CategoriesDTO();
 	   

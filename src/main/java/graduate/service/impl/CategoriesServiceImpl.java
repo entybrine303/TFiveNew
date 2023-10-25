@@ -76,7 +76,7 @@ public class CategoriesServiceImpl  implements CategoriesService
 		}
 
 		@Override
-		public List<Categories> findAllById(Iterable<Long> ids) {
+		public List<Categories> findAllById(Iterable<String> ids) {
 			return categoriesRepository.findAllById(ids);
 		}
 
@@ -106,7 +106,7 @@ public class CategoriesServiceImpl  implements CategoriesService
 		}
 
 		@Override
-		public Optional<Categories> findById(Long  id) {
+		public Optional<Categories> findById(String id) {
 			return categoriesRepository.findById(id);
 		}
 
@@ -115,8 +115,13 @@ public class CategoriesServiceImpl  implements CategoriesService
 			categoriesRepository.deleteInBatch(entities);
 		}
 
-		@Override
-		public boolean existsById(Long id) {
+	@Override
+	public boolean existsById(Long id) {
+		return false;
+	}
+
+	@Override
+		public boolean existsById(String id) {
 			return categoriesRepository.existsById(id);
 		}
 
@@ -136,12 +141,13 @@ public class CategoriesServiceImpl  implements CategoriesService
 		}
 
 		@Override
-		public void deleteAllByIdInBatch(Iterable<Long> ids) {
+		public void deleteAllByIdInBatch(Iterable<String> ids) {
 			categoriesRepository.deleteAllByIdInBatch(ids);
 		}
 
 		@Override
-		public <S extends Categories, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+		public <S extends Categories, R> R findBy(Example<S> example,
+				Function<FetchableFluentQuery<S>, R> queryFunction) {
 			return categoriesRepository.findBy(example, queryFunction);
 		}
 
@@ -156,12 +162,12 @@ public class CategoriesServiceImpl  implements CategoriesService
 		}
 
 		@Override
-		public void deleteById(Long id) {
+		public void deleteById(String id) {
 			categoriesRepository.deleteById(id);
 		}
 
 		@Override
-		public Categories getOne(Long id) {
+		public Categories getOne(String id) {
 			return categoriesRepository.getOne(id);
 		}
 
@@ -170,13 +176,18 @@ public class CategoriesServiceImpl  implements CategoriesService
 			categoriesRepository.delete(entity);
 		}
 
-		@Override
-		public Categories getById(Long id) {
+	@Override
+	public Categories getById(Long id) {
+		return null;
+	}
+
+	@Override
+		public Categories getById(String id) {
 			return categoriesRepository.getById(id);
 		}
 
 		@Override
-		public void deleteAllById(Iterable<? extends Long> ids) {
+		public void deleteAllById(Iterable<? extends String> ids) {
 			categoriesRepository.deleteAllById(ids);
 		}
 
@@ -207,18 +218,11 @@ public class CategoriesServiceImpl  implements CategoriesService
 			return categoriesRepository.findAll(example, sort);
 		}
 
-		@Override
-		public Page<Categories> findByNameContaining(String name, String categoriesID) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public boolean existsById(String id) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-	   
-		
+	@Override
+	public Page<Categories> findByNameContaining(String name, String categoriesID) {
+		return null;
 	}
+
+
+}
 
