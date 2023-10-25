@@ -5,9 +5,17 @@ import graduate.domain.Dish;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface DishService {
 
+
+  List<Dish> findByNameContaining(String name);
+
+  Page<Dish> findByNameContaining(Categories category, Pageable pageable);
+
+  Page<Dish> findByNameContaining(String name, Pageable pageable);
 
   Dish save(Dish entity);
   List<Dish> findAll();
