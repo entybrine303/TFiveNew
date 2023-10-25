@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoriesDTO implements Serializable{
-	private Long categoriesID;
-	private Long restaurantID;
+	private String categoriesID;
+	private String restaurantID;
 	private String name;
 	private Boolean isEdit = false;
 

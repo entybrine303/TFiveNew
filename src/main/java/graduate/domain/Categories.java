@@ -26,9 +26,9 @@ import lombok.Setter;
 public class Categories implements Serializable{
 	@Id
 	@Column(length = 10)
-	private Long categoriesID;
+	private String categoriesID;
 	@Column(length = 10)
-	private Long restaurantID;
+	private String restaurantID;
 	private String name;
 	
 }

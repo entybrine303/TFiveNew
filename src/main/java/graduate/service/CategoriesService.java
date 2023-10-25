@@ -28,41 +28,37 @@ public interface CategoriesService {
 
 	<S extends Categories> List<S> findAll(Example<S> example);
 
-	Categories getReferenceById(Long id);
+	Categories getReferenceById(String id);
 
 	void deleteAll();
 
 	void deleteAll(Iterable<? extends Categories> entities);
 
-	void deleteAllById(Iterable<? extends Long> ids);
+	void deleteAllById(Iterable<? extends String> ids);
 
-	Categories getById(Long id);
+	Categories getById(String id);
 
 	void delete(Categories entity);
 
-	Categories getOne(Long id);
+	Categories getOne(String id);
 
-	void deleteById(Long id);
+	void deleteById(String id);
 
 	void deleteAllInBatch();
 
-	long count();
-
 	<S extends Categories, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction);
 
-	void deleteAllByIdInBatch(Iterable<Long> ids);
+	void deleteAllByIdInBatch(Iterable<String> ids);
 
 	<S extends Categories> boolean exists(Example<S> example);
 
 	void deleteAllInBatch(List<Categories> entities);
 
-	<S extends Categories> long count(Example<S> example);
-
 	boolean existsById(String id);
 
 	void deleteInBatch(Iterable<Categories> entities);
 
-	Optional<Categories> findById(Long  id);
+	Optional<Categories> findById(String  id);
 
 	<S extends Categories> Page<S> findAll(Example<S> example, Pageable pageable);
 
@@ -74,7 +70,7 @@ public interface CategoriesService {
 
 	List<Categories> saveAll(List<Categories> entities);
 
-	List<Categories> findAllById(Iterable<Long> ids);
+	List<Categories> findAllById(Iterable<String> ids);
 
 	List<Categories> findAll(Sort sort);
 
@@ -90,7 +86,6 @@ public interface CategoriesService {
 
 	List<Categories> findByNameContaining(String name);
 
-	boolean existsById(Long id);
 
 
 }
