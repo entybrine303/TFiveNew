@@ -86,6 +86,4 @@ public interface CategoriesService {
 
 	List<Categories> findByNameContaining(String name);
 
-
-
 }
