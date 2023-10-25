@@ -4,7 +4,9 @@
 	layout:decorate="~{restaurantForm.html}"
 	>
 <head>
+
 <title>QUẢN LÝ DANH MỤC MÓN</title>
+	<meta charset="utf-8">
 </head>
 
 
@@ -13,7 +15,7 @@
 		<main>
 			<div class="container box-main">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link active" th:href="@{/admin/add}"
 						data-toggle="tab" href="#management-categories" role="tab"
 						aria-controls="management-categories" aria-selected="true">Quản
 							lý danh mục món</a></li>
@@ -56,7 +58,7 @@
 								<button class="btn btn-info" th:text="${categories.isEdit? 'Update' : 'Save'}">Save</button>
 
 
-								<a><button type="reset" class="btn btn-primary">Reset</button></a>
+								<a><button type="reset" class="btn btn-primary" th:href="@{/admin/add}">Reset</button></a>
 
 							</div>
 						</form>
