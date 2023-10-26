@@ -1,2 +1,3 @@
-Làm thông báo
+Làm thông báo khi add, update, delete 
+Làm thông báo xác nhận khi update, delete
 Thêm phần ghi chú vào quản lý đơn hàng
