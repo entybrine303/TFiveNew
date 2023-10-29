@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,7 +34,6 @@ public class ManagementCategoriesController {
 	
 	void fillToTable(ModelMap model) {
 		List<Categories> list = categoriesService.findAll();
-
 		model.addAttribute("categories", list);
 	}
 
@@ -46,21 +44,39 @@ public class ManagementCategoriesController {
 		return "restaurantUI/managementCategories";
 	}
 
-	@PostMapping("saveOrUpdate")
-	public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("category") CategoriesDTO dto,
+	@PostMapping("save")
+	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("category") CategoriesDTO dto,
 			BindingResult result) {
-		
 		if (result.hasErrors()) {
-
 			return new ModelAndView("restaurantUI/managementCategories");
 		}
+		
+		if (categoriesService.existsById(dto.getCategoriesID())) {
+	        model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
+	        return new ModelAndView(viewForm(model), model);
+	    }
 		Categories entity = new Categories();
-		BeanUtils.copyProperties(dto, entity);
-		categoriesService.save(entity);
-		model.addAttribute("mess", "Category is saved");
+		 BeanUtils.copyProperties(dto, entity); 
+			dto.setIsEdit(false);
+			categoriesService.save(entity);
+			model.addAttribute("mess", "Category is saved");
+			
 		
 		return new ModelAndView(viewForm(model), model);
 	}
+	@PostMapping("Update")
+	public ModelAndView Update(ModelMap model, @Valid @ModelAttribute("category") CategoriesDTO dto,
+			BindingResult result) {
+		
+		Categories entity = new Categories();
+		 BeanUtils.copyProperties(dto, entity); 
+		dto.setIsEdit(false);
+		categoriesService.save(entity);
+		model.addAttribute("mess", "Category is update");
+		return new ModelAndView(viewForm(model), model);
+	}
+
+	
 
 	@GetMapping("delete/{categoriesId}")
 	public ModelAndView delete(ModelMap model, @PathVariable("categoriesId") String categoriesId) {
