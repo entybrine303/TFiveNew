@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import graduate.domain.DriverRegister;
 import graduate.service.DriverRegisterService;
 @Controller
-@RequestMapping("tfive/admin")
+@RequestMapping("tfive/admin/driver")
 public class ManagementDriverController {
 	@Autowired
 	private DriverRegisterService driverRegisterService;
@@ -32,7 +32,7 @@ public class ManagementDriverController {
 		model.addAttribute("driverRegister", list);
 	}
 	
-	@GetMapping("management-driver")
+	@GetMapping("view")
 	public String viewDriver(ModelMap model) {
 		fillToTable(model);
 		return "restaurantUI/managementDriver";

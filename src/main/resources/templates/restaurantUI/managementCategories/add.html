@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{restaurantForm.html}"
+	>
+<head>
+<title>QUẢN LÝ DANH MỤC MÓN</title>
+</head>
+
+
+<body>
+	<section layout:fragment="body">
+		<main>
+			<div class="container box-main">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item"><a class="nav-link active"
+						data-toggle="tab" href="#management-categories" role="tab"
+						aria-controls="management-categories" aria-selected="true">Quản
+							lý danh mục món</a></li>
+					
+						
+						
+						<li class="nav-item"><a class="nav-link" th:href="@{/admin/list}"
+						  role="tab"
+						 aria-selected="false">Danh sách danh mục món</a></li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+				     <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                      <i>[[${message}]]</i>
+                    </div>
+
+					<div class="tab-pane fade show active" id="management-categories"
+						role="tabpanel" aria-labelledby="home-tab">
+						<form th:action="@{/admin/saveOrUpdate}" method="post"
+							 class="card container form-management" th:object="${categories}"
+							>
+							<div class="box-l">
+
+								
+									<div class="form-group">
+                          <label for="categoriesID">Id:</label>
+
+                          <input type="text" class="form-control"  th:field="*{categoriesID}" id="categoriesID" name="categoriesID"  placeholder="categoriesID">
+                          
+                        </div>
+									
+									<label for="name">Tên danh mục</label> 
+									<input type="text" id="name" th:field="*{name}"
+									class="form-control" name="name">
+									
+						
+									</div>
+
+							<div class="box-btn">
+
+								<button class="btn btn-info" th:text="${categories.isEdit? 'Update' : 'Save'}">Save</button>
+
+
+								<a><button type="reset" class="btn btn-primary">Reset</button></a>
+
+							</div>
+						</form>
+					</div>
+
+				
+				</div>
+
+			</div>
+
+		</main>
+
+	</section>
+
+</body>
+
+</html>

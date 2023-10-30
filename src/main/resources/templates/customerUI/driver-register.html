@@ -18,8 +18,8 @@
                             <hr>
                              <input th:field="*{name}" name="name" id="name" type="text" placeholder="Họ và tên">
                              <input th:field="*{email}" name="email" type="email" placeholder="Email">
-                             <input th:field="*{phoneNumber}" name="phoneNumber" type="text" placeholder="Số điện thoại">
-                             <input th:field="*{identificationCard}" name="identificationCard" type="text" placeholder="Số CMND / CCCD">
+                             <input maxlength="10" th:field="*{phoneNumber}" name="phoneNumber" type="text" placeholder="Số điện thoại">
+                             <input maxlength="12" th:field="*{identificationCard}" name="identificationCard" type="text" placeholder="Số CMND / CCCD">
                              <hr>
                              <button class="btn-register">Đăng kí</button>
                          </div>

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
-@RequestMapping("tfive/admin")
+@RequestMapping("tfive/admin/dish")
 public class ManagementDishController {
 	
-	@GetMapping("management-dish")
+	@GetMapping("view")
 	public String viewFormDish(ModelMap model) {
 		
 		return "restaurantUI/managementDish";
