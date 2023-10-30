@@ -26,6 +26,6 @@ public class Voucher implements Serializable{
 	private String img;
 	private double reducedPrice;
 	private double minimumPrice;
-	private boolean isShare;
+	private boolean IsShare;
 	private boolean VoucherType;
 }
