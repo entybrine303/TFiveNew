@@ -21,11 +21,10 @@ import lombok.NoArgsConstructor;
 public class Dish implements Serializable{
 	@Id
 	@Column(length = 10)
-	private String driverID;
+	private String dishID;
 	@Column(length = 10)
 	private String restaurantID;
-	@Column(length = 10)
-	private String categoryID;
+	private Categories categoriesID;
 	@Column(length = 50)
 	private String name;
 	private String description;
