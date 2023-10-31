@@ -31,7 +31,7 @@ public class ManagementCategoriesController {
 
 	@Autowired
 	private CategoriesService categoriesService;
-	
+
 	void fillToTable(ModelMap model) {
 		List<Categories> list = categoriesService.findAll();
 		model.addAttribute("categories", list);
@@ -40,6 +40,7 @@ public class ManagementCategoriesController {
 	@GetMapping("view")
 	public String viewForm(ModelMap model) {
 		fillToTable(model);
+
 		model.addAttribute("category", new CategoriesDTO());
 		return "restaurantUI/managementCategories";
 	}
@@ -50,39 +51,28 @@ public class ManagementCategoriesController {
 		if (result.hasErrors()) {
 			return new ModelAndView("restaurantUI/managementCategories");
 		}
-		
-		if (categoriesService.existsById(dto.getCategoriesID())) {
-	        model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
-	        return new ModelAndView(viewForm(model), model);
-	    }
-		Categories entity = new Categories();
-		 BeanUtils.copyProperties(dto, entity); 
-			dto.setIsEdit(false);
-			categoriesService.save(entity);
-			model.addAttribute("mess", "Category is saved");
-			
-		
-		return new ModelAndView(viewForm(model), model);
-	}
-	@PostMapping("Update")
-	public ModelAndView Update(ModelMap model, @Valid @ModelAttribute("category") CategoriesDTO dto,
-			BindingResult result) {
-		
-		Categories entity = new Categories();
-		 BeanUtils.copyProperties(dto, entity); 
-		dto.setIsEdit(false);
-		categoriesService.save(entity);
-		model.addAttribute("mess", "Category is update");
-		return new ModelAndView(viewForm(model), model);
-	}
 
-	
+		if (categoriesService.existsById(dto.getCategoriesID())&& dto.getIsEdit()==false) {
+			model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
+			return new ModelAndView(viewForm(model), model);
+		}
+		Categories entity = new Categories();
+		BeanUtils.copyProperties(dto, entity);
+		categoriesService.save(entity);
+		if (dto.getIsEdit()) {
+			model.addAttribute("mess", "Category is update");			
+		}else {
+			model.addAttribute("mess", "Category is saved");
+		}
+		
+		return new ModelAndView(viewForm(model), model);
+	}
 
 	@GetMapping("delete/{categoriesId}")
 	public ModelAndView delete(ModelMap model, @PathVariable("categoriesId") String categoriesId) {
 		categoriesService.deleteById(categoriesId);
 		model.addAttribute("mess", "Category id delete");
-		return new ModelAndView(viewForm(model),model);
+		return new ModelAndView(viewForm(model), model);
 	}
 
 	@GetMapping("edit/{categoriesId}")
@@ -93,12 +83,10 @@ public class ManagementCategoriesController {
 
 		if (opt.isPresent()) {
 			Categories entity = opt.get();
-
 			BeanUtils.copyProperties(entity, dto);
 			dto.setIsEdit(true);
-
+			
 			model.addAttribute("category", dto);
-
 			return new ModelAndView("restaurantUI/managementCategories", model);
 		}
 		model.addAttribute("mess", "Category is not existed");

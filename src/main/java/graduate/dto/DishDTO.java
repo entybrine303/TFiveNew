@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DishDTO {
-  private String driverID;
+  private String dishID;
   private String restaurantID;
   private String categoriesID;
   private String name;

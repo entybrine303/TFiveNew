@@ -26,36 +26,14 @@
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active" id="management-categories"
 						role="tabpanel" aria-labelledby="home-tab"> 
-						<form th:action="@{/tfive/admin/categories/save}" method="post" th:if="${category.isEdit==false}"
+						<form th:action="@{/tfive/admin/categories/save}" method="post" 
 							 class="card container form-management" th:object="${category}"> 
 							<div class="box-l">
 
+                          <input type="hidden" th:field="*{isEdit}" name="isEdit" >
                           <label for="categoriesID">Id:</label>
-                          <input type="text" class="form-control"  th:field="*{categoriesID}" id="categoriesID" name="categoriesID"  placeholder="categoriesID">
-
-									
-									<label for="name">Tên danh mục</label> 
-									<input type="text" id="name" th:field="*{name}"
-									class="form-control" name="name">
-									</div>
-
-							<div class="box-btn">
-
-								<button class="btn btn-info" th:text="${category.isEdit? 'Update' : 'Save'}">Save</button>
-								<a><button th:if="${category.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
-								<a th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/categories/view}">Reset</a>
-								<a style="background-color:#ED1D24" th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/categories/delete/' + ${category.categoriesID}}">Delete</a>
-
-							</div>
-						</form>
-						<form th:action="@{/tfive/admin/categories/Update}" method="post" th:if="${category.isEdit==true}"
-							 class="card container form-management" th:object="${category}"> 
-							<div class="box-l">
-
-                          <label for="categoriesID">Id: update </label>
-                          <input readonly type="text"  class="form-control"  th:field="*{categoriesID}" id="categoriesID" name="categoriesID"  placeholder="categoriesID">
-
-									
+                          <input type="text" class="form-control" id="categoriesID" placeholder="categoriesID"
+                          th:readonly="${category.isEdit}" th:field="*{categoriesID}" name="categoriesID" >
 									<label for="name">Tên danh mục</label> 
 									<input type="text" id="name" th:field="*{name}"
 									class="form-control" name="name">

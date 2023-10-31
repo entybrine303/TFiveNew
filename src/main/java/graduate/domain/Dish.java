@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Dish implements Serializable{
 	@Id
 	@Column(length = 10)
-	private String driverID;
+	private String dishID;
 	@Column(length = 10)
 	private String restaurantID;
 	@Column(length = 50)
@@ -30,7 +30,6 @@ public class Dish implements Serializable{
 	private double price;
 	private boolean status;
 
-	@ManyToOne
 	private Categories categoriesID;
 	
 

@@ -24,7 +24,7 @@ public class FileSystemStorageSericeImpl implements StorageService{
 	private final Path rootLocation;
 	
 	@Override
-	public String getStoredFilename(MultipartFile file, String id) {
+	public String getStoredFileName(MultipartFile file, String id) {
 		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
 		
 		return "p" + id + "." + ext;
@@ -42,7 +42,6 @@ public class FileSystemStorageSericeImpl implements StorageService{
 			}
 			Path destinationFile = this.rootLocation.resolve(Paths.get(storedFilename))
 					   .normalize().toAbsolutePath();
-			
 			if(!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
 				throw new StorageException("Cannot store file outside current directory");
 			}
@@ -50,6 +49,7 @@ public class FileSystemStorageSericeImpl implements StorageService{
 				Files.copy(inputSteam, destinationFile, StandardCopyOption.REPLACE_EXISTING);
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw new StorageException("Failed to store file", e);
 		}
 	}
@@ -70,7 +70,7 @@ public class FileSystemStorageSericeImpl implements StorageService{
 	}
 	@Override
 	public Path load(String filename) {
-		return rootLocation.resolve(filename);
+		return rootLocation.resolve(rootLocation);
 	}
 	
 	@Override
