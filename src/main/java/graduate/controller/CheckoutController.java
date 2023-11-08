@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.utils.Sub;
+import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class CheckoutController {
@@ -28,8 +28,10 @@ public class CheckoutController {
 	
 	@GetMapping("checkout")
 	public String viewCart(ModelMap model) {
-		Sub sub=new Sub();
+		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
+		sub.checkRole(request);
+		
 		return "customerUI/checkout";
 	}
 	

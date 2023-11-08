@@ -1,6 +1,7 @@
 package graduate.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,12 +26,18 @@ import lombok.NoArgsConstructor;
 public class Cart implements Serializable{
 	@Id
 	@Column(length = 10)
-	private String cardID;
-	private int quantity;
-	private double totalAmount;
+	private String cartID;
+	private Integer quantity;
+	private Double totalAmount;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateSave;
+	private Date savedDate;
+	
+	@PrePersist
+    public void prePersist() {
+        Calendar calendar = Calendar.getInstance();
+        savedDate = calendar.getTime();
+    }
 
 	@ManyToOne
 	@JoinColumn(name = "dishID", referencedColumnName = "dishID")

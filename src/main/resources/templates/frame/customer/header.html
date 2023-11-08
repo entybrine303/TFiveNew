@@ -195,24 +195,28 @@
                                         <li class="header__sub--menu__items"><a th:href="@{/tfive/faq}" class="header__sub--menu__link">Câu hỏi thường gặp</a></li>
                                     </ul>
                                 </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" th:href="@{/tfive/account/driver-register/view}">Tuyển dụng</a>
-
+                                <li class="header__menu--items" th:href="@{/tfive/account/driver-register/view}" 
+                                    th:if="${#httpSession.getAttribute('role')=='guest' or #httpSession.getAttribute('role')=='user'}">
+                                    <a class="header__menu--link">Tuyển dụng</a>
+                                </li>
+                                <li class="header__menu--items" th:if="${#httpSession.getAttribute('role')=='admin'}">
+                                    <a class="header__menu--link" th:href="@{/tfive/admin/categories/view}">Quản lý</a>
+                                </li>
+                                <li class="header__menu--items" th:if="${#httpSession.getAttribute('role')=='driver'}">
+                                    <a class="header__menu--link" th:href="@{/tfive/driver/home}">Tài xế</a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
                     <div class="header__account header__sticky--none">
                         <ul class="header__account--wrapper d-flex align-items-center">
-                            <li class="header__account--items d-none d-lg-block">
+                            <li class="header__account--items d-none d-lg-block" >
                                 <a class="header__account--btn btn-username" th:href="@{/tfive/profile}" >
-
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <span class="visually-hidden">My account</span> 
                                     <span th:if="${username != null or username != ''}" th:text="${#httpSession.getAttribute('username')}"></span>
                                 </a>
-                            </li>
-                            <li class="header__account--items  header__account--search__items mobile__d--block d-sm-2-none">
+                            </li><li class="header__account--items  header__account--search__items mobile__d--block d-sm-2-none">
                                 <a class="header__account--btn search__open--btn" href="javascript:void(0)" data-offcanvas>
                                     <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"/></svg>
                                     <span class="visually-hidden">Search</span>  
@@ -250,8 +254,8 @@
                                     <span class="visually-hidden">Search</span>  
                                 </a>
                             </li>
-                            <li class="header__account--items d-none d-lg-block">
-                                <a class="header__account--btn btn-username" th:href="@{/tfive/profile}">
+                            <li class="header__account--items d-none d-lg-block" >
+                                <a class="header__account--btn btn-username" th:href="@{/tfive/profile}" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <span class="visually-hidden">My account</span> 
                                     <span th:if="${username != null or username != ''}" th:text="${#httpSession.getAttribute('username')}"></span>
@@ -371,9 +375,15 @@
                                         <li class="header__sub--menu__items"><a th:href="@{/tfive/faq}" class="header__sub--menu__link">Câu hỏi thường gặp</a></li>
                                     </ul>
                                 </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" th:href="@{/tfive/account/driver-register/view}">Tuyển dụng</a>
-
+                                <li class="header__menu--items" 
+                                    th:if="${#httpSession.getAttribute('role')=='guest' or #httpSession.getAttribute('role')=='user'}">
+                                    <a class="header__menu--link" th:href="@{/tfive/account/driver-register/view}" >Tuyển dụng</a>
+                                </li>
+                                <li class="header__menu--items" th:if="${#httpSession.getAttribute('role')=='admin'}">
+                                    <a class="header__menu--link" th:href="@{/tfive/admin/categories/view}">Quản lý</a>
+                                </li>
+                                <li class="header__menu--items" th:if="${#httpSession.getAttribute('role')=='driver'}">
+                                    <a class="header__menu--link" th:href="@{/tfive/driver/home}">Tài xế</a>
                                 </li>
                             </ul>
                         </nav>
@@ -472,7 +482,11 @@
                                 <li class="header__sub--menu__items"><a th:href="@{/tfive/faq}" class="header__sub--menu__link">Câu hỏi thường gặp</a></li>
                             </ul>
                         </li>
-                        <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" th:href="@{/tfive/account/driver-register/view}">Tuyển dụng</a></li>
+                        <li class="offcanvas__menu_li"
+                        th:if="${#httpSession.getAttribute('role')=='guest' or #httpSession.getAttribute('role')=='user'}">
+                        <a class="offcanvas__menu_item" th:href="@{/tfive/account/driver-register/view}">Tuyển dụng</a></li>
+                        <li class="offcanvas__menu_li" th:if="${#httpSession.getAttribute('role')=='admin'}"><a class="offcanvas__menu_item" th:href="@{/tfive/admin/categories/view}">Quản lý</a></li>
+                        <li class="offcanvas__menu_li" th:if="${#httpSession.getAttribute('role')=='driver'}"><a class="offcanvas__sub_menu_item" th:href="@{/tfive/driver/home}">Tài xế</a></li>
                     </ul>
                     <div class="offcanvas__account--items">
                         <a class="offcanvas__account--items__btn d-flex align-items-center" th:href="@{/tfive/account/login}">

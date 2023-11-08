@@ -26,7 +26,7 @@ public class Driver implements Serializable{
 	private String driverID;
 	@Column(length = 10)
 	private String licensePlates;
-	@Column(length = 50)
+	@Column(length = 50, columnDefinition = "nvarchar(100)")
 	private String name;
 	private Boolean sex;
 	@Column(length = 10)

@@ -26,9 +26,9 @@ public class Delivery implements Serializable{
 	@Id
 	@Column(length = 10)
 	private String deliveryID;
-	private int DeliveryTime;
-	private double RestaurantPayment;
-	private double CustomerFees;
+	private Integer DeliveryTime;
+	private Double RestaurantPayment;
+	private Double CustomerFees;
 	
 //	Tạo trường dữ liệu có kiểu dữ liệu là datetime
 	@Temporal(TemporalType.TIMESTAMP)
@@ -43,6 +43,7 @@ public class Delivery implements Serializable{
 	private Date arrivedCustomer;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date FinishedOrder;
+	@Column(columnDefinition = "nvarchar(max)")
 	private String noteForDriver;
 
 	@ManyToOne

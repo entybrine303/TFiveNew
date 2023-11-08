@@ -1,9 +1,9 @@
 package graduate.service.imp;
 
 
-import graduate.domain.Categories;
+import graduate.domain.Category;
 import graduate.domain.Dish;
-import graduate.reponsitory.DishReponsitory;
+import graduate.repository.DishRepository;
 import graduate.service.DishService;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 public class DishServiceImpl  implements DishService {
 
   @Autowired
-  private DishReponsitory dishRepository;
+  private DishRepository dishRepository;
 
 
   @Override
@@ -30,7 +30,7 @@ public class DishServiceImpl  implements DishService {
 
 
   @Override
-  public Page<Dish> findByNameContaining(Categories category, Pageable pageable) {
+  public Page<Dish> findByNameContaining(Category category, Pageable pageable) {
     return dishRepository.findByNameContaining(category, pageable);
   }
 

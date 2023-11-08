@@ -26,14 +26,14 @@
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active" id="management-categories"
 						role="tabpanel" aria-labelledby="home-tab"> 
-						<form th:action="@{/tfive/admin/categories/save}" method="post" 
+						<form th:action="@{/tfive/admin/category/save}" method="post" 
 							 class="card container form-management" th:object="${category}"> 
 							<div class="box-l">
 
                           <input type="hidden" th:field="*{isEdit}" name="isEdit" >
-                          <label for="categoriesID">Id:</label>
-                          <input type="text" class="form-control" id="categoriesID" placeholder="categoriesID"
-                          th:readonly="${category.isEdit}" th:field="*{categoriesID}" name="categoriesID" >
+                          <label for="categoryID">Id:</label>
+                          <input type="text" class="form-control" id="categoryID" placeholder="ID Danh mục"
+                          readonly th:field="*{categoryID}" name="categoryID" >
 									<label for="name">Tên danh mục</label> 
 									<input type="text" id="name" th:field="*{name}"
 									class="form-control" name="name">
@@ -43,8 +43,8 @@
 
 								<button class="btn btn-info" th:text="${category.isEdit? 'Update' : 'Save'}">Save</button>
 								<a><button th:if="${category.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
-								<a th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/categories/view}">Reset</a>
-								<a style="background-color:#ED1D24" th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/categories/delete/' + ${category.categoriesID}}">Delete</a>
+								<a th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/category/view}">Reset</a>
+								<a style="background-color:#ED1D24" th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/category/delete/' + ${category.categoryID}}">Delete</a>
 
 							</div>
 						</form>
@@ -62,10 +62,10 @@
 							</thead>
 							<tbody>
 								<tr th:each="item : ${categories}">
-									<td scope="row" th:text="${item.categoriesID}"></td>
+									<td scope="row" th:text="${item.categoryID}"></td>
 									<td scope="row" th:text="${item.name}"></td>
-									<td><a class="edit" th:href="@{'/tfive/admin/categories/edit/' + ${item.categoriesID}}">Edit</a> 
-									| <a th:href="@{'/tfive/admin/categories/delete/' + ${item.categoriesID}}">Delete</a>
+									<td><a class="edit" th:href="@{'/tfive/admin/category/edit/' + ${item.categoryID}}">Edit</a> 
+									| <a th:href="@{'/tfive/admin/category/delete/' + ${item.categoryID}}">Delete</a>
 									</td>
 								</tr>
 							</tbody>

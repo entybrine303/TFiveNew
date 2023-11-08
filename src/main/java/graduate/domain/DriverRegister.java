@@ -20,6 +20,7 @@ public class DriverRegister implements Serializable{
 	@Id
 	@Column(length = 10)
 	private String phoneNumber;
+	@Column(columnDefinition = "nvarchar(100)")
 	private String name;
 	private String email;
 	@Column(length = 12)

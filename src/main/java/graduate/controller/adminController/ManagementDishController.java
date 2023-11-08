@@ -23,31 +23,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.domain.Categories;
+import graduate.domain.Category;
 import graduate.domain.Dish;
-import graduate.dto.CategoriesDTO;
+import graduate.domain.Restaurant;
+import graduate.dto.CategoryDTO;
 import graduate.dto.DishDTO;
-import graduate.reponsitory.DishReponsitory;
-import graduate.service.CategoriesService;
+import graduate.repository.DishRepository;
+import graduate.service.CategoryService;
 import graduate.service.DishService;
 import graduate.service.StorageService;
+import graduate.utils.RamdomID;
 @Controller
 @RequestMapping("tfive/admin/dish")
 public class ManagementDishController {
 	
 	@Autowired
-	private DishReponsitory dishRepository;
+	private DishRepository dishRepository;
 	@Autowired
 	private DishService dishService;
 	@Autowired
-	private CategoriesService categoriesService;
+	private CategoryService categoriesService;
 	@Autowired
 	private StorageService storageService;
 
 	@ModelAttribute("categories") // lựa chọn danh mục
-	public List<CategoriesDTO> getCategories() {
+	public List<CategoryDTO> getCategories() {
 		return categoriesService.findAll().stream().map(item -> {
-			CategoriesDTO dto = new CategoriesDTO();
+			CategoryDTO dto = new CategoryDTO();
 			BeanUtils.copyProperties(item, dto);
 			return dto;
 		}).collect(Collectors.toList());
@@ -55,13 +57,16 @@ public class ManagementDishController {
 
 	void fillToTable(ModelMap model) {
 		List<Dish> list = dishService.findAll();
-		model.addAttribute("dishs", list);
+		model.addAttribute("dishes", list);
 	}
 
 	@GetMapping("view")
 	public String viewForm(ModelMap model) {
 		fillToTable(model);
-		model.addAttribute("dish", new DishDTO());
+		
+		DishDTO dishDTO=new DishDTO();
+		dishDTO.setDishID("D-"+RamdomID.generateRandomId());
+		model.addAttribute("dish", dishDTO);
 		return "restaurantUI/managementDish";
 	}
 
@@ -84,9 +89,9 @@ public class ManagementDishController {
 		Dish entity = new Dish();
 		BeanUtils.copyProperties(dto, entity);
 		
-		Categories categories = new Categories();
-		categories.setCategoriesID(dto.getCategoriesID());
-		entity.setCategoriesID(categories);
+		Category category = new Category();
+		category.setCategoryID(dto.getCategoryID());
+		entity.setCategory(category);
 		
 		if (!dto.getImageFile().isEmpty()) {
 			UUID uuid = UUID.randomUUID();
@@ -94,6 +99,7 @@ public class ManagementDishController {
 			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), uuString));
 			storageService.store(dto.getImageFile(), entity.getImg());
 		}
+		entity.setRestaurant(new Restaurant("R01"));
 		dishService.save(entity);
 		model.addAttribute("mess", "Product is saved");
 		return new ModelAndView(viewForm(model), model);
@@ -117,7 +123,7 @@ public class ManagementDishController {
 
 			BeanUtils.copyProperties(entity, dto);
 			dto.setIsEdit(true);
-			dto.setCategoriesID(entity.getCategoriesID().getCategoriesID());
+			dto.setCategoryID(entity.getCategory().getCategoryID());
 			dto.setImg(entity.getImg());
 			model.addAttribute("dish", dto);
 

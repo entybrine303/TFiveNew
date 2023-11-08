@@ -20,7 +20,7 @@
                                 <h1 class="breadcrumb__content--title mb-25"> GIỎ HÀNG</h1>
                                 <ul class="breadcrumb__content--menu d-flex justify-content-center">
                                     <li class="breadcrumb__content--menu__items"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb__content--menu__items"><span>Giỏ hàng</span></li>
+                                    <li class="breadcrumb__content--menu__items"><span>Cart</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
             <section class="cart__section section--padding">
                 <div class="container-fluid">
                     <div class="cart__section--inner">
-                        <form action="#"> 
+                        <form> 
                             <h2 class="cart__title mb-30">Giỏ hàng của bạn</h2>
                             <div class="row">
                                 <div class="col-lg-8">
@@ -46,75 +46,47 @@
                                                     <th class="cart__table--header__list">Số lượng</th>
                                                     <th class="cart__table--header__list">Thành tiền</th>
                                                 </tr>
-                                            </thead>
+                                            </thead>	
                                             <tbody class="cart__table--body">
-                                                <tr class="cart__table--body__items">
-                                                    <td class="cart__table--body__list">
+                                                <tr class="cart__table--body__items" th:each="cart : ${cartItems}">
+                                                <td class="cart__table--body__list">
                                                         <div class="cart__product d-flex align-items-center">
-                                                            <button class="cart__remove--btn" aria-label="search button" type="button">
+                                                            <button class="cart__remove--btn" aria-label="search button" type="button" 
+                                                             th:data-cartID="${cart.cartID}" th:onclick="'deleteCartItem(this,\'' + @{'/tfive/cart/delete/'} + '\')'">
                                                                 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
                                                             </button>
                                                             <div class="cart__thumbnail">
-                                                                <a href="product-details.html"><img class="border-radius-5" src="/assets/img/product/small-product/product9.webp" alt="cart-product"></a>
+                                                                <a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img class="border-radius-5" th:src="@{/assets/img/uploads/} + ${cart.dish.img}" alt="cart-product"></a>
                                                             </div>
                                                             <div class="cart__content">
-                                                                <h3 class="cart__content--title h4"><a href="product-details.html">Tên sản phẩm</a></h3>
-                                                                <span class="cart__content--variant">[Lựa chọn]</span>
+                                                                <h4 class="cart__content--title"><a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}" th:text="${cart.dish.name}">Tên sản phẩm</a></h4>
+                                                               <!--  <span class="cart__content--variant">[Lựa chọn]</span> -->
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="cart__table--body__list">
-                                                        <span class="cart__price">£65.00</span>
+                                                        <span th:text="*{#numbers.formatDecimal(cart.dish.price, 0, 'COMMA', 0, 'POINT')} + 'đ'" class="cart__price">£65.00</span>
                                                     </td>
                                                     <td class="cart__table--body__list">
                                                         <div class="quantity__box">
                                                             <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
                                                             <label>
-                                                                <input type="number" class="quantity__number quickview__value--number" value="1" data-counter />
+                                                                <input th:value="${cart.quantity}" name="quantity" type="number" class="quantity__number quickview__value--number" data-counter />
                                                             </label>
                                                             <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                                         </div>
                                                     </td>
                                                     <td class="cart__table--body__list">
-                                                        <span class="cart__price end">£130.00</span>
+                                                        <span th:text="${#numbers.formatDecimal(cart.totalAmount, 0, 'COMMA', 0, 'POINT')} + 'đ'"class="cart__price end">£130.00</span>
                                                     </td>
-                                                </tr>
-                                                <tr class="cart__table--body__items">
-                                                    <td class="cart__table--body__list">
-                                                        <div class="cart__product d-flex align-items-center">
-                                                            <button class="cart__remove--btn" aria-label="search button" type="button">
-                                                                <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
-                                                            </button>
-                                                            <div class="cart__thumbnail">
-                                                                <a href="product-details.html"><img class="border-radius-5" src="/assets/img/product/small-product/product9.webp" alt="cart-product"></a>
-                                                            </div>
-                                                            <div class="cart__content">
-                                                                <h3 class="cart__content--title h4"><a href="product-details.html">Tên sản phẩm</a></h3>
-                                                                <span class="cart__content--variant">[Lựa chọn]</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="cart__table--body__list">
-                                                        <span class="cart__price">£65.00</span>
-                                                    </td>
-                                                    <td class="cart__table--body__list">
-                                                        <div class="quantity__box">
-                                                            <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
-                                                            <label>
-                                                                <input type="number" class="quantity__number quickview__value--number" value="1" data-counter />
-                                                            </label>
-                                                            <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
-                                                        </div>
-                                                    </td>
-                                                    <td class="cart__table--body__list">
-                                                        <span class="cart__price end">£130.00</span>
-                                                    </td>
+                                                    
                                                 </tr>
                                             </tbody>
                                         </table> 
                                         <div class="continue__shopping d-flex justify-content-between">
                                             <a class="continue__shopping--link" href="shop.html">Tiếp tục mua sắm</a>
-                                            <button class="continue__shopping--clear" type="submit">Xoá tất cả</button>
+                                            <button class="continue__shopping--clear btn-delete-all" type="button"
+                                            th:data-customerID="${customerID}" th:onclick="'deleteCartByCustomerID(this,\'' + @{'/tfive/cart/delete-all/'} + '\')'">Xoá tất cả</button>
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +111,7 @@
                                             <p class="cart__summary--footer__desc">Phí vận chuyển và các phí khác sẽ được tính khi thanh toán</p>
                                             <ul class="d-flex justify-content-between">
                                                 <li><button class="cart__summary--footer__btn primary__btn cart" type="submit">Cập nhật</button></li>
-                                                <li><a class="cart__summary--footer__btn primary__btn checkout" href="checkout.html">Thanh toán</a></li>
+                                                <li><a class="cart__summary--footer__btn primary__btn checkout" th:href="@{/tfive/checkout}">Thanh toán</a></li>
                                             </ul>
                                         </div>
                                     </div> 

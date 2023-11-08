@@ -28,21 +28,23 @@
             <!-- End breadcrumb section -->
     
             <!-- Start product details section -->
-            <section class="product__details--section section--padding">
+            <section class="product__details--section section--padding" th:object="${product}">
                 <div class="container">
                     <div class="row row-cols-lg-2 row-cols-md-2">
                         <div class="col">
                             <div class="product__details--media">
-                                <img class="img-dish" src="/assets/img/product/big-product/product3.webp"  alt="img-dish">
+                                <img class="img-dish" th:src="@{/assets/img/uploads/} + *{img}" alt="product-img">
                             </div>
                         </div>   
                         <div class="col">
                             <div class="product__details--info">
-                                <form action="#">
-                                    <h2 class="product__details--info__title mb-15 dish-name">Tên món
-                                        Camera</h2>
+                                <form th:action="@{/tfive/cart/addToCart}" method="post">
+                                <input type="hidden" name="dishID" th:field="*{dishID}"> 
+                                <!-- <input type="hidden" name="customerID" th:field="*{customerID}">  -->
+                                    <h2 th:text="*{name}" name="name" class="product__details--info__title mb-15 dish-name">Tên món</h2>
                                     <div class="product__details--info__price mb-12">
-                                        <span class="current__price">$58.00</span>
+                                    	<input type="hidden" name="price" th:field="*{price}"> 
+                                        <span  th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'" class="current__price"></span>
                                         <span class="old__price">$68.00</span>
                                     </div>
                                     <ul class="rating product__card--rating mb-15 d-flex">
@@ -85,9 +87,9 @@
                                             <span class="rating__review--text">(126) Lượt đánh giá</span>
                                         </li>
                                     </ul>
-                                    <p class="product__details--info__desc mb-15 dish-description">Mô tả sản phẩm.</p>
+                                    <p th:text="*{description}" class="product__details--info__desc mb-15 dish-description">Mô tả sản phẩm.</p>
                                     <div class="product__variant">
-                                        <div class="product__variant--list mb-10">
+                                        <!-- <div class="product__variant--list mb-10">
                                             <fieldset class="variant__input--fieldset">
                                                 <legend class="product__variant--title mb-8">Color :</legend>
                                                 <div class="variant__color d-flex">
@@ -109,8 +111,8 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                        </div>
-                                        <div class="product__variant--list mb-20">
+                                        </div> -->
+                                        <!-- <div class="product__variant--list mb-20">
                                             <fieldset class="variant__input--fieldset">
                                                 <legend class="product__variant--title mb-8">Weight :</legend>
                                                 <ul class="variant__size d-flex">
@@ -128,12 +130,12 @@
                                                     </li>
                                                 </ul>
                                             </fieldset>
-                                        </div>
+                                        </div> -->
                                         <div class="product__variant--list quantity d-flex align-items-center mb-20">
                                             <div class="quantity__box">
                                                 <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
                                                 <label>
-                                                    <input type="number" class="quantity__number quickview__value--number" value="1" data-counter />
+                                                    <input name="quantity" type="number" class="quantity__number quickview__value--number" value="1" data-counter />
                                                 </label>
                                                 <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                             </div>

@@ -28,15 +28,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
-public class Categories implements Serializable{
+@Table(name = "category")
+public class Category implements Serializable{
 	@Id
 	@Column(length = 10)
-	private String categoriesID;
+	private String categoryID;
+	@Column(columnDefinition = "nvarchar(100)")
 	private String name;
 	
-	@OneToMany(mappedBy = "categoriesID")
-    private List<Dish> dish;
+	@OneToMany(mappedBy = "category")
+    private List<Dish> dishes;
 	
 	@ManyToOne
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")

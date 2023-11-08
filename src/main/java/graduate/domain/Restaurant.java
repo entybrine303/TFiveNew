@@ -24,6 +24,7 @@ public class Restaurant implements Serializable{
 	@Id
 	@Column(length = 10)
 	private String restaurantID;
+	@Column(columnDefinition = "nvarchar(max)")
 	private String address;
 	@Column(length = 10)
 	private String phoneNumber;
@@ -31,16 +32,21 @@ public class Restaurant implements Serializable{
 	private String img;
 	
 	@OneToMany(mappedBy = "restaurant")
-    private List<Dish> dish;
+    private List<Dish> dishes;
 	@OneToMany(mappedBy = "restaurant")
     private List<Voucher> vouchers;
 	@OneToMany(mappedBy = "restaurant")
-    private List<Order> order;
+    private List<Order> orders;
 	@OneToMany(mappedBy = "restaurant")
-    private List<Categories> categories;
+    private List<Category> categories;
 	
 	@OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
+	public Restaurant(String restaurantID) {
+		this.restaurantID = restaurantID;
+	}
+
+	
 }

@@ -26,8 +26,8 @@ public class OrderDetail implements Serializable{
 	@Id
 	@Column(length = 10)
 	private String orderDetailID;
-	private int quantity;
-	private double totalAmount;
+	private Integer quantity;
+	private Double totalAmount;
 	
 	@ManyToOne
 	@JoinColumn(name = "dishID", referencedColumnName = "dishID")

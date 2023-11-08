@@ -24,22 +24,27 @@ public class Dish implements Serializable {
 	@Id
 	@Column(length = 10)
 	private String dishID;
-	@Column(length = 50)
+	@Column(length = 50, columnDefinition = "nvarchar(100)")
 	private String name;
+	@Column(columnDefinition = "nvarchar(max)")
 	private String description;
 	private String img;
-	private double price;
-	private boolean status;
+	private Double price;
+	private Boolean status;
 
 	@ManyToOne
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")
 	private Restaurant restaurant;
 	@ManyToOne
-	@JoinColumn(name = "categoriesID", referencedColumnName = "categoriesID")
-	private Categories categoriesID;
+	@JoinColumn(name = "categoryID", referencedColumnName = "categoryID")
+	private Category category;
 	
 	@OneToMany(mappedBy = "dish")
     private List<OrderDetail> orderDetails;
 	@OneToMany(mappedBy = "dish")
     private List<Cart> carts;
+	
+	public Dish(String dishID) {
+		this.dishID = dishID;
+	}
 }

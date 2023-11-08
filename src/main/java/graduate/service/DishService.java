@@ -1,6 +1,6 @@
 package graduate.service;
 
-import graduate.domain.Categories;
+import graduate.domain.Category;
 import graduate.domain.Dish;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ public interface DishService {
 
   List<Dish> findByNameContaining(String name);
 
-  Page<Dish> findByNameContaining(Categories category, Pageable pageable);
+  Page<Dish> findByNameContaining(Category category, Pageable pageable);
 
   Dish save(Dish entity);
 

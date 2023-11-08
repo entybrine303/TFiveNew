@@ -13,15 +13,14 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import graduate.reponsitory.DriverRegisterReponsitory;
 import graduate.domain.DriverRegister;
-import graduate.reponsitory.DriverRegisterReponsitory;
+import graduate.repository.DriverRegisterRepository;
 import graduate.service.DriverRegisterService;
 
 @Service
 public class DriverRegisterServiceImpl implements DriverRegisterService {
 	@Autowired
-	private DriverRegisterReponsitory driverRegisterRepository;
+	private DriverRegisterRepository driverRegisterRepository;
 
 	@Override
 	public <S extends DriverRegister> S save(S entity) {

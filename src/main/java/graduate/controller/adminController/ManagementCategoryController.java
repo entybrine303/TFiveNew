@@ -17,19 +17,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.domain.Categories;
-import graduate.dto.CategoriesDTO;
-import graduate.service.CategoriesService;
+import graduate.domain.Category;
+import graduate.domain.Restaurant;
+import graduate.dto.CategoryDTO;
+import graduate.service.CategoryService;
+import graduate.utils.RamdomID;
 
 @Controller
-@RequestMapping("tfive/admin/categories/")
-public class ManagementCategoriesController {
+@RequestMapping("tfive/admin/category/")
+public class ManagementCategoryController {
 
 	@Autowired
-	private CategoriesService categoriesService;
+	private CategoryService categoriesService;
 
 	public void fillToTable(ModelMap model) {
-		List<Categories> list = categoriesService.findAll();
+		List<Category> list = categoriesService.findAll();
 		model.addAttribute("categories", list);
 	}
 
@@ -37,23 +39,26 @@ public class ManagementCategoriesController {
 	public String viewForm(ModelMap model) {
 		fillToTable(model);
 
-		model.addAttribute("category", new CategoriesDTO());
+		CategoryDTO categoryDTO=new CategoryDTO();
+		categoryDTO.setCategoryID("C-"+RamdomID.generateRandomId());
+		model.addAttribute("category", categoryDTO);
 		return "restaurantUI/managementCategories";
 	}
 
 	@PostMapping("save")
-	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("category") CategoriesDTO dto,
+	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("category") CategoryDTO dto,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			return new ModelAndView("restaurantUI/managementCategories");
 		}
 
-		if (categoriesService.existsById(dto.getCategoriesID()) && dto.getIsEdit() == false) {
+		if (categoriesService.existsById(dto.getCategoryID()) && dto.getIsEdit() == false) {
 			model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
 			return new ModelAndView(viewForm(model), model);
 		}
-		Categories entity = new Categories();
+		Category entity = new Category();
 		BeanUtils.copyProperties(dto, entity);
+		entity.setRestaurant(new Restaurant("R01"));
 		categoriesService.save(entity);
 		if (dto.getIsEdit()) {
 			model.addAttribute("mess", "Category is update");
@@ -64,21 +69,21 @@ public class ManagementCategoriesController {
 		return new ModelAndView(viewForm(model), model);
 	}
 
-	@GetMapping("delete/{categoriesId}")
-	public ModelAndView delete(ModelMap model, @PathVariable("categoriesId") String categoriesId) {
-		categoriesService.deleteById(categoriesId);
+	@GetMapping("delete/{categoryId}")
+	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") String categoryId) {
+		categoriesService.deleteById(categoryId);
 		model.addAttribute("mess", "Category id delete");
 		return new ModelAndView(viewForm(model), model);
 	}
 
-	@GetMapping("edit/{categoriesId}")
-	public ModelAndView edit(ModelMap model, @PathVariable("categoriesId") String categoriesId) {
+	@GetMapping("edit/{categoryId}")
+	public ModelAndView edit(ModelMap model, @PathVariable("categoryId") String categoryId) {
 		fillToTable(model);
-		Optional<Categories> opt = categoriesService.findById(categoriesId);
-		CategoriesDTO dto = new CategoriesDTO();
+		Optional<Category> opt = categoriesService.findById(categoryId);
+		CategoryDTO dto = new CategoryDTO();
 
 		if (opt.isPresent()) {
-			Categories entity = opt.get();
+			Category entity = opt.get();
 			BeanUtils.copyProperties(entity, dto);
 			dto.setIsEdit(true);
 

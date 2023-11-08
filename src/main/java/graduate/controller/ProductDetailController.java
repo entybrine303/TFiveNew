@@ -1,6 +1,7 @@
 package graduate.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +27,7 @@ import graduate.service.DishService;
 import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
-public class HomeController {
+public class ProductDetailController {
 	@Autowired
 	private ManagementCategoryController managementCategoriesController;
 	
@@ -42,16 +44,27 @@ public class HomeController {
 		List<Dish> list = dishService.findAll();
 		model.addAttribute("products", list);
 	}
+
+	public void fillProduct(ModelMap model, String productID) {
+		try {
+			Optional<Dish> product = dishService.findById(productID);
+			Dish getProduct = product.get();
+			model.addAttribute("product", getProduct);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("mess", e.getMessage());
+		}
+	}
 	
-	@GetMapping("")
-	public String viewHome(ModelMap model) {
+	@GetMapping("product/{dishID}")
+	public String viewProductDetail(ModelMap model, @PathVariable("dishID") String productID) {
 		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
 		sub.checkRole(request);
 		
+		fillProduct(model, productID);
 		fillAllProduct(model);
-		managementCategoriesController.fillToTable(model);
-		return "customerUI/index";
+		return "customerUI/product-detail";
 	}
 	
 }

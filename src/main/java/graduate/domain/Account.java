@@ -32,4 +32,10 @@ public class Account implements Serializable{
     private Customer customer;
 	@OneToOne(mappedBy = "account")
     private Driver driver;
+	
+	public Account(String username) {
+		this.username = username;
+	}
+	
+	
 }

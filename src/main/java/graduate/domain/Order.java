@@ -30,9 +30,12 @@ public class Order implements Serializable{
 //	Tạo trường dữ liệu có kiểu dữ liệu là datetime
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderDate;
+	@Column(columnDefinition = "nvarchar(100)")
 	private String status;
-	private double totalPrice;
+	private Double totalPrice;
+	@Column(columnDefinition = "nvarchar(max)")
 	private String noteForRestaurant;
+	private Double shipMoney;
 	
 	@ManyToOne
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")

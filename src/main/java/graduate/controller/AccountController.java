@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.utils.Sub;
+import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class AccountController {
@@ -28,15 +28,16 @@ public class AccountController {
 	
 	@GetMapping("my-order")
 	public String viewOrder(ModelMap model) {
-		Sub sub=new Sub();
+		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
+		sub.checkRole(request);
 		
 		return "customerUI/my-order";
 	}
 	
 	@GetMapping("profile")
 	public String viewProfile(ModelMap model) {
-		Sub sub=new Sub();
+		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
 		
 		return "customerUI/profile";

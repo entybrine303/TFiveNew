@@ -1,4 +1,4 @@
-package graduate.reponsitory;
+package graduate.repository;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ import graduate.domain.Account;
 
 
 @Repository
-public interface AccountReponsitory extends JpaRepository<Account, String>{
+public interface AccountRepository extends JpaRepository<Account, String>{
 	
 }

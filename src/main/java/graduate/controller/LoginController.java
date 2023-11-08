@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import graduate.domain.Account;
+import graduate.domain.Customer;
 import graduate.dto.LoginDTO;
 import graduate.dto.RegisterDTO;
 import graduate.service.AccountService;
-import graduate.utils.Sub;
+import graduate.service.CustomerService;
+import graduate.utils.CheckSession;
+import graduate.utils.RamdomID;
 @Controller
 @RequestMapping("tfive/account")
 public class LoginController {
@@ -29,16 +32,21 @@ public class LoginController {
 	AccountService accountService;
 	
 	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
 	private HttpSession session;
 	
 	@Autowired
 	private HttpServletRequest request;
 	
+	
 
 	@GetMapping("login")
 	public String viewLogin(ModelMap model) {
-		Sub sub=new Sub();
+		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
+		sub.checkRole(request);
 		
 		model.addAttribute("register", new RegisterDTO());
 		return "customerUI/login";
@@ -47,6 +55,7 @@ public class LoginController {
 	@GetMapping("logout")
 	public ModelAndView logout(ModelMap model) {
 		session.setAttribute("username", null);
+		session.setAttribute("role", "guest");
 		return new ModelAndView(viewLogin(model));
 		
 //		 // Chuyển hướng về trang hiện tại (load lại trang)
@@ -69,7 +78,10 @@ public class LoginController {
 		}
 		
 		session.setAttribute("username", account.getUsername());
-		System.out.println(session.getAttribute("username"));
+		session.setAttribute("role", account.getRole());
+		
+			Customer customer=customerService.findByUsername(account.getUsername());
+			session.setAttribute("customerID", customer.getCustomerID());
 		
 //		 // Lấy đường dẫn trang trước đó từ session
 //        String referer = (String) request.getSession().getAttribute("referer");
@@ -99,7 +111,14 @@ public class LoginController {
 		entity.setRole("user");
 		
 		accountService.save(entity);
-
+		
+//		Tạo customerID để lưu trữ dữ liệu của user, dữ liêu được lưu ở bảng Customer
+//		Khởi tạo trường customerID và username tương ứng với account được đăng kí
+		Customer customer=new Customer();
+		customer.setCustomerID("U-"+RamdomID.generateRandomId());
+		customer.setAccount(new Account(entity.getUsername()));
+		customerService.save(customer);
+		
 		model.addAttribute("mess", "Đăng kí thành công");
 		return new ModelAndView("customerUI/login");
 	}

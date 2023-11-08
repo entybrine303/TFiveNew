@@ -23,12 +23,13 @@ public class Voucher implements Serializable{
 	@Id
 	@Column(length = 10)
 	private String voucherID;
+	@Column(columnDefinition = "nvarchar(max)")
 	private String description;
 	private String img;
-	private double reducedPrice;
-	private double minimumPrice;
-	private boolean isShare;
-	private boolean VoucherType;
+	private Double reducedPrice;
+	private Double minimumPrice;
+	private Boolean isShare;
+	private Boolean VoucherType;
 	
 	@ManyToOne
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")

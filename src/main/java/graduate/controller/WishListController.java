@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.utils.Sub;
+import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class WishListController {
@@ -29,8 +29,10 @@ public class WishListController {
 	
 	@GetMapping("wish-list")
 	public String viewWishList(ModelMap model) {
-		Sub sub=new Sub();
+		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
+		sub.checkRole(request);
+		
 		return "customerUI/wishlist";
 	}
 	

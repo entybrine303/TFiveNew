@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import graduate.domain.Account;
-import graduate.reponsitory.AccountReponsitory;
-import graduate.reponsitory.CategoriesReponsitory;
+import graduate.repository.AccountRepository;
+import graduate.repository.CategoryRepository;
 import graduate.service.AccountService;
 @Service
 public class AccountSeviceImpl implements AccountService {
 	@Autowired
-	private AccountReponsitory accountReponsitory;
+	private AccountRepository accountReponsitory;
 	
 	@Override
 	public Account login(String username, String password) {

@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriesDTO implements Serializable{
-	private String categoriesID;
+public class CategoryDTO implements Serializable{
+	private String categoryID;
 	private String restaurantID;
 	private String name;
 	private Boolean isEdit = false;

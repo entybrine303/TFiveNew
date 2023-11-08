@@ -9,15 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DishDTO {
+public class CartDTO {
   private String dishID;
-  private String restaurantID;
-  private String categoryID;
+//  private String customerID;
   private String name;
-  private String description;
-  private String img;
-  private MultipartFile imageFile;
   private double price;
-  private boolean status;
-  private Boolean isEdit = false;
+  private int quantity;
+  private Boolean isEdit=false;
 }

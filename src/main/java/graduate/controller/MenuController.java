@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.controller.adminController.ManagementCategoriesController;
-import graduate.utils.Sub;
+import graduate.controller.adminController.ManagementCategoryController;
+import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class MenuController {
 	@Autowired
-	private ManagementCategoriesController managementCategoriesController;
+	private ManagementCategoryController managementCategoriesController;
 	
 	@Autowired
 	private HttpSession session;
@@ -32,8 +32,10 @@ public class MenuController {
 	
 	@GetMapping("menu")
 	public String viewMenu(ModelMap model) {
-		Sub sub=new Sub();
+		CheckSession sub=new CheckSession();
 		sub.checkUsername(request);
+		sub.checkRole(request);
+		
 		managementCategoriesController.fillToTable(model);
 		
 		return "customerUI/menu";
