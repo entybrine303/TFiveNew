@@ -31,7 +31,7 @@ public class ManagementCategoriesController {
 
 	@Autowired
 	private CategoriesService categoriesService;
-	
+
 	void fillToTable(ModelMap model) {
 		List<Categories> list = categoriesService.findAll();
 		model.addAttribute("categories", list);
@@ -96,9 +96,7 @@ public class ManagementCategoriesController {
 
 			BeanUtils.copyProperties(entity, dto);
 			dto.setIsEdit(true);
-
 			model.addAttribute("category", dto);
-
 			return new ModelAndView("restaurantUI/managementCategories", model);
 		}
 		model.addAttribute("mess", "Category is not existed");
