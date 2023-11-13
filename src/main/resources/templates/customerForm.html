@@ -36,10 +36,6 @@
 		<div th:replace="frame/customer/header:: header"></div>
 	</header>
 	<section class="view-body">
-		<!-- <div th:if="${mess!=null}"
-				class="alert alert-primary container box-mess" role="alert">
-				<i>[[${mess}]]</i>
-			</div> -->
 		<!-- Start preloader -->
 		<div id="preloader">
 			<div id="ctn-preloader" class="ctn-preloader">
@@ -82,6 +78,31 @@
 		</div>
 		<!-- End preloader -->
 
+<div class="box-noti" id="box-noti" style="display: none;">
+        <div class="box-confirm " >
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p class="confirm-content">Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-50" onclick="offNoti()">Huỷ</button>
+                <button class="btn-confirm w-50">Xác nhận</button>
+            </div>
+        </div>
+        <div class="box-alert box-confirm ">
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p class="confirm-content">Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-100" onclick="offNoti()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
 		<div layout:fragment="body"></div>
 
 		<!-- Scroll top bar -->
@@ -95,6 +116,15 @@
 		<div th:replace="frame/customer/footer:: footer"></div>
 	</footer>
 
+	<!-- All Script JS Plugins here  -->
+	<script src="/assets/js/vendor/popper.js" defer="defer"></script>
+	<script src="/assets/js/plugins/swiper-bundle.min.js"></script>
+	<script src="/assets/js/plugins/glightbox.min.js"></script>
+
+	<!-- Customscript js -->
+	<script src="/assets/js/script.js"></script>
+	<script src="/assets/js/customerUI/sub.js"></script>
+	
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -105,15 +135,6 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-
-	<!-- All Script JS Plugins here  -->
-	<script src="/assets/js/vendor/popper.js" defer="defer"></script>
-	<script src="/assets/js/plugins/swiper-bundle.min.js"></script>
-	<script src="/assets/js/plugins/glightbox.min.js"></script>
-
-	<!-- Customscript js -->
-	<script src="/assets/js/script.js"></script>
-	<script src="/assets/js/customerUI/sub.js"></script>
 </body>
 
 </html>

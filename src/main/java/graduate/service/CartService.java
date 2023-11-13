@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 public interface CartService {
-	 List<Cart> deleteByCustomerCustomerID(String customerID);
+	 void deleteByCustomer_CustomerID(String customerID);
 	List<Cart> findByCustomer_CustomerID(String customerID);
   Cart save(Cart entity);
 

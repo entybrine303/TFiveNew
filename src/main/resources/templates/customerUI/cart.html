@@ -41,6 +41,7 @@
                                         <table class="cart__table--inner">
                                             <thead class="cart__table--header">
                                                 <tr class="cart__table--header__items">
+                                                <th class="cart__table--header__list"></th>
                                                     <th class="cart__table--header__list">Tên sản phẩm</th>
                                                     <th class="cart__table--header__list">Giá</th>
                                                     <th class="cart__table--header__list">Số lượng</th>
@@ -48,13 +49,19 @@
                                                 </tr>
                                             </thead>	
                                             <tbody class="cart__table--body">
+                                            <tr th:if="${cartItems==null}" style="text-align: center">
+                                                <td colspan="5" style="font-size: 26px; font-weight: bold; padding: 20px 0">Chưa có sản phẩm nào</td>
+                                            </tr>
                                                 <tr class="cart__table--body__items" th:each="cart : ${cartItems}">
                                                 <td class="cart__table--body__list">
-                                                        <div class="cart__product d-flex align-items-center">
-                                                            <button class="cart__remove--btn" aria-label="search button" type="button" 
+                                                <button class="cart__remove--btn" aria-label="search button" type="button" 
                                                              th:data-cartID="${cart.cartID}" th:onclick="'deleteCartItem(this,\'' + @{'/tfive/cart/delete/'} + '\')'">
                                                                 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
                                                             </button>
+                                                            </td>
+                                                <td class="cart__table--body__list">
+                                                        <div class="cart__product d-flex align-items-center">
+                                                            
                                                             <div class="cart__thumbnail">
                                                                 <a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img class="border-radius-5" th:src="@{/assets/img/uploads/} + ${cart.dish.img}" alt="cart-product"></a>
                                                             </div>
@@ -69,11 +76,7 @@
                                                     </td>
                                                     <td class="cart__table--body__list">
                                                         <div class="quantity__box">
-                                                            <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
-                                                            <label>
-                                                                <input th:value="${cart.quantity}" name="quantity" type="number" class="quantity__number quickview__value--number" data-counter />
-                                                            </label>
-                                                            <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
+                                                           <span class="cart__price" th:text="${cart.quantity}"></span>
                                                         </div>
                                                     </td>
                                                     <td class="cart__table--body__list">
@@ -92,27 +95,19 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="cart__summary border-radius-10">
-                                        <div class="cart__note mb-20">
-                                            <h3 class="cart__note--title">Ghi chú</h3>
-                                            <p class="cart__note--desc">Gửi ghi chú của bạn cho quán để quán có thể phục vụ bạn tốt hơn...</p>
-                                            <textarea class="cart__note--textarea border-radius-5"></textarea>
-                                        </div>
                                         <div class="cart__summary--total mb-20">
                                             <table class="cart__summary--total__table">
                                                 <tbody>
                                                     <tr class="cart__summary--total__list">
                                                         <td class="cart__summary--total__title text-left">Tổng cộng</td>
-                                                        <td class="cart__summary--amount text-right">$860.00</td>
+                                                        <td class="cart__summary--amount text-right" th:text="${#numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">$860.00</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="cart__summary--footer">
                                             <p class="cart__summary--footer__desc">Phí vận chuyển và các phí khác sẽ được tính khi thanh toán</p>
-                                            <ul class="d-flex justify-content-between">
-                                                <li><button class="cart__summary--footer__btn primary__btn cart" type="submit">Cập nhật</button></li>
-                                                <li><a class="cart__summary--footer__btn primary__btn checkout" th:href="@{/tfive/checkout}">Thanh toán</a></li>
-                                            </ul>
+                                            <a style="text-align: center;" class="w-100 cart__summary--footer__btn primary__btn checkout" th:href="@{/tfive/checkout}">Thanh toán</a>
                                         </div>
                                     </div> 
                                 </div>

@@ -15,24 +15,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.utils.CheckSession;
+import graduate.domain.Customer;
+import graduate.service.CustomerService;
+
 @Controller
 @RequestMapping("tfive")
-public class CheckoutController {
+public class OrderController {
 
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
-	private HttpServletRequest request;
+	private CustomerService customerService;
+	
+	public void fillCustomerInfo(ModelMap model) {
+		try {
+			Customer customer = customerService.findByUsername(session.getAttribute("username").toString());
+			model.addAttribute("customer", customer);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("mess", e.getMessage());
+		}
+	}
 	
 	@GetMapping("checkout")
-	public String viewCart(ModelMap model) {
-		CheckSession sub=new CheckSession();
-		sub.checkUsername(request);
-		sub.checkRole(request);
+	public String viewCheckout(ModelMap model) {
+		fillCustomerInfo(model);
 		
 		return "customerUI/checkout";
+	}
+	
+	@GetMapping("order-detail")
+	public String viewOrderDetail(ModelMap model) {
+		
+		return "customerUI/order-detail";
 	}
 	
 }

@@ -22,8 +22,8 @@ import graduate.dto.LoginDTO;
 import graduate.dto.RegisterDTO;
 import graduate.service.AccountService;
 import graduate.service.CustomerService;
-import graduate.utils.CheckSession;
 import graduate.utils.RamdomID;
+import graduate.utils.RedirectHelper;
 @Controller
 @RequestMapping("tfive/account")
 public class LoginController {
@@ -40,13 +40,13 @@ public class LoginController {
 	@Autowired
 	private HttpServletRequest request;
 	
+	@Autowired
+    private RedirectHelper redirectHelper;
+	
 	
 
 	@GetMapping("login")
 	public String viewLogin(ModelMap model) {
-		CheckSession sub=new CheckSession();
-		sub.checkUsername(request);
-		sub.checkRole(request);
 		
 		model.addAttribute("register", new RegisterDTO());
 		return "customerUI/login";
@@ -56,11 +56,8 @@ public class LoginController {
 	public ModelAndView logout(ModelMap model) {
 		session.setAttribute("username", null);
 		session.setAttribute("role", "guest");
-		return new ModelAndView(viewLogin(model));
 		
-//		 // Chuyển hướng về trang hiện tại (load lại trang)
-//        String referer = request.getHeader("referer");
-//		return new ModelAndView("redirect:" + referer);
+		 return redirectHelper.redirectTo("/tfive/");
 	}
 	
 	@PostMapping("pLogin")
@@ -83,16 +80,16 @@ public class LoginController {
 			Customer customer=customerService.findByUsername(account.getUsername());
 			session.setAttribute("customerID", customer.getCustomerID());
 		
-//		 // Lấy đường dẫn trang trước đó từ session
-//        String referer = (String) request.getSession().getAttribute("referer");
-//        if (referer != null && !referer.isEmpty()) {
-//            // Xóa thông tin đã lưu trong session
-//            request.getSession().removeAttribute("referer");
-//            // Chuyển hướng về trang trước đó
-//            return new ModelAndView("redirect:" + referer);
-//        }
+		 // Lấy đường dẫn trang trước đó từ session
+        String referer = (String) request.getSession().getAttribute("referer");
+        if (referer != null && !referer.isEmpty()) {
+            // Xóa thông tin đã lưu trong session
+            request.getSession().removeAttribute("referer");
+            // Chuyển hướng về trang trước đó
+            return new ModelAndView("redirect:" + referer);
+        }
 		
-		return new ModelAndView("customerUI/index");
+		 return redirectHelper.redirectTo("/tfive/");
 	}
 
 	@PostMapping("/pRegister")
@@ -120,7 +117,7 @@ public class LoginController {
 		customerService.save(customer);
 		
 		model.addAttribute("mess", "Đăng kí thành công");
-		return new ModelAndView("customerUI/login");
+		 return redirectHelper.redirectTo("/tfive/account/login");
 	}
 
 }

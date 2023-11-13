@@ -2,6 +2,7 @@ Fill sp
 Tìm kiếm sp
 *Update cart, fill cart theo từng cart của customer, dựa trên customerID
 *Check id có trùng hay không khi tạo mới một bảng
+*Dù k upload ảnh lên thẻ input, nhưng thẻ input vẫn lấy giá trị là null để set vào db
 
 Làm thông báo khi add
 Làm thông báo xác nhận khi update, delete

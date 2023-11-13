@@ -44,3 +44,45 @@ ul{
 .bold{
     font-weight: bold;
 }
+
+
+.box-noti{
+    display: none;
+    text-align: center;
+    z-index: 1000;
+    height: 100vh;
+    position: fixed;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.box-confirm{
+    position: absolute;
+    background: #fff;
+    top: 34%;
+    width: 40%;
+    left: 30%;
+}
+
+.noti-footer{
+    display: flex;
+}
+
+.confirm-title{
+    padding: 10px 0;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.confirm-content{
+    padding: 26px 0;
+}
+
+.btn-confirm{
+    border: none;
+    padding: 10px 0;
+}
+
+.btn-confirm:first-child{
+    border-right: 1px solid gray;
+}

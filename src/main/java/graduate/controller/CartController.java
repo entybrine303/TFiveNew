@@ -2,6 +2,7 @@ package graduate.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +31,9 @@ import graduate.dto.DishDTO;
 import graduate.repository.CustomerRepository;
 import graduate.service.CartService;
 import graduate.service.CustomerService;
-import graduate.utils.CheckSession;
+import graduate.service.DishService;
 import graduate.utils.RamdomID;
+import graduate.utils.RedirectHelper;
 @Controller
 @RequestMapping("tfive")
 public class CartController {
@@ -40,10 +42,13 @@ public class CartController {
 	private HttpSession session;
 	
 	@Autowired
-	private HttpServletRequest request;
+	private CartService cartService;
+
+	@Autowired
+	private DishService dishService;
 	
 	@Autowired
-	private CartService cartService;
+	private RedirectHelper redirectHelper;
 	
 	@Autowired
 	private CustomerService customerService;
@@ -55,15 +60,16 @@ public class CartController {
 	
 		List<Cart> list = cartService.findByCustomer_CustomerID(customer.getCustomerID());
 		model.addAttribute("customerID", customer.getCustomerID());
-		model.addAttribute("cartItems", list);
+		
+		if (list.isEmpty()) {
+			model.addAttribute("cartItems", null);
+		}else {
+			model.addAttribute("cartItems", list);
+		}
 	}
 	
 	@GetMapping("cart")
 	public String viewCart(ModelMap model) {
-		CheckSession sub=new CheckSession();
-		sub.checkUsername(request);
-		sub.checkRole(request);
-		
 		fillToTable(model);
 		
 		return "customerUI/cart";
@@ -91,6 +97,26 @@ public class CartController {
 		return new ModelAndView(viewCart(model), model);
 	}
 	
+	@GetMapping("cart/addToCart/{dishID}")
+	public ModelAndView saveOneProduct(ModelMap model, @PathVariable("dishID") String productID) {
+		Optional<Dish> opt = dishService.findById(productID);
+		
+		Cart entity = new Cart();
+		entity.setCartID("C-"+RamdomID.generateRandomId());
+		entity.setQuantity(1);
+		entity.setTotalAmount(opt.get().getPrice());
+		
+		entity.setDish(opt.get());
+		
+//		Lưu thông tin customer vào cart
+		Customer customer=customerService.findByUsername(session.getAttribute("username").toString());
+		entity.setCustomer(new Customer(customer.getCustomerID()));
+		
+		cartService.save(entity);
+		model.addAttribute("mess", "Product is saved");
+		return redirectHelper.redirectTo("/tfive/cart");
+	}
+	
 	@GetMapping("cart/delete/{cartID}")
 	public ModelAndView delete(ModelMap model, @PathVariable("cartID") String cartID) {
 		cartService.deleteById(cartID);
@@ -100,7 +126,7 @@ public class CartController {
 
 	@GetMapping("cart/delete-all/{customerID}")
 	public ModelAndView deleteAll(ModelMap model,  @PathVariable("customerID") String customerID) {
-		cartService.deleteByCustomerCustomerID(customerID);
+		cartService.deleteByCustomer_CustomerID(customerID);
 		model.addAttribute("mess", "Category id delete");
 		return new ModelAndView(viewCart(model), model);
 	}

@@ -195,9 +195,9 @@
                                         <li class="header__sub--menu__items"><a th:href="@{/tfive/faq}" class="header__sub--menu__link">Câu hỏi thường gặp</a></li>
                                     </ul>
                                 </li>
-                                <li class="header__menu--items" th:href="@{/tfive/account/driver-register/view}" 
+                                <li class="header__menu--items" 
                                     th:if="${#httpSession.getAttribute('role')=='guest' or #httpSession.getAttribute('role')=='user'}">
-                                    <a class="header__menu--link">Tuyển dụng</a>
+                                    <a class="header__menu--link" th:href="@{/tfive/account/driver-register/view}" >Tuyển dụng</a>
                                 </li>
                                 <li class="header__menu--items" th:if="${#httpSession.getAttribute('role')=='admin'}">
                                     <a class="header__menu--link" th:href="@{/tfive/admin/categories/view}">Quản lý</a>
@@ -211,10 +211,14 @@
                     <div class="header__account header__sticky--none">
                         <ul class="header__account--wrapper d-flex align-items-center">
                             <li class="header__account--items d-none d-lg-block" >
-                                <a class="header__account--btn btn-username" th:href="@{/tfive/profile}" >
+                                <a th:if="${#httpSession.getAttribute('username')!=null}" class="header__account--btn btn-username" th:href="@{/tfive/profile}" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <span class="visually-hidden">My account</span> 
                                     <span th:if="${username != null or username != ''}" th:text="${#httpSession.getAttribute('username')}"></span>
+                                </a>
+                                <a th:if="${#httpSession.getAttribute('username')==null}" class="header__account--btn btn-username" th:href="@{/tfive/account/login}" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <span class="visually-hidden">My account</span>
                                 </a>
                             </li><li class="header__account--items  header__account--search__items mobile__d--block d-sm-2-none">
                                 <a class="header__account--btn search__open--btn" href="javascript:void(0)" data-offcanvas>
@@ -241,7 +245,7 @@
                                         </g>
                                     </svg>  
                                     <span class="items__count">2</span> 
-                                    <span class="minicart__btn--text">Giỏ hàng<br> <span class="minicart__btn--text__price">0đ</span></span>
+                                    <span class="minicart__btn--text">Giỏ hàng<br> <span class="minicart__btn--text__price" th:text="${#numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</span></span>
                                 </a>
                             </li>
                         </ul>
@@ -255,10 +259,14 @@
                                 </a>
                             </li>
                             <li class="header__account--items d-none d-lg-block" >
-                                <a class="header__account--btn btn-username" th:href="@{/tfive/profile}" >
+                                <a th:if="${#httpSession.getAttribute('username')!=null}" class="header__account--btn btn-username" th:href="@{/tfive/profile}" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                     <span class="visually-hidden">My account</span> 
                                     <span th:if="${username != null or username != ''}" th:text="${#httpSession.getAttribute('username')}"></span>
+                                </a>
+                                <a th:if="${#httpSession.getAttribute('username')==null}" class="header__account--btn btn-username" th:href="@{/tfive/account/login}" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <span class="visually-hidden">My account</span>
                                 </a>
                             </li>
                             <li class="header__account--items d-none d-lg-block">
@@ -489,7 +497,14 @@
                         <li class="offcanvas__menu_li" th:if="${#httpSession.getAttribute('role')=='driver'}"><a class="offcanvas__sub_menu_item" th:href="@{/tfive/driver/home}">Tài xế</a></li>
                     </ul>
                     <div class="offcanvas__account--items">
-                        <a class="offcanvas__account--items__btn d-flex align-items-center" th:href="@{/tfive/account/login}">
+                        <a th:if="${#httpSession.getAttribute('username')!=null}" class="offcanvas__account--items__btn d-flex align-items-center" th:href="@{/tfive/profile}">
+
+                            <span class="offcanvas__account--items__icon"> 
+                                <svg xmlns="http://www.w3.org/2000/svg"  width="20.51" height="19.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/></svg> 
+                            </span>
+                            <span class="offcanvas__account--items__label" th:text="${'Xin chào, '+#httpSession.getAttribute('username')}"></span>
+                        </a>
+                        <a th:if="${#httpSession.getAttribute('username')==null}" class="offcanvas__account--items__btn d-flex align-items-center" th:href="@{/tfive/account/login}">
 
                             <span class="offcanvas__account--items__icon"> 
                                 <svg xmlns="http://www.w3.org/2000/svg"  width="20.51" height="19.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/></svg> 
@@ -572,57 +587,37 @@
                 </div>
             </div>
             <div class="minicart__product">
-                <div class="minicart__product--items d-flex">
-                    <div class="minicart__thumb">
-                        <a href="product-details.html"><img src="/assets/img/product/small-product/product1.webp" alt="prduct-img"></a>
-                    </div>
-                    <div class="minicart__text">
-                        <h4 class="minicart__subtitle"><a href="product-details.html">Tên sản phẩm</a></h4>
-                        <span class="color__variant">[<b>Lựa chọn:</b> ... ]</span>
-                        <div class="minicart__price">
-                            <span class="minicart__current--price">$125.00</span>
-                            <span class="minicart__old--price">$140.00</span>
-                        </div>
-                        <div class="minicart__text--footer d-flex align-items-center">
-                            <div class="quantity__box minicart__quantity">
-                                <button type="button" class="quantity__value decrease" aria-label="quantity value" value="Decrease Value">-</button>
-                                <label>
-                                    <input type="number" class="quantity__number" value="1" data-counter />
-                                </label>
-                                <button type="button" class="quantity__value increase" aria-label="quantity value" value="Increase Value">+</button>
-                            </div>
-                            <button class="minicart__product--remove" type="button">Xoá</button>
-                        </div>
-                    </div>
+            	<div class="minicart__product--items" style="text-align: center;" th:if="${cartItems==null}">
+                    <h4>Chưa có sản phẩm nào</h4>
                 </div>
-                <div class="minicart__product--items d-flex">
+                <div class="minicart__product--items d-flex" th:each="cart : ${cartItems}">
                     <div class="minicart__thumb">
-                        <a href="product-details.html"><img src="/assets/img/product/small-product/product1.webp" alt="prduct-img"></a>
+                        <a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img src="/assets/img/product/small-product/product1.webp" alt="prduct-img"></a>
                     </div>
                     <div class="minicart__text">
-                        <h4 class="minicart__subtitle"><a href="product-details.html">Tên sản phẩm</a></h4>
-                        <span class="color__variant">[<b>Lựa chọn:</b> ... ]</span>
+                        <h4 class="minicart__subtitle"><a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}" th:text="${cart.dish.name}">Tên sản phẩm</a></h4>
                         <div class="minicart__price">
-                            <span class="minicart__current--price">$125.00</span>
+                            <span class="minicart__current--price" th:text="*{#numbers.formatDecimal(cart.dish.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">$125.00</span>
                             <span class="minicart__old--price">$140.00</span>
                         </div>
                         <div class="minicart__text--footer d-flex align-items-center">
                             <div class="quantity__box minicart__quantity">
-                                <button type="button" class="quantity__value decrease" aria-label="quantity value" value="Decrease Value">-</button>
+                                <button type="button" class="quantity__value" >-</button>
                                 <label>
-                                    <input type="number" class="quantity__number" value="1" data-counter />
+                                    <input th:value="${cart.quantity}" type="number" class="quantity__number" />
                                 </label>
-                                <button type="button" class="quantity__value increase" aria-label="quantity value" value="Increase Value">+</button>
+                                <button type="button" class="quantity__value">+</button>
                             </div>
-                            <button class="minicart__product--remove" type="button">Xoá</button>
+                            <button class="minicart__product--remove" type="button"
+								th:data-cartID="${cart.cartID}" th:onclick="'deleteCartItem(this,\'' + @{'/tfive/cart/delete/'} + '\')'">Xoá</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="minicart__amount">
+            <div class="minicart__amount" th:if="${cartItems!=null}">
                 <div class="minicart__amount_list d-flex justify-content-between">
                     <span>Tổng:</span>
-                    <span><b>$240.00</b></span>
+                    <span><b th:text="${#numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">$240.00</b></span>
                 </div>
             </div>
             <div class="minicart__button d-flex justify-content-center">

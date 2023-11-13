@@ -21,10 +21,9 @@ public class CartServiceImpl  implements CartService {
   @Autowired
   private CartRepository cartReponsitory;
   
-
 @Override
-public List<Cart> deleteByCustomerCustomerID(String customerID) {
-	return cartReponsitory.deleteByCustomerCustomerID(customerID);
+public void deleteByCustomer_CustomerID(String customerID) {
+	cartReponsitory.deleteByCustomer_CustomerID(customerID);
 }
 @Override
 public List<Cart> findByCustomer_CustomerID(String customerID) {

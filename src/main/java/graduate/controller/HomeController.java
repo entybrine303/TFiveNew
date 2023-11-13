@@ -22,7 +22,6 @@ import graduate.domain.Category;
 import graduate.domain.Dish;
 import graduate.service.CategoryService;
 import graduate.service.DishService;
-import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class HomeController {
@@ -31,9 +30,6 @@ public class HomeController {
 	
 	@Autowired
 	private HttpSession session;
-	
-	@Autowired
-	private HttpServletRequest request;
 
 	@Autowired
 	private DishService dishService;
@@ -44,11 +40,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("")
-	public String viewHome(ModelMap model) {
-		CheckSession sub=new CheckSession();
-		sub.checkUsername(request);
-		sub.checkRole(request);
-		
+	public String viewHome(ModelMap model) {		
 		fillAllProduct(model);
 		managementCategoriesController.fillToTable(model);
 		return "customerUI/index";

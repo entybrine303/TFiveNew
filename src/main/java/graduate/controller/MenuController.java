@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import graduate.controller.adminController.ManagementCategoryController;
-import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class MenuController {
@@ -32,9 +31,6 @@ public class MenuController {
 	
 	@GetMapping("menu")
 	public String viewMenu(ModelMap model) {
-		CheckSession sub=new CheckSession();
-		sub.checkUsername(request);
-		sub.checkRole(request);
 		
 		managementCategoriesController.fillToTable(model);
 		

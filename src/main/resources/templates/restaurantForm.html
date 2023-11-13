@@ -18,6 +18,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/restaurant/form.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/restaurant/management.css">
 
     <!-- JAVASCRIPT -->
@@ -26,10 +27,31 @@
 
 <body>
     <section class="view-body">
-        <!-- <div th:if="${mess!=null}"
-				class="alert alert-primary container box-mess" role="alert">
-				<i>[[${mess}]]</i>
-			</div> -->
+        <div class="box-noti" id="box-noti" style="display: none;">
+        <div class="box-confirm " >
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p class="confirm-content">Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-50" onclick="offNoti()">Huỷ</button>
+                <button class="btn-confirm w-50">Xác nhận</button>
+            </div>
+        </div>
+        <div class="box-alert box-confirm ">
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p class="confirm-content">Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-100" onclick="offNoti()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
         <aside> 
             <div class="list-group list-tabs list-tabs-off" id="list-tabs-off">
             <a href="#" onclick="displayTabs()">

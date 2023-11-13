@@ -24,7 +24,6 @@ import graduate.domain.Category;
 import graduate.domain.Dish;
 import graduate.service.CategoryService;
 import graduate.service.DishService;
-import graduate.utils.CheckSession;
 @Controller
 @RequestMapping("tfive")
 public class ProductDetailController {
@@ -58,9 +57,6 @@ public class ProductDetailController {
 	
 	@GetMapping("product/{dishID}")
 	public String viewProductDetail(ModelMap model, @PathVariable("dishID") String productID) {
-		CheckSession sub=new CheckSession();
-		sub.checkUsername(request);
-		sub.checkRole(request);
 		
 		fillProduct(model, productID);
 		fillAllProduct(model);
