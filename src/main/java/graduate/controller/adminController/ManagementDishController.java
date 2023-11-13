@@ -80,10 +80,10 @@ public class ManagementDishController {
 
 			return new ModelAndView(viewForm(model));
 		}
-//    if (dishService.existsById(dto.getDriverID())) {
-//        model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
-//        return new ModelAndView(viewForm(model), model);
-//    }
+    if (dishService.existsById(dto.getDishID())&& dto.getIsEdit()==false) {
+        model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
+        return new ModelAndView(viewForm(model), model);
+    }
 
 		Dish entity = new Dish();
 		BeanUtils.copyProperties(dto, entity);

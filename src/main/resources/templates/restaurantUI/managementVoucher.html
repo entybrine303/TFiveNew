@@ -22,9 +22,14 @@
                             enctype="multipart/form-data" th:object="${voucher}">
                             <div class="row">
                                 <div class="box-l col-sm-7">
+
+                                    <input type="hidden" th:field="*{isEdit}" name="isEdit" >
                                     <label for="voucherID">Mã voucher </label>
-                                    <input type="text" th:field="*{voucherID}" id="voucherID" class="form-control" name="voucherID"
-                                        >
+                                    <input type="text" th:readonly="${voucher.isEdit}" th:field="*{voucherID}" id="voucherID" class="form-control" name="voucherID">
+
+
+
+
                                     <label for="reducedPrice">Voucher giảm</label>
                                     <input type="number" th:field="*{reducedPrice}" id="reducedPrice" class="form-control" name="price" >
                                     <label for="minimumPrice">Giá tối thiểu</label>
@@ -49,13 +54,13 @@
                                 </div>
     
                             </div>
-    
                             <div class="box-btn">
-    
-                                <button class="btn btn-info">Save</button>
-    
-                                <a><button type="reset" class="btn btn-primary">Reset</button></a>
-    
+
+                                <button class="btn btn-info" th:text="${voucher.isEdit? 'Update' : 'Save'}">Save</button>
+                                <a><button th:if="${voucher.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
+                                <a th:if="${voucher.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/voucher/view}">Reset</a>
+                                <a style="background-color:#ED1D24" th:if="${voucher.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/voucher/delete/' + ${voucher.voucherID}}">Delete</a>
+
                             </div>
                         </form>
                     </div>

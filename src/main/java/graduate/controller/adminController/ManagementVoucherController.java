@@ -47,16 +47,20 @@ public class ManagementVoucherController {
     if (result.hasErrors()) {
       return new ModelAndView("restaurantUI/managementVoucher");
     }
-//
-//    if (voucherService.existsById(dto.getVoucherID())) {
-//      model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
-//      return new ModelAndView(viewForm(model), model);
-//    }
+
+    if (voucherService.existsById(dto.getVoucherID()) && dto.getIsEdit()==false ) {
+      model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
+      return new ModelAndView(viewForm(model), model);
+    }
     Voucher entity = new Voucher();
     BeanUtils.copyProperties(dto, entity);
     dto.setIsEdit(false);
     voucherService.save(entity);
-    model.addAttribute("mess", "Voucher is saved");
+    if (dto.getIsEdit()) {
+      model.addAttribute("mess", "Voucher is saved");
+    }else {
+      model.addAttribute("mess", "Voucher is update");
+    }
 
 
     return new ModelAndView(viewForm(model), model);

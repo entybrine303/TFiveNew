@@ -49,15 +49,8 @@
                                 
                                     <label for="status">Trạng Thái</label>
                                     <select class="form-control" name="status" id="status" th:field="*{status}">
-<<<<<<< HEAD
                                         <option value="1">Còn món</option>
                                         <option value="0">Tạm hết</option>
-
-
-=======
-                                        <option value="0">Còn món</option>
-                                        <option value="1">Tạm hết</option>
->>>>>>> ea3aa1b832272b24c1620c6b43bdac02341f36c4
                                     </select>
 
                                     <label for="description" class="w-100">Mô tả của món
@@ -138,15 +131,9 @@
                                     <td scope="row" th:text="${item.name}"></td>
                                     <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
                                     <td th:text="${item.categoriesID.name}"></td>
-<<<<<<< HEAD
                                     <td th:text="${item.status == true ? 'Còn món' : 'Hết món'}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/dish/edit/' + ${item.dishID}}">Edit</a>
                                         | <a th:href="@{'/tfive/admin/dish/delete/' + ${item.dishID}}">Delete</a>
-=======
-                                    <td th:text="${item.status ? 'Còn món' : 'Tạm hết'}"></td>
-                                    <td><a class="edit" th:href="@{'/tfive/admin/dish/edit/' + ${item.driverID}}">Edit</a>
-                                        | <a th:href="@{'/tfive/admin/dish/delete/' + ${item.driverID}}">Delete</a>
->>>>>>> ea3aa1b832272b24c1620c6b43bdac02341f36c4
                                     </td>
                                 </tr>
                             </tbody>
