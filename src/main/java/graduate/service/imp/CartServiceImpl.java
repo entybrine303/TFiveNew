@@ -2,6 +2,7 @@ package graduate.service.imp;
 
 
 import graduate.domain.Cart;
+import graduate.domain.DriverRegister;
 import graduate.repository.CartRepository;
 import graduate.service.CartService;
 import java.util.List;
@@ -20,6 +21,10 @@ public class CartServiceImpl  implements CartService {
 
   @Autowired
   private CartRepository cartReponsitory;
+  @Override
+  public Long countByCustomerID(String customerID) {
+  	 return cartReponsitory.countByCustomerID(customerID);
+  }
   
 @Override
 public void deleteByCustomer_CustomerID(String customerID) {
@@ -62,9 +67,9 @@ public List<Cart> findByCustomer_CustomerID(String customerID) {
   }
 
   @Override
-  public List<Cart> saveAll(List<Cart> entities) {
-    return cartReponsitory.saveAll(entities);
-  }
+	public <S extends Cart> List<S> saveAll(Iterable<S> entities) {
+		return cartReponsitory.saveAll(entities);
+	}
 
   @Override
   public void flush() {
@@ -99,11 +104,6 @@ public List<Cart> findByCustomer_CustomerID(String customerID) {
   @Override
   public boolean existsById(String id) {
     return cartReponsitory.existsById(id);
-  }
-
-  @Override
-  public void deleteAllInBatch(List<Cart> entities) {
-    cartReponsitory.deleteAllInBatch(entities);
   }
 
   @Override
@@ -176,6 +176,12 @@ public List<Cart> findByCustomer_CustomerID(String customerID) {
   public <S extends Cart> List<S> findAll(Example<S> example, Sort sort) {
     return cartReponsitory.findAll(example, sort);
   }
+@Override
+public void deleteAllInBatch(List<Cart> entities) {
+	cartReponsitory.deleteInBatch(entities);
+	
+}
+
 
 
 

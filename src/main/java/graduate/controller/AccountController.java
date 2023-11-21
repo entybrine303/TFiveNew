@@ -1,5 +1,6 @@
 package graduate.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,10 +24,12 @@ import graduate.domain.Account;
 import graduate.domain.Category;
 import graduate.domain.Customer;
 import graduate.domain.Dish;
+import graduate.domain.Order;
 import graduate.domain.Restaurant;
 import graduate.dto.CustomerDTO;
 import graduate.dto.DishDTO;
 import graduate.service.CustomerService;
+import graduate.service.OrderService;
 import graduate.service.StorageService;
 @Controller
 @RequestMapping("tfive")
@@ -43,9 +46,14 @@ public class AccountController {
 	
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private OrderService orderService;
 	
 	@GetMapping("my-order")
 	public String viewOrder(ModelMap model) {
+		List<Order> list=orderService.findByCustomer_CustomerID(model.getAttribute("customerID").toString());
+		model.addAttribute("listOrder", list);
 		return "customerUI/my-order";
 	}
 	

@@ -1,6 +1,7 @@
 package graduate.service;
 
 import graduate.domain.Cart;
+import graduate.domain.DriverRegister;
 import graduate.domain.Cart;
 import java.util.List;
 import java.util.Optional;
@@ -9,11 +10,13 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 public interface CartService {
 	 void deleteByCustomer_CustomerID(String customerID);
 	List<Cart> findByCustomer_CustomerID(String customerID);
+	Long countByCustomerID(String userId);
   Cart save(Cart entity);
 
   <S extends Cart> Optional<S> findOne(Example<S> example);
@@ -26,7 +29,7 @@ public interface CartService {
 
   List<Cart> findAllById(Iterable<String> ids);
 
-  List<Cart> saveAll(List<Cart> entities);
+  <S extends Cart> List<S> saveAll(Iterable<S> entities);
 
   void flush();
 

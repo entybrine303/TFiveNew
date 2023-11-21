@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import graduate.domain.Account;
+import graduate.domain.DriverRegister;
 import graduate.repository.AccountRepository;
 import graduate.repository.CategoryRepository;
 import graduate.service.AccountService;
@@ -30,8 +31,9 @@ public class AccountSeviceImpl implements AccountService {
 		return accountReponsitory.save(entity);
 	}
 
-	public List<Account> saveAll(List<Account> entities) {
-		return  (List<Account>)accountReponsitory.saveAll(entities);
+	@Override
+	public <S extends Account> List<S> saveAll(Iterable<S> entities) {
+		return accountReponsitory.saveAll(entities);
 	}
 
 	public Optional<Account> findById(String id) {

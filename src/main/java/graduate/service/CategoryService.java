@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import graduate.domain.Category;
+import graduate.domain.DriverRegister;
 import graduate.dto.CategoryDTO;
 import graduate.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +69,7 @@ public interface CategoryService {
 
 	void flush();
 
-	List<Category> saveAll(List<Category> entities);
+	<S extends Category> List<S> saveAll(Iterable<S> entities);
 
 	List<Category> findAllById(Iterable<String> ids);
 

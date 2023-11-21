@@ -3,6 +3,7 @@ package graduate.service.imp;
 
 import graduate.domain.Category;
 import graduate.domain.Customer;
+import graduate.domain.DriverRegister;
 import graduate.repository.CustomerRepository;
 import graduate.repository.DishRepository;
 import graduate.service.CustomerService;
@@ -65,9 +66,9 @@ public Customer findByUsername(String username) {
   }
 
   @Override
-  public List<Customer> saveAll(List<Customer> entities) {
-    return customerReponsitory.saveAll(entities);
-  }
+	public <S extends Customer> List<S> saveAll(Iterable<S> entities) {
+		return customerReponsitory.saveAll(entities);
+	}
 
   @Override
   public void flush() {

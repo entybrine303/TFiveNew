@@ -1,12 +1,14 @@
 package graduate.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,6 +37,10 @@ public class Voucher implements Serializable{
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")
 	private Restaurant restaurant;
 
-	@OneToOne(mappedBy = "voucher")
-    private Order order;
+	@OneToMany(mappedBy = "voucher")
+    private List<Order> orders;
+
+	public Voucher(String voucherID) {
+		this.voucherID = voucherID;
+	}
 }

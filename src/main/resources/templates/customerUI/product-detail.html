@@ -40,7 +40,6 @@
                             <div class="product__details--info">
                                 <form th:action="@{/tfive/cart/addToCart}" method="post">
                                 <input type="hidden" name="dishID" th:field="*{dishID}"> 
-                                <!-- <input type="hidden" name="customerID" th:field="*{customerID}">  -->
                                     <h2 th:text="*{name}" name="name" class="product__details--info__title mb-15 dish-name">Tên món</h2>
                                     <div class="product__details--info__price mb-12">
                                     	<input type="hidden" name="price" th:field="*{price}"> 
@@ -133,11 +132,11 @@
                                         </div> -->
                                         <div class="product__variant--list quantity d-flex align-items-center mb-20">
                                             <div class="quantity__box">
-                                                <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
+                                                <button type="button" id="decrease" onclick="changeQuantity('')" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
                                                 <label>
-                                                    <input name="quantity" type="number" class="quantity__number quickview__value--number" value="1" data-counter />
+                                                    <input id="txt-quantity" name="quantity" type="number" class="quantity__number quickview__value--number" value="1" data-counter />
                                                 </label>
-                                                <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
+                                                <button type="button" id="increase" onclick="changeQuantity('+')" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                             </div>
                                         </div>
                                         <div class="product__variant--list mb-15">

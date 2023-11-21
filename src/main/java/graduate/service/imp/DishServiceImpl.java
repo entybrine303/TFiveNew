@@ -66,7 +66,7 @@ public class DishServiceImpl  implements DishService {
   }
 
   @Override
-  public List<Dish> saveAll(List<Dish> entities) {
+  public <S extends Dish> List<S> saveAll(Iterable<S> entities) {
     return dishRepository.saveAll(entities);
   }
 
@@ -180,6 +180,8 @@ public class DishServiceImpl  implements DishService {
   public <S extends Dish> List<S> findAll(Example<S> example, Sort sort) {
     return dishRepository.findAll(example, sort);
   }
+
+
 
 
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import graduate.domain.Account;
+import graduate.domain.DriverRegister;
 
 public interface AccountService {
 
@@ -29,7 +30,7 @@ public interface AccountService {
 
 	Optional<Account> findById(String id);
 
-	List<Account> saveAll(List<Account> entities);
+	<S extends Account> List<S> saveAll(Iterable<S> entities);
 
 	Account save(Account entity);
 

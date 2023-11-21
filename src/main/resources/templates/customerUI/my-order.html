@@ -51,38 +51,38 @@
                                             <tr class="account__table--header__child">
                                                 <th class="account__table--header__child--items">Mã đơn</th>
                                                 <th class="account__table--header__child--items">Ngày đặt</th>
-                                                <th class="account__table--header__child--items">Tình trạng</th>
-                                                <th class="account__table--header__child--items">Tổng tiền</th>	 	 	 	
+                                                <th class="account__table--header__child--items">Tình trạng</th>	 	 	
                                                 <th class="account__table--header__child--items"></th>
                                             </tr>
                                         </thead>
                                         <tbody class="account__table--body mobile__none">
-                                            <tr class="account__table--body__child">
-                                                <td class="account__table--body__child--items order-ID">#1</td>
-                                                <td class="account__table--body__child--items order-date">November 24, 2022</td>
-                                                <td class="account__table--body__child--items order-status">Đã hoàn thành</td>
-                                                <td class="account__table--body__child--items order-total-price">$40.00 USD</td>
-                                                <td class="account__table--body__child--items"><button class="btn-detail">Chi tiết</button></td>
+                                            <tr class="order-row account__table--body__child" th:each="item : ${listOrder}">
+                                                <td class="account__table--body__child--items order-ID" th:text="${item.orderID}">#1</td>
+                                                <td class="account__table--body__child--items order-date" th:text="${#dates.format(item.orderDate, 'dd/MM/yyyy')}">November 24, 2022</td>
+                                                <td class="account__table--body__child--items order-status" th:text="${item.status}">Đã hoàn thành</td>
+                                                <td class="account__table--body__child--items order-total-price" ><a th:href="@{'/tfive/order-detail/'+ *{item.orderID}}">Chi tiết</a></td>
+                                                
                                             </tr>
                                             
                                         </tbody>
                                         <tbody class="account__table--body mobile__block">
-                                            <tr class="account__table--body__child">
+                                        
+                                            <tr class="account__table--body__child" th:each="item : ${listOrder}">
                                                 <td class="account__table--body__child--items">
                                                     <strong>Mã đơn hàng</strong>
-                                                    <span>#1</span>
+                                                    <span th:text="${item.orderID}">#1</span>
                                                 </td>
                                                 <td class="account__table--body__child--items">
                                                     <strong>Ngày đặt</strong>
-                                                    <span>November 24, 2022</span>
+                                                    <span th:text="${#dates.format(item.orderDate, 'dd/MM/yyyy')}">November 24, 2022</span>
                                                 </td>
                                                 <td class="account__table--body__child--items">
-                                                    <strong>Tình trạng</strong>
+                                                    <strong th:text="${item.status}">Tình trạng</strong>
                                                     <span>Paid</span>
                                                 </td>
                                                 <td class="account__table--body__child--items">
                                                     <strong>Tổng tiền</strong>
-                                                    <span>$40.00 USD</span>
+                                                    <span th:text="${item.totalPrice}">$40.00 USD</span>
                                                 </td>
                                                 <td class="account__table--body__child--items">
                                                     <button class="btn-detail btn-detail-mobile">Chi tiết</button>

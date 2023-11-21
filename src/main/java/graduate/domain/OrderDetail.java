@@ -33,7 +33,7 @@ public class OrderDetail implements Serializable{
 	@JoinColumn(name = "dishID", referencedColumnName = "dishID")
 	private Dish dish ;
 	
-	@OneToOne
+	@ManyToOne
     @JoinColumn(name = "orderID", referencedColumnName = "orderID")
     private Order orders;
 }

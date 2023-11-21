@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Repository;
 
 import graduate.domain.Category;
+import graduate.domain.DriverRegister;
 import graduate.repository.CategoryRepository;
 import graduate.service.CategoryService;
 
@@ -67,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<Category> saveAll(List<Category> entities) {
+	public <S extends Category> List<S> saveAll(Iterable<S> entities) {
 		return categoriesRepository.saveAll(entities);
 	}
 

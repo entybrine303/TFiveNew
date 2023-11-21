@@ -2,6 +2,8 @@ package graduate.service;
 
 import graduate.domain.Category;
 import graduate.domain.Customer;
+import graduate.domain.DriverRegister;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -29,7 +31,7 @@ public interface CustomerService {
 
   List<Customer> findAllById(Iterable<String> ids);
 
-  List<Customer> saveAll(List<Customer> entities);
+  <S extends Customer> List<S> saveAll(Iterable<S> entities);
 
   void flush();
 

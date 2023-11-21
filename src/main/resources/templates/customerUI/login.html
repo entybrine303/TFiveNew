@@ -80,13 +80,13 @@
                                         <div class="account__login--inner">
                                         <form  th:action="@{/tfive/account/pRegister}" method="post" th:object=${register}>
                                             <label>
-                                                <input class="account__login--input" placeholder="Username" th:field="*{username}" id="username" name="username" required>
+                                                <input class="account__login--input" placeholder="Username" id="username" name="username" required>
                                             </label>
                                             <label>
-                                                <input class="account__login--input" placeholder="Mật khẩu"  type="password" th:field="*{password}"id="password" name="password" required>
+                                                <input class="account__login--input" placeholder="Mật khẩu"  type="password" id="password" name="password" required>
                                             </label>
                                             <label>
-                                                <input class="account__login--input" placeholder="Nhập lại mật khẩu" type="password" th:field="*{confirmPassword}" id="password" name="confirmPassword" required>
+                                                <input class="account__login--input" placeholder="Nhập lại mật khẩu" type="password" id="password" name="confirmPassword" required>
                                             </label>
                                             
                                             <button class="account__login--btn primary__btn mb-10" type="submit">Xác nhận & Đăng kí</button>

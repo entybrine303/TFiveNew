@@ -28,9 +28,9 @@
             <!-- End breadcrumb section -->
             
             <!-- my account section start -->
-            <section class="my__account--section section--padding">
+            <section class="my__account--section section--padding" th:object="${order}">
                 <div class="container box-order-status">
-                    <p class="account__welcome--text">Bạn ơi, đơn hàng của bạn <span class="order-status" style="text-transform: capitalize;">đã được quán xác nhận</span></p>
+                    <p class="account__welcome--text">Bạn ơi, đơn hàng của bạn <span class="order-status" style="text-transform: capitalize;" th:text="*{status}">đã được quán xác nhận</span></p>
                     <div class="my__account--section__inner border-radius-10">
                             <div class="row order-status-list">
                                 <div class="col-md-2 col-sm-4 col-xs-12 this-step"><i class="fa-solid fa-cart-arrow-down"></i><p>Đã đặt hàng </p><span class="bland"> 10:00 21/10/2023</span></div>
@@ -103,13 +103,13 @@
                                     <div class="row head-order-info">
                                             <div class="t-head-order-info col-md-6 col-sm-6 col-xs-6 customer-info">
                                                 <h3>Địa chỉ nhận hàng</h3>
-                                                <p class="customer-name">Tên khách hàng</p>
-                                                <p class="bland phone-number fs-16">Số điện thoại khách</p>
-                                                <p class="bland customer-address fs-16">Địa chỉ khách</p>
+                                                <p class="customer-name" th:text="*{customer.name}">Tên khách hàng</p>
+                                                <p class="bland phone-number fs-16" th:text="*{customer.phoneNumber}">Số điện thoại khách</p>
+                                                <p class="bland customer-address fs-16" th:text="*{customer.address}">Địa chỉ khách</p>
                                             </div>
                                             <div class="t-head-order-info col-md-6 col-sm-6 col-xs-6 sub-order-status">
                                                 <h4>Trạng thái đơn hàng</h4>
-                                                <p class="bland this-status fs-16">Đã được xác nhận</p>
+                                                <p class="bland this-status fs-16" th:text="*{status}">Đã được xác nhận</p>
                                                 <p class="status-time fs-16">00:00 20/10/2023</p>
                                             </div>
                                     </div>
@@ -121,15 +121,14 @@
                 </div>
                 <div class="container">
                     <div class="my__account--section__inner border-radius-10">
-                        <div class="row">
                             <div class="body-order">
                                 <div class="box-order-detail">
                                     <p class="bold">Chi tiết đơn hàng</p>
-                                    <div class="box-note container">
+                                    <div class="box-note container" th:if="*{noteForRestaurant!=null}">
                                                     <p class="bold">Ghi chú của khách</p>
-                                                    <p class="note">Ghi chú.....</p>
+                                                    <p class="note" th:text="*{noteForRestaurant}">Ghi chú</p>
                                                 </div>
-                                    <p>Số lượng: <span class="total-quantity">3</span></p>
+                                    <p>Số lượng: <span class="total-quantity" th:text="${totalQuantity}">3</span></p>
                                     <hr>
                                     <p class="bold">Menu</p>
                                     <table class="table">
@@ -141,15 +140,10 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          <tr>
-                                            <th scope="row">01. <span class="dish-name">Bánh mì</span></th>
-                                            <td class="quantity">4</td>
-                                            <td class="total-amount">12.000 đ</td>
-                                          </tr>
-                                          <tr>
-                                            <th scope="row">01. <span class="dish-name">Bánh mì</span></th>
-                                            <td class="quantity">4</td>
-                                            <td class="total-amount">12.000 đ</td>
+                                          <tr  th:each="item : ${listOrder}">
+                                            <th scope="row">01. <span class="dish-name" th:text="${item.dish.name}">Bánh mì</span></th>
+                                            <td class="quantity" th:text="${item.quantity}">4</td>
+                                            <td class="total-amount" th:text="${#numbers.formatDecimal(item.totalAmount, 0, 'COMMA', 0, 'POINT')} + 'đ'">12.000 đ</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -160,28 +154,24 @@
                                     <tbody>
                                         <tr>
                                             <th scope="col">Tổng tiền hàng</th>
-                                            <td>24.000đ</td>
+                                            <td th:text="${#numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">24.000đ</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">Phí ship</th>
-                                            <td>15.000đ</td>
+                                            <td th:text="${#numbers.formatDecimal(shipMoney, 0, 'COMMA', 0, 'POINT')} + 'đ'">15.000đ</td>
                                         </tr>
                                         <tr>
-                                            <th scope="col">Voucher từ cửa hàng</th>
-                                            <td>-6.000đ</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Giảm giá phí ship</th>
-                                            <td>0đ</td>
+                                            <th scope="col">Giảm giá</th>
+                                            <td th:text="${voucher!=null ? '-'+#numbers.formatDecimal(voucher.reducedPrice, 0, 'COMMA', 0, 'POINT')+'đ' : '0đ'}">0đ</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">Thành tiền</th>
-                                            <td>20.000đ</td>
+                                            <td th:text="${#numbers.formatDecimal(totalMoney, 0, 'COMMA', 0, 'POINT')} + 'đ'">20.000đ</td>
                                           </tr>
                                     </tbody>
                                   </table>
                             </div>
-                        </div>
+                            <button class="primary__btn text-white w-100" style="margin-top: 30px;" type="button">Huỷ đơn</button>
                     </div>
                 </div>
             </section>

@@ -1,14 +1,18 @@
 package graduate.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,14 +32,21 @@ public class Order implements Serializable{
 	private String orderID;
 	
 //	Tạo trường dữ liệu có kiểu dữ liệu là datetime
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date orderDate;
+	
 	@Column(columnDefinition = "nvarchar(100)")
 	private String status;
 	private Double totalPrice;
 	@Column(columnDefinition = "nvarchar(max)")
 	private String noteForRestaurant;
 	private Double shipMoney;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date orderDate;
+
+	@PrePersist
+    public void prePersist() {
+        Calendar calendar = Calendar.getInstance();
+        orderDate= calendar.getTime();
+    }
 	
 	@ManyToOne
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")
@@ -43,12 +54,16 @@ public class Order implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "customerID", referencedColumnName = "customerID")
 	private Customer customer;
-	@OneToOne
-    @JoinColumn(name = "voucherid", referencedColumnName = "voucherid")
+	@ManyToOne
+    @JoinColumn(name = "voucherID", referencedColumnName = "voucherID")
     private Voucher voucher;
 
-	@OneToOne(mappedBy = "orders")
-    private OrderDetail orderDetail;
+	@OneToMany(mappedBy = "orders")
+    private List<OrderDetail> orderDetails;
 	@OneToOne(mappedBy = "orders")
     private Delivery delivery;
+
+	public Order(String orderID) {
+		this.orderID = orderID;
+	}
 }

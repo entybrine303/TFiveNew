@@ -1,11 +1,16 @@
 package graduate.service.imp;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
@@ -33,6 +38,44 @@ public class FileSystemStorageSericeImpl implements StorageService{
 	public FileSystemStorageSericeImpl(StorageProperties properties) {
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
+	
+	// Phương thức để cố định kích thước của ảnh
+    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, originalImage.getType());
+        Graphics2D g = resizedImage.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        g.dispose();
+        return resizedImage;
+    }
+
+    // Phương thức để lưu ảnh cố định kích thước
+    public void storeResizedImage(MultipartFile file, String storedFilename, int targetWidth, int targetHeight) {
+        try {
+            if (file.isEmpty()) {
+                throw new StorageException("Failed to store empty file");
+            }
+
+            // Đọc ảnh gốc từ InputStream
+            BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+            // Resize ảnh
+            BufferedImage resizedImage = resizeImage(originalImage, targetWidth, targetHeight);
+
+            // Tiếp tục lưu ảnh nhỏ
+            Path destinationFile = this.rootLocation.resolve(Paths.get(storedFilename)).normalize().toAbsolutePath();
+            if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+                throw new StorageException("Cannot store file outside current directory");
+            }
+
+            // Lưu ảnh đã resize
+            ImageIO.write(resizedImage, "jpg", destinationFile.toFile());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new StorageException("Failed to store file", e);
+        }
+    }
 	
 	@Override
 	public void store(MultipartFile file, String storedFilename) {

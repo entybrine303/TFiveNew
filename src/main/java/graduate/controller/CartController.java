@@ -53,25 +53,8 @@ public class CartController {
 	@Autowired
 	private CustomerService customerService;
 	
-	
-	void fillToTable(ModelMap model) {
-//		Tìm các sản phẩm được lưu trong giỏ hàng, tương ứng với customerID
-		Customer customer=customerService.findByUsername(session.getAttribute("username").toString());
-	
-		List<Cart> list = cartService.findByCustomer_CustomerID(customer.getCustomerID());
-		model.addAttribute("customerID", customer.getCustomerID());
-		
-		if (list.isEmpty()) {
-			model.addAttribute("cartItems", null);
-		}else {
-			model.addAttribute("cartItems", list);
-		}
-	}
-	
 	@GetMapping("cart")
 	public String viewCart(ModelMap model) {
-		fillToTable(model);
-		
 		return "customerUI/cart";
 	}
 	
@@ -94,7 +77,8 @@ public class CartController {
 		
 		cartService.save(entity);
 		model.addAttribute("mess", "Product is saved");
-		return new ModelAndView(viewCart(model), model);
+
+		return redirectHelper.redirectTo("/tfive/cart");
 	}
 	
 	@GetMapping("cart/addToCart/{dishID}")
@@ -121,14 +105,16 @@ public class CartController {
 	public ModelAndView delete(ModelMap model, @PathVariable("cartID") String cartID) {
 		cartService.deleteById(cartID);
 		model.addAttribute("mess", "Category id delete");
-		return new ModelAndView(viewCart(model), model);
+
+		return redirectHelper.redirectTo("/tfive/cart");
 	}
 
 	@GetMapping("cart/delete-all/{customerID}")
 	public ModelAndView deleteAll(ModelMap model,  @PathVariable("customerID") String customerID) {
 		cartService.deleteByCustomer_CustomerID(customerID);
 		model.addAttribute("mess", "Category id delete");
-		return new ModelAndView(viewCart(model), model);
+
+		return redirectHelper.redirectTo("/tfive/cart");
 	}
 	
 }

@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import graduate.domain.DriverRegister;
 import graduate.repository.DriverRegisterRepository;
@@ -51,11 +50,6 @@ public class DriverRegisterServiceImpl implements DriverRegisterService {
 	@Override
 	public List<DriverRegister> findAllById(Iterable<String> ids) {
 		return driverRegisterRepository.findAllById(ids);
-	}
-
-	@Override
-	public <S extends DriverRegister> List<S> saveAll(Iterable<S> entities) {
-		return driverRegisterRepository.saveAll(entities);
 	}
 
 	@Override
@@ -176,6 +170,11 @@ public class DriverRegisterServiceImpl implements DriverRegisterService {
 	@Override
 	public <S extends DriverRegister> List<S> findAll(Example<S> example, Sort sort) {
 		return driverRegisterRepository.findAll(example, sort);
+	}
+
+	@Override
+	public <S extends DriverRegister> List<S> saveAll(Iterable<S> entities) {
+		return driverRegisterRepository.saveAll(entities);
 	}
 	
 	

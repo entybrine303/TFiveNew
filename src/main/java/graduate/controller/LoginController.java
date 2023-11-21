@@ -56,6 +56,7 @@ public class LoginController {
 	public ModelAndView logout(ModelMap model) {
 		session.setAttribute("username", null);
 		session.setAttribute("role", "guest");
+		System.out.println(session.getAttribute("username")+"eheheehhe");
 		
 		 return redirectHelper.redirectTo("/tfive/");
 	}
@@ -68,7 +69,6 @@ public class LoginController {
 		}
 		
 		Account account=accountService.login(dao.getUsername(), dao.getPassword());
-		
 		if (account==null) {
 			model.addAttribute("mess", "Invalid username or password");
 			return new ModelAndView("customerUI/login", model);
@@ -76,9 +76,6 @@ public class LoginController {
 		
 		session.setAttribute("username", account.getUsername());
 		session.setAttribute("role", account.getRole());
-		
-			Customer customer=customerService.findByUsername(account.getUsername());
-			session.setAttribute("customerID", customer.getCustomerID());
 		
 		 // Lấy đường dẫn trang trước đó từ session
         String referer = (String) request.getSession().getAttribute("referer");

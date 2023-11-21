@@ -97,8 +97,8 @@ public class ManagementDishController {
 			UUID uuid = UUID.randomUUID();
 			String uuString = uuid.toString();
 			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), uuString));
-			storageService.store(dto.getImageFile(), entity.getImg());
-		}
+			storageService.storeResizedImage(dto.getImageFile(), entity.getImg(), 209, 171);
+			}
 		entity.setRestaurant(new Restaurant("R01"));
 		dishService.save(entity);
 		model.addAttribute("mess", "Product is saved");

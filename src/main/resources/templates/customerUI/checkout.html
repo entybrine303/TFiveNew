@@ -29,12 +29,13 @@
             <!-- End breadcrumb section -->
     
             <!-- Start checkout page area -->
-        <div class="checkout__page--area section--padding">
+        <div class="checkout__page--area section--padding" >
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
                         <div class="main checkout__mian">
-                            <form action="#" th:object="${customer}">
+                            <form th:action="@{/tfive/checkout/finish}" method="post" th:object="${customer}">
+                   			<input type="hidden" th:value="${ipVoucherID}" name="voucherID">
                                 <div class="checkout__content--step section__contact--information">
                                     <div class="section__header checkout__section--header d-flex align-items-center justify-content-between mb-25">
                                        
@@ -79,9 +80,10 @@
                                    <textarea name="noteForD" class="checkout__notes--textarea__field border-radius-5" id="driver-note" placeholder="" spellcheck="false"></textarea>
                                 </div>
                                 <div class="checkout__content--step__footer d-flex align-items-center">
-                                    <a class="continue__shipping--btn primary__btn border-radius-5" href="index.html">Cập nhật</a>
-                                    <a class="previous__link--content " href="cart.html">Giỏ hàng</a>
+                                    <a class="continue__shipping--btn primary__btn border-radius-5" th:href="@{/tfive/}">Tiếp tục mua sắm</a>
+                                    <a class="previous__link--content " th:href="@{/tfive/cart}">Giỏ hàng</a>
                                 </div>
+                                <input type="submit" id="order-submit" style="display: none">
                             </form>
                         </div>
                     </div>
@@ -104,19 +106,37 @@
                                                 </div>
                                             </td>
                                             <td class="cart__table--body__list">
-                                                <span class="cart__price" th:text="*{#numbers.formatDecimal(cart.dish.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">£65.00</span>
+                                                <span class="cart__price" th:text="*{#numbers.formatDecimal(cart.totalAmount, 0, 'COMMA', 0, 'POINT')} + 'đ'">£65.00</span>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table> 
                             </div>
                             <div class="checkout__discount--code">
-                                <form class="d-flex" action="#">
+                                <form th:action="@{/tfive/checkout/findVoucher}"
+                                method="post" th:object="${voucher}">
+                                <div class="d-flex">
                                     <label>
-                                        <input class="checkout__discount--code__input--field border-radius-5" placeholder="Nhập mã giảm giá"  type="text">
+                                        <input class="checkout__discount--code__input--field border-radius-5" name="voucherID" placeholder="Nhập mã giảm giá"  type="text">
                                     </label>
-                                    <button class="checkout__discount--code__btn primary__btn border-radius-5" type="submit">Áp dụng</button>
+                                    <button class="checkout__discount--code__btn primary__btn border-radius-5" type="submit">Áp</button>
+                                </div>
                                 </form>
+                                <hr>
+                                <div class="show-voucher">
+                                    <a class="w-100" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Chọn voucher <i class="fa-solid fa-angle-right"></i>
+                                      </a>  
+                                </div>
+                                  <div class="collapse" id="collapseExample">
+                                    <div class="card card-body" th:each="item : ${vouchers}" th:if="${item.isShare}">
+                                    	<a th:href="@{'/tfive/checkout/selectVoucher/'+${item.voucherID}}">
+                                                <span th:text="${'Mã '+item.voucherID}" th:if="${item.voucherType}" class="bold"  style="color: blue;">Đơn hàng</span>
+                                                <span th:text="${'Mã '+item.voucherID}" th:if="${item.voucherType==false}" class="bold" style="color: green;">Vận chuyển</span>
+                                                <p class="voucher-description" th:text="${item.description}">Mô tả .............</p>
+                                            </a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="checkout__total">
                                 <table class="checkout__total--table">
@@ -127,17 +147,18 @@
                                         </tr>
                                         <tr class="checkout__total--items">
                                             <td class="checkout__total--title text-left">Tiền ship</td>
-                                            <td class="checkout__total--calculated__text text-right">$860.00</td>
+                                            <td th:text="${#numbers.formatDecimal(shipMoney, 0, 'COMMA', 0, 'POINT')} + 'đ'" class="checkout__total--calculated__text text-right">20.000đ</td>
                                         </tr>
                                         <tr class="checkout__total--items">
                                             <td class="checkout__total--title text-left">Giảm giá</td>
-                                            <td class="checkout__total--calculated__text text-right">$860.00</td>
+                                            <td class="checkout__total--calculated__text text-right" 
+                                            th:text="${reducedPrice!=null ? '-'+#numbers.formatDecimal(reducedPrice, 0, 'COMMA', 0, 'POINT')+'đ' : '0đ'}">$860.00</td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="checkout__total--footer">
                                         <tr class="checkout__total--footer__items">
                                             <td class="checkout__total--footer__title checkout__total--footer__list text-left">Thành tiền </td>
-                                            <td class="checkout__total--footer__amount checkout__total--footer__list text-right">$860.00</td>
+                                            <td th:text="${#numbers.formatDecimal(totalMoney, 0, 'COMMA', 0, 'POINT')} + 'đ'" class="checkout__total--footer__amount checkout__total--footer__list text-right">$860.00</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -149,7 +170,7 @@
                                     <li class="payment__history--list"><button class="payment__history--link primary__btn" type="button">Thẻ tín dụng</button></li>
                                 </ul>
                             </div>
-                            <button class="checkout__now--btn primary__btn" type="submit">Hoàn tất</button>
+                            <button class="checkout__now--btn primary__btn" type="button" onclick="document.getElementById('order-submit').click()">Hoàn tất</button>
                         </aside>
                     </div>
                     

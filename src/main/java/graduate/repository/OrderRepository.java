@@ -1,6 +1,6 @@
 package graduate.repository;
 
-import graduate.domain.Cart;
+import graduate.domain.Order;
 import graduate.domain.Category;
 import graduate.domain.Customer;
 import graduate.domain.Dish;
@@ -13,11 +13,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface CartRepository extends JpaRepository<Cart, String>{
-	List<Cart> findByCustomer_CustomerID(String customerID);
+public interface OrderRepository extends JpaRepository<Order, String>{
+	List<Order> findByCustomer_CustomerID(String customerID);
 	 @Transactional
 	 void deleteByCustomer_CustomerID(String customerID);
-	 
-	 @Query("SELECT COUNT(c) FROM Cart c WHERE c.customer.customerID = :customerID")
-	    Long countByCustomerID(@Param("customerID") String customerID);
 }

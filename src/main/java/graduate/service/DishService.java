@@ -2,6 +2,8 @@ package graduate.service;
 
 import graduate.domain.Category;
 import graduate.domain.Dish;
+import graduate.domain.DriverRegister;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -29,8 +31,6 @@ public interface DishService {
   List<Dish> findAll(Sort sort);
 
   List<Dish> findAllById(Iterable<String> ids);
-
-  List<Dish> saveAll(List<Dish> entities);
 
   void flush();
 
@@ -76,4 +76,6 @@ public interface DishService {
   <S extends Dish> List<S> findAll(Example<S> example);
 
   <S extends Dish> List<S> findAll(Example<S> example, Sort sort);
+
+<S extends Dish> List<S> saveAll(Iterable<S> entities);
 }

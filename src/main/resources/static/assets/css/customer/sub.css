@@ -296,6 +296,30 @@ section> .container{
     cursor: pointer;
 }
 
+.show-voucher{
+    padding-top: 10px;
+}
+
+.show-voucher>a{
+    border: none;
+    background: none;
+    color: #000;
+    font-size: 18px;
+    text-align: left;
+}
+
+.box-note{
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #FEF8E2;
+}
+
+.order-row:hover {
+    background: #F1F1F1;
+    cursor: pointer;
+}
+
+
 /* MOBILE */
 @media (max-width: 739px) {
     .box-intro{
