@@ -12,14 +12,24 @@
             <div class="container">
                 <div class="row c--box">
                     <div class="box-form col-md-5 col-12">
-                        <form th:action="@{/tfive/account/driver-register/saveOrUpdate}" method="post" th:object="${driver}">
+                        <form th:action="@{/tfive/admin/driver/saveOrUpdate}" method="post" th:object="${driver}">
                             <div class="box-register">
                             <h3>Điền thông tin để đăng kí Tài xế</h3>
                             <hr>
+
+                             <input th:field="*{driverID}" name="driverID" id="driverID" type="text" placeholder="Số điện thoại">
                              <input th:field="*{name}" name="name" id="name" type="text" placeholder="Họ và tên">
                              <input th:field="*{email}" name="email" type="email" placeholder="Email">
-                             <input maxlength="10" th:field="*{phoneNumber}" name="phoneNumber" type="text" placeholder="Số điện thoại">
+<!--                             <input maxlength="10" th:field="*{phoneNumber}" name="phoneNumber" type="text" placeholder="Số điện thoại">-->
                              <input maxlength="12" th:field="*{identificationCard}" name="identificationCard" type="text" placeholder="Số CMND / CCCD">
+                                <input maxlength="12" th:field="*{motorbike}" name="motorbike" type="text" placeholder="Loại xe">
+                             <input maxlength="12" th:field="*{licensePlates}" name="licensePlates" type="text" placeholder="Biển số xe 43-G1-124423">
+
+                                <select style="height: 47px; font-size: 16px" class="form-control" name="sex" id="sex" th:field="*{sex}">
+                                    <option th:value="True">Nam</option>
+                                    <option th:value="False">Nữ</option>
+                                </select>
+
                              <hr>
                              <button class="btn-register">Đăng kí</button>
                          </div>

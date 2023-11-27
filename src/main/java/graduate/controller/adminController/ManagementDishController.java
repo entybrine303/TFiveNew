@@ -127,7 +127,7 @@ public class ManagementDishController {
 			dto.setImg(entity.getImg());
 			model.addAttribute("dish", dto);
 
-			return new ModelAndView("restaurantUI/managementDish", model);
+			return new ModelAndView(viewForm(model), model);
 		}
 		model.addAttribute("mess", "Dish is not existed");
 

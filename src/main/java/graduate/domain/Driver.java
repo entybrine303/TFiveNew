@@ -23,15 +23,16 @@ import lombok.NoArgsConstructor;
 public class Driver implements Serializable{
 	@Id
 	@Column(length = 10)
-	private String driverID;
+	private String driverID;//SDT
 	@Column(length = 10)
 	private String licensePlates;
 	@Column(length = 50, columnDefinition = "nvarchar(100)")
 	private String name;
 	private Boolean sex;
-	@Column(length = 10)
-	private String phoneNumber;
+//	@Column(length = 10)
+//	private String phoneNumber;
 	private String email;
+	private String motorbike;
 	private Boolean workStatus;
 	@Column(length = 12)
 	private String identificationCard;
@@ -43,5 +44,7 @@ public class Driver implements Serializable{
 	@OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
+
+	private int confirm = 0;
 	
 }
