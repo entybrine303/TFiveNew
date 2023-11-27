@@ -56,7 +56,7 @@
                                     <td th:text="${item.motorbike}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/driver/edit/' +${item.driverID}} ">Edit</a>
                                         | <a class="edit" >Chat</a>
-                                        | <a >Delete</a>
+                                        | <a th:href="@{'/tfive/admin/driver/delete/' +${item.driverID}} ">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -110,7 +110,7 @@
                                     <td th:text="${item.licensePlates}"></td>
                                     <td th:text="${item.motorbike}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/driver/confirm/'+${item.driverID}}">Xác nhận</a>
-                                        | <a th:href="@{'/tfive/admin/delete/'+${item.driverID}}">Từ chối</a>
+                                        | <a th:href="@{'/tfive/admin/driver/delete/' +${item.driverID}} ">Từ chối</a>
 
                                     </td>
                                 </tr>

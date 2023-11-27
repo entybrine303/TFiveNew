@@ -102,23 +102,25 @@ public ModelAndView confirm(ModelMap model, @PathVariable("driverID") String dis
 
 	return new ModelAndView(viewDriver(model), model);
 }
-	
-	@GetMapping("delete/{phoneNumber}")
-	public ModelAndView delete(ModelMap model, @PathVariable("phoneNumber") String phoneNumber) throws IOException {
-		fillToTable(model);
-		Optional<Driver> optional=driverRegisterService.findById(phoneNumber);
-		
-		if (optional.isPresent()) {
-			
-			driverRegisterService.delete(optional.get());
-//			model.addAttribute("mess", "Tài khoản "+optional.get().get()+" đã được xoá");
-			
-		}else {
-			model.addAttribute("mess", "Không tìm thấy tài khoản");
+	@GetMapping("delete/{driverID}")
+	public ModelAndView delete(ModelMap model, @PathVariable("driverID") String dishID) {
+		Optional<Driver> opt = driverRegisterService.findById(dishID);
+
+		if (opt.isPresent()) {
+			Driver driver = opt.get();
+			driver.setConfirm(2);
+			driverRegisterService.save(driver); // Assuming you have a save/update method in your service
 		}
-		
-		return new ModelAndView(viewDriver(model),model);
+
+		return new ModelAndView(viewDriver(model), model);
 	}
+//@GetMapping("delete/{driverID}")
+//public ModelAndView delete(ModelMap model, @PathVariable("driverID") String dishID) {
+//	driverRegisterService.deleteById(dishID);
+//	model.addAttribute("mess", "Driver id delete");
+//	return new ModelAndView(viewDriver(model), model);
+//}
+
 
 	@GetMapping("edit/{driverID}")
 	public ModelAndView edit(ModelMap model, @PathVariable("driverID") String driverID) {
