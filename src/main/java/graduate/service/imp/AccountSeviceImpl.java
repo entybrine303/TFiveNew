@@ -5,28 +5,30 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import graduate.domain.Account;
 import graduate.domain.DriverRegister;
 import graduate.repository.AccountRepository;
 import graduate.repository.CategoryRepository;
 import graduate.service.AccountService;
+
 @Service
 public class AccountSeviceImpl implements AccountService {
 	@Autowired
 	private AccountRepository accountReponsitory;
-	
+
 	@Override
 	public Account login(String username, String password) {
-		Optional<Account> optExist=findById(username);
-		
+		Optional<Account> optExist = findById(username);
+
 		if (optExist.isPresent() && password.equals(optExist.get().getPassword())) {
-//			optExist.get().setPassword(null);
 			return optExist.get();
 		}
 		return null;
 	}
 
+	@Override
 	public Account save(Account entity) {
 		return accountReponsitory.save(entity);
 	}
@@ -75,8 +77,5 @@ public class AccountSeviceImpl implements AccountService {
 	public void deleteAll() {
 		accountReponsitory.deleteAll();
 	}
-
-	
-	
 
 }

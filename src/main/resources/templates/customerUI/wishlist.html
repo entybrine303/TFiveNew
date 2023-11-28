@@ -44,55 +44,39 @@
                                         </tr>
                                     </thead>
                                     <tbody class="cart__table--body">
-                                        <tr class="cart__table--body__items">
+                                    <tr th:if="${listWishlist==null}" style="text-align: center">
+                                                <td colspan="5" style="font-size: 26px; font-weight: bold; padding: 20px 0">Chưa có sản phẩm nào</td>
+                                            </tr>
+                                        <tr class="cart__table--body__items" th:each="item : ${listWishlist}">
                                             <td class="cart__table--body__list">
                                                 <div class="cart__product d-flex align-items-center">
-                                                    <button class="cart__remove--btn" aria-label="search button" type="button">
+                                                    <button class="cart__remove--btn" aria-label="search button" type="button"
+                                                    th:data-cartID="${item.dish.dishID}" th:onclick="'deleteCartItem(this,\'' + @{'/tfive/wishlist/delete/'} + '\')'">
                                                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
                                                     </button>
                                                     <div class="cart__thumbnail">
-                                                        <a href="product-details.html"><img class="border-radius-5" src="/assets/img/product/small-product/product9.webp" alt="cart-product"></a>
+                                                        <a th:href="@{'/tfive/product/' + ${item.dish.dishID}}"><img class="border-radius-5" 
+                                                        th:src="@{/assets/img/uploads/} + ${item.dish.img}"
+                                                        onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" alt="cart-product"></a>
                                                     </div>
                                                     <div class="cart__content">
-                                                        <h3 class="cart__content--title h4"><a href="product-details.html">Tên sản phẩm</a></h3>
-                                                        <span class="cart__content--variant">[Lựa chọn]</span>
+                                                        <h3 class="cart__content--title h4"><a th:href="@{'/tfive/product/' + ${item.dish.dishID}}" th:text="${item.dish.name}">Tên sản phẩm</a></h3>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="cart__table--body__list">
-                                                <span class="cart__price">£65.00</span>
+                                                <span class="cart__price" th:text="*{#numbers.formatDecimal(item.dish.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">£65.00</span>
                                             </td>
                                             <td class="cart__table--body__list text-right">
-                                                <a class="wishlist__cart--btn primary__btn" href="cart.html">Thêm vào giỏ hàng</a>
-                                            </td>
-                                        </tr>
-                                        <tr class="cart__table--body__items">
-                                            <td class="cart__table--body__list">
-                                                <div class="cart__product d-flex align-items-center">
-                                                    <button class="cart__remove--btn" aria-label="search button" type="button">
-                                                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
-                                                    </button>
-                                                    <div class="cart__thumbnail">
-                                                        <a href="product-details.html"><img class="border-radius-5" src="/assets/img/product/small-product/product9.webp" alt="cart-product"></a>
-                                                    </div>
-                                                    <div class="cart__content">
-                                                        <h3 class="cart__content--title h4"><a href="product-details.html">Tên sản phẩm</a></h3>
-                                                        <span class="cart__content--variant">[Lựa chọn]</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__table--body__list">
-                                                <span class="cart__price">£65.00</span>
-                                            </td>
-                                            <td class="cart__table--body__list text-right">
-                                                <a class="wishlist__cart--btn primary__btn" href="cart.html">Thêm vào giỏ hàng</a>
+                                                <a class="wishlist__cart--btn primary__btn" th:href="@{'/tfive/cart/addToCart/'+*{item.dish.dishID}}">Thêm vào giỏ hàng</a>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table> 
                                 <div class="continue__shopping d-flex justify-content-between">
                                     <a class="continue__shopping--link" href="index.html">Tiếp tục mua sắm</a>
-                                    <a class="continue__shopping--clear" href="shop.html">Xem tất cả sản phẩm</a>
+                                    <a class="continue__shopping--clear" th:if="${listWishlist!=null}" th:href="@{'/tfive/wishlist/delete-all/'+${#httpSession.getAttribute('customerID')}}">Xoá tất cả</a>
                                 </div>
                             </div> 
                         </form> 

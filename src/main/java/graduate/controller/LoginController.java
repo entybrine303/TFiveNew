@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import graduate.domain.Account;
 import graduate.domain.Customer;
 import graduate.dto.LoginDTO;
-import graduate.dto.RegisterDTO;
 import graduate.service.AccountService;
 import graduate.service.CustomerService;
 import graduate.utils.RamdomID;
@@ -40,35 +39,33 @@ public class LoginController {
 	@Autowired
 	private HttpServletRequest request;
 	
-	@Autowired
-    private RedirectHelper redirectHelper;
-	
 	
 
 	@GetMapping("login")
 	public String viewLogin(ModelMap model) {
 		
-		model.addAttribute("register", new RegisterDTO());
+		model.addAttribute("register", new LoginDTO());
 		return "customerUI/login";
 	}
 	
 	@GetMapping("logout")
 	public ModelAndView logout(ModelMap model) {
-		session.setAttribute("username", null);
-		session.setAttribute("role", "guest");
-		System.out.println(session.getAttribute("username")+"eheheehhe");
+//		session.setAttribute("username", null);
+//		session.setAttribute("role", "guest");
 		
-		 return redirectHelper.redirectTo("/tfive/");
+		session.invalidate();
+		
+		 return RedirectHelper.redirectTo("/tfive/");
 	}
 	
 	@PostMapping("pLogin")
 	public ModelAndView login(ModelMap model, 
-			@Valid @ModelAttribute("account") LoginDTO dao, BindingResult result) {
+			@Valid @ModelAttribute("account") LoginDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ModelAndView("customerUI/login", model);
 		}
 		
-		Account account=accountService.login(dao.getUsername(), dao.getPassword());
+		Account account=accountService.login(dto.getUsername(), dto.getPassword());
 		if (account==null) {
 			model.addAttribute("mess", "Invalid username or password");
 			return new ModelAndView("customerUI/login", model);
@@ -85,23 +82,32 @@ public class LoginController {
             // Chuyển hướng về trang trước đó
             return new ModelAndView("redirect:" + referer);
         }
+        
+        if (account.getRole().equals("admin")) return RedirectHelper.redirectTo("/tfive/admin/category/view");
+        if (account.getRole().equals("driver")) return RedirectHelper.redirectTo("/tfive/driver/home");
 		
-		 return redirectHelper.redirectTo("/tfive/");
+		 return RedirectHelper.redirectTo("/tfive/");
 	}
 
 	@PostMapping("/pRegister")
 	public ModelAndView saveorUpdate(ModelMap model, 
-			@Valid @ModelAttribute("register") RegisterDTO dao, BindingResult result) {
+			@Valid @ModelAttribute("register") LoginDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ModelAndView("customerUI/login");
 		}
-		if (!dao.getConfirmPassword().equals(dao.getPassword())) {
+		
+		if (!dto.getConfirmPassword().equals(dto.getPassword())) {
 			model.addAttribute("mess", "Đăng kí thất bại! Mật khẩu không trùng khớp");
 			return new ModelAndView("customerUI/login");
 		}
+		
+		if (accountService.existsById(dto.getUsername())) {
+			model.addAttribute("mess", "Tên đăng nhập đã tồn tại");
+			return new ModelAndView("customerUI/register");
+		}
 		Account entity = new Account();
 		
-		BeanUtils.copyProperties(dao, entity);
+		BeanUtils.copyProperties(dto, entity);
 		entity.setRole("user");
 		
 		accountService.save(entity);
@@ -114,7 +120,7 @@ public class LoginController {
 		customerService.save(customer);
 		
 		model.addAttribute("mess", "Đăng kí thành công");
-		 return redirectHelper.redirectTo("/tfive/account/login");
+		 return RedirectHelper.redirectTo("/tfive/account/login");
 	}
 
 }

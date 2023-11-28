@@ -44,6 +44,9 @@ public class Customer implements Serializable{
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
+	@OneToMany(mappedBy = "customer")
+    private List<Wishlist> wishlists;
+
 	public Customer(String customerID) {
 		this.customerID = customerID;
 	}

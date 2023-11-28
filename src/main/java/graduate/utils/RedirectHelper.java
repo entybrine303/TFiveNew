@@ -6,7 +6,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Component
 public class RedirectHelper {
-	public ModelAndView redirectTo(String url) {
+	public static ModelAndView redirectTo(String url) {
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(url);
         return new ModelAndView(redirectView);

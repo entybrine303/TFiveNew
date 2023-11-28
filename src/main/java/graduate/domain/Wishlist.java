@@ -1,7 +1,6 @@
 package graduate.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,19 +20,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "orderDetail")
-public class OrderDetail implements Serializable{
+@Table(name = "wishlist")
+public class Wishlist implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long orderDetailID;
-	private Integer quantity;
-	private Double totalAmount;
+	private Long likeID;
 	
+	@ManyToOne
+	@JoinColumn(name = "customerID", referencedColumnName = "customerID")
+	private Customer customer;
 	@ManyToOne
 	@JoinColumn(name = "dishID", referencedColumnName = "dishID")
 	private Dish dish ;
-	
-	@ManyToOne
-    @JoinColumn(name = "orderID", referencedColumnName = "orderID")
-    private Order orders;
 }

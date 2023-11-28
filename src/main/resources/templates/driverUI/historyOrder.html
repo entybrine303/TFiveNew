@@ -15,7 +15,6 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/driver/index.css">
-    <link rel="stylesheet" href="/assets/css/driver/historyOrder.css">
 
     <!-- JAVASCRIPT -->
     <script src="/assets/js/driverUI/index.js"></script> 
@@ -24,11 +23,12 @@
     <h4 class="w-100" style="padding: 20px; text-align:center">Hoàn thành</h4>
     <hr>
     <div class="body">
-        <div class="box-order-received" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/order-detail'} + '\')'">
+        <div th:if="*{order.driver!=null and order.driver.driverID==#httpSession.getAttribute('driverID') and order.status=='Hoàn thành'}" th:each="order : ${listOrder}"
+        class="box-order-received">
+         <a class="a-detail hover-none" th:href="@{'/tfive/driver/detail/'+*{order.orderID}}">
             <div class="order-head row">
                 <div class="ctn-l col-6">
-                    <p class="order-id">Mã đơn hàng</p>
-                    <small class="shipping-money">Tiền ship</small>
+                    <p class="order-id" th:text="*{order.orderID}">Mã đơn hàng</p>
                 </div>
                 <div class="ctn-r col-6">
                     <div class="delivery-icon">
@@ -40,23 +40,17 @@
             </div>
             <div class="order-body">
                 <div class="ctn-t">
-                    <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">Tên nhà hàng</span></label>
-                    <label class="pay float-r bland">Trả: <span class="payment" style="color: red; font-weight: bold;">10k</span></label>
+                    <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">TFive - Foods and Drinks</span></label>
                     <div class="clear"></div>
                 </div>
                 <hr>
                 <div class="ctn-b">
-                    <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label class="deliver bland" >Giao: <span class="customer-name">Tên khách</span></label>
-                    <label class="collect float-r bland">Thu: <span class="collect-money" style="color: green; font-weight: bold;">20k</span></label>
+                    <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label class="deliver bland" >Giao: <span class="customer-name" th:text="*{order.customer.name}">Tên khách</span></label>
                     <div class="clear"></div>
-                    <label class="length">2.0 km</label>
                 </div>
                 <hr>
             </div>
-            <div class="order-bottom">
-                <small class="receive bland">Đã giao xong lúc <span class="receiving-time">00:00 10/10/2020</span></small>
-                <hr>
-            </div>
+            </a>
         </div>
     </div>
 

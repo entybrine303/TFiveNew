@@ -4,6 +4,8 @@ import graduate.domain.DriverRegister;
 import graduate.domain.Delivery;
 import graduate.domain.Delivery;
 import graduate.domain.Delivery;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -11,66 +13,71 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 public interface DeliveryService {
-  Delivery save(Delivery entity);
-  
-  void deleteByOrders_OrderID(String orderID);
-  <S extends Delivery> Optional<S> findOne(Example<S> example);
+	Delivery save(Delivery entity);
 
-  List<Delivery> findAll();
+	void deleteByOrders_OrderID(String orderID);
 
-  Page<Delivery> findAll(Pageable pageable);
+	<S extends Delivery> Optional<S> findOne(Example<S> example);
 
-  List<Delivery> findAll(Sort sort);
+	Delivery findByOrder_OrderId(String orderID);
 
-  List<Delivery> findAllById(Iterable<String> ids);
+	Date findLatestUpdateDate(String orderID);
 
-  <S extends Delivery> List<S> saveAll(Iterable<S> entities);
+	List<Delivery> findAll();
 
-  void flush();
+	Page<Delivery> findAll(Pageable pageable);
 
-  Delivery saveAndFlush(Delivery entity);
+	List<Delivery> findAll(Sort sort);
 
-  <S extends Delivery> List<S> saveAllAndFlush(Iterable<S> entities);
+	List<Delivery> findAllById(Iterable<String> ids);
 
-  <S extends Delivery> Page<S> findAll(Example<S> example, Pageable pageable);
+	<S extends Delivery> List<S> saveAll(Iterable<S> entities);
 
-  Optional<Delivery> findById(String id);
+	void flush();
 
-  void deleteInBatch(Iterable<Delivery> entities);
+	Delivery saveAndFlush(Delivery entity);
 
-  boolean existsById(String id);
+	<S extends Delivery> List<S> saveAllAndFlush(Iterable<S> entities);
 
-  void deleteAllInBatch(List<Delivery> entities);
+	<S extends Delivery> Page<S> findAll(Example<S> example, Pageable pageable);
 
-  <S extends Delivery> boolean exists(Example<S> example);
+	Optional<Delivery> findById(String id);
 
-  void deleteAllByIdInBatch(Iterable<String> ids);
+	void deleteInBatch(Iterable<Delivery> entities);
 
-  <S extends Delivery, R> R findBy(Example<S> example,
-      Function<FetchableFluentQuery<S>, R> queryFunction);
+	boolean existsById(String id);
 
-  void deleteAllInBatch();
+	void deleteAllInBatch(List<Delivery> entities);
 
-  void deleteById(String id);
+	<S extends Delivery> boolean exists(Example<S> example);
 
-  Delivery getOne(String id);
+	void deleteAllByIdInBatch(Iterable<String> ids);
 
-  void delete(Delivery entity);
+	<S extends Delivery, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction);
 
-  Delivery getById(String id);
+	void deleteAllInBatch();
 
-  void deleteAllById(Iterable<? extends String> ids);
+	void deleteById(String id);
 
-  void deleteAll(Iterable<? extends Delivery> entities);
+	Delivery getOne(String id);
 
-  void deleteAll();
+	void delete(Delivery entity);
 
-  Delivery getReferenceById(String id);
+	Delivery getById(String id);
 
-  <S extends Delivery> List<S> findAll(Example<S> example);
+	void deleteAllById(Iterable<? extends String> ids);
 
-  <S extends Delivery> List<S> findAll(Example<S> example, Sort sort);
+	void deleteAll(Iterable<? extends Delivery> entities);
+
+	void deleteAll();
+
+	Delivery getReferenceById(String id);
+
+	<S extends Delivery> List<S> findAll(Example<S> example);
+
+	<S extends Delivery> List<S> findAll(Example<S> example, Sort sort);
 }

@@ -63,7 +63,8 @@
                                                         <div class="cart__product d-flex align-items-center">
                                                             
                                                             <div class="cart__thumbnail">
-                                                                <a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img class="border-radius-5" th:src="@{/assets/img/uploads/} + ${cart.dish.img}" alt="cart-product"></a>
+                                                                <a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img class="border-radius-5" 
+                                                                th:src="@{/assets/img/uploads/} + ${cart.dish.img}" onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" alt="cart-product"></a>
                                                             </div>
                                                             <div class="cart__content">
                                                                 <h4 class="cart__content--title"><a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}" th:text="${cart.dish.name}">Tên sản phẩm</a></h4>
@@ -88,7 +89,7 @@
                                         </table> 
                                         <div class="continue__shopping d-flex justify-content-between">
                                             <a class="continue__shopping--link" href="shop.html">Tiếp tục mua sắm</a>
-                                            <button class="continue__shopping--clear btn-delete-all" type="button"
+                                            <button th:if="${cartItems!=null}" class="continue__shopping--clear btn-delete-all" type="button"
                                             th:data-customerID="${customerID}" th:onclick="'deleteCartByCustomerID(this,\'' + @{'/tfive/cart/delete-all/'} + '\')'">Xoá tất cả</button>
                                         </div>
                                     </div>

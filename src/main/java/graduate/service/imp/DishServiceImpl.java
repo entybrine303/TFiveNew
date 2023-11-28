@@ -23,6 +23,11 @@ public class DishServiceImpl  implements DishService {
   private DishRepository dishRepository;
 
 
+@Override
+public List<Dish> findRandomDishes() {
+	return dishRepository.findRandomDishes();
+}
+  
   @Override
   public List<Dish> findByNameContaining(String name) {
     return dishRepository.findByNameContaining(name);
@@ -180,6 +185,8 @@ public class DishServiceImpl  implements DishService {
   public <S extends Dish> List<S> findAll(Example<S> example, Sort sort) {
     return dishRepository.findAll(example, sort);
   }
+
+
 
 
 

@@ -60,7 +60,7 @@
             </div>
         <div class="box-tabs" id="box-tabs" onclick="hideTabs(event)">
             <div class="list-group list-tabs list-tabs-on" id="list-tabs-on">
-                <a th:href="@{/tfive/}" class="list-group-item list-group-item-action" style="border-radius: 0;">
+                <a th:href="@{#}" class="list-group-item list-group-item-action" style="border-radius: 0;">
                     
                             <div class="main__logo--container" style=" display: flex;
                             align-items: center;">
@@ -68,6 +68,8 @@
                                 <span class="main__logo--text bold" style="font-size: 26px;">TFive</span>
                             </div>
                 </a>
+                
+                <a th:href="@{/tfive/admin/profile}" class="list-group-item list-group-item-action">Hồ sơ quán</a>
                 <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#subTabDish" role="button" aria-expanded="false" aria-controls="collapseExample">Quản lý thực đơn
                     <i class="fa-solid fa-angle-down icon-angle"></i>
                 </a>
@@ -80,7 +82,7 @@
                 <a th:href="@{/tfive/admin/customer/view}" class="list-group-item list-group-item-action">Quản lý khách hàng</a>
                 <a th:href="@{/tfive/admin/driver/view}" class="list-group-item list-group-item-action">Quản lý tài xế</a>
                 <a href="#" class="list-group-item list-group-item-action">Thống kê</a>
-                <a th:href="@{#}" class="list-group-item list-group-item-action">Đăng xuất</a>
+                <a th:href="@{/tfive/account/logout}" class="list-group-item list-group-item-action">Đăng xuất</a>
             </div>
         </div>
         </aside>

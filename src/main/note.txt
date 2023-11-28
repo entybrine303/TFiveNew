@@ -3,9 +3,16 @@ Tìm kiếm sp
 *Check id có trùng hay không khi tạo mới một bảng
 *Dù k upload ảnh lên thẻ input, nhưng thẻ input vẫn lấy giá trị là null để set vào db
 
-*Lỗi voucherID liên quan đến session
 
-Làm thông báo khi add
-Làm thông báo xác nhận khi update, delete
-Thêm phần ghi chú vào quản lý đơn hàng
+Làm thông báo 
 Làm chức năng lọc theo giá, sắp xếp ở page menu
+
+
+Đơn hàng gồm có 6 trạng thái: 
++Đã đặt
++Xác nhận
++Đã xong
++Đã nhận
++Đã lấy
++Đã huỷ
++Hoàn thành

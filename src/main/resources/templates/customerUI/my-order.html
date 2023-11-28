@@ -30,7 +30,6 @@
             <!-- my account section start -->
             <section class="my__account--section section--padding">
                 <div class="container">
-                    <p class="account__welcome--text">Hello, chào <span class="customer-name" style="text-transform: capitalize;">Tên khách hàng</span></p>
                     <div class="my__account--section__inner border-radius-10 d-flex">
                         <div class="account__left--sidebar">
                             <h2 class="account__content--title mb-20">Tài khoản của tôi</h2>
@@ -38,7 +37,7 @@
                                 <li class="account__menu--list "><a th:href="@{/tfive/profile}">Thông tin cá nhân</a></li>
                                 <li class="account__menu--list active"><a th:href="@{/tfive/my-order}">Đơn hàng</a></li>
                             <li class="account__menu--list"><a th:href="@{/tfive/wish-list}">Yêu thích</a></li>
-                            <li class="account__menu--list"><a href="wishlist.html">Đổi mật khẩu</a></li>
+                            <li class="account__menu--list "><a th:href="@{/tfive/account/change-password/}">Đổi mật khẩu</a></li>
                                 <li class="account__menu--list"><a th:href="@{/tfive/account/logout}">Đăng xuất</a></li>
                             </ul>
                         </div>
@@ -51,7 +50,7 @@
                                             <tr class="account__table--header__child">
                                                 <th class="account__table--header__child--items">Mã đơn</th>
                                                 <th class="account__table--header__child--items">Ngày đặt</th>
-                                                <th class="account__table--header__child--items">Tình trạng</th>	 	 	
+                                                <th class="account__table--header__child--items">Tình trạng</th>	 	
                                                 <th class="account__table--header__child--items"></th>
                                             </tr>
                                         </thead>
@@ -60,7 +59,7 @@
                                                 <td class="account__table--body__child--items order-ID" th:text="${item.orderID}">#1</td>
                                                 <td class="account__table--body__child--items order-date" th:text="${#dates.format(item.orderDate, 'dd/MM/yyyy')}">November 24, 2022</td>
                                                 <td class="account__table--body__child--items order-status" th:text="${item.status}">Đã hoàn thành</td>
-                                                <td class="account__table--body__child--items order-total-price" ><a th:href="@{'/tfive/order-detail/'+ *{item.orderID}}">Chi tiết</a></td>
+                                                <td class="account__table--body__child--items" ><a class="primary__btn text-white w-100 alg-ctr" id="view-detail" th:href="@{'/tfive/order-detail/'+ *{item.orderID}}">Chi tiết</a></td>
                                                 
                                             </tr>
                                             
@@ -82,10 +81,10 @@
                                                 </td>
                                                 <td class="account__table--body__child--items">
                                                     <strong>Tổng tiền</strong>
-                                                    <span th:text="${item.totalPrice}">$40.00 USD</span>
+                                                    <span th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">$40.00 USD</span>
                                                 </td>
                                                 <td class="account__table--body__child--items">
-                                                    <button class="btn-detail btn-detail-mobile">Chi tiết</button>
+                                                <a style="text-align: center; padding: 12px 0" class="btn-detail btn-detail-mobile" th:href="@{'/tfive/order-detail/'+ *{item.orderID}}">Chi tiết</a>
                                                 </td>
                                                 
                                             </tr>

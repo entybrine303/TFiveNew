@@ -16,5 +16,7 @@ import lombok.NoArgsConstructor;
 public class LoginDTO implements Serializable{
 	private String username;
 	private String password;
+	private String newPassword;
+	private String confirmPassword;
 	private String role;
 }

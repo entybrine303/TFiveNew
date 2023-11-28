@@ -9,6 +9,7 @@ import graduate.service.DeliveryService;
 import graduate.service.OrderDetailService;
 import graduate.service.OrderService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -30,6 +31,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 	public Delivery save(Delivery entity) {
 		return deliveryRepository.save(entity);
 	}	
+
+	@Override
+	public Delivery findByOrder_OrderId(String orderID) {
+		return deliveryRepository.findByOrders_OrderID(orderID);
+	}
 
 	@Override
 	public void deleteByOrders_OrderID(String orderID) {
@@ -176,6 +182,12 @@ public class DeliveryServiceImpl implements DeliveryService {
 	public <S extends Delivery> List<S> findAll(Example<S> example, Sort sort) {
 		return deliveryRepository.findAll(example, sort);
 	}
+
+	@Override
+	public Date findLatestUpdateDate(String orderID) {
+		return deliveryRepository.findLatestUpdateDatetimeByOrderID(orderID);
+	}
+
 
 
 }

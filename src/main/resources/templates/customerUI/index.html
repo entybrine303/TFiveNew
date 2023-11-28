@@ -46,7 +46,6 @@
                             <div class="categories__card text-center">
                                 <a class="categories__card--link" th:href="@{/tfive/menu}">
                                     <h2 class="categories__title categories-name" th:text="${item.name}">Coffe</h2>
-                                    <span class="categories__subtitle categories-dish-total">(9 items)</span>
                                 </a>
                             </div>
                         </div>
@@ -88,8 +87,10 @@
                                             <article class="product__card">
                                                 <div class="product__card--thumbnail">
                                                     <a class="product__card--thumbnail__link display-block" th:href="@{'/tfive/product/'+${item.dishID}}">
-                                                        <img class="product__card--thumbnail__img product__primary--img" th:src="@{/assets/img/uploads/} + ${item.img}" alt="product-img">
-                                                        <img  class="product__card--thumbnail__img product__secondary--img" th:src="@{/assets/img/uploads/} + ${item.img}" alt="product-img">
+                                                        <img class="product__card--thumbnail__img product__primary--img" th:src="@{/assets/img/uploads/} + ${item.img}"
+                                                        onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" alt="product-img">
+                                                        <img  class="product__card--thumbnail__img product__secondary--img"
+                                                        onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" th:src="@{/assets/img/uploads/} + ${item.img}" alt="product-img">
                                                     </a>
                                                     <span class="product__badge product-sale">-14%</span>
                                                     
@@ -138,7 +139,7 @@
                                                     <h3 class="product__card--title product-name">
                                                     <a th:href="@{'/tfive/product/'+${item.dishID}}" th:text="${item.name}"></a></h3>
                                                     <div class="product__card--price product-price">
-                                                        <span class="current__price" th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                                        <span class="current__price" th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span>
                                                         <span class="old__price"> $362.00</span>
                                                     </div>
                                                     <div class="product__card--footer">

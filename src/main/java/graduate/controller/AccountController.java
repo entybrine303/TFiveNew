@@ -28,9 +28,13 @@ import graduate.domain.Order;
 import graduate.domain.Restaurant;
 import graduate.dto.CustomerDTO;
 import graduate.dto.DishDTO;
+import graduate.dto.LoginDTO;
+import graduate.service.AccountService;
 import graduate.service.CustomerService;
 import graduate.service.OrderService;
 import graduate.service.StorageService;
+import graduate.utils.RamdomID;
+
 @Controller
 @RequestMapping("tfive")
 public class AccountController {
@@ -40,27 +44,19 @@ public class AccountController {
 
 	@Autowired
 	private StorageService storageService;
-	
-	@Autowired
-	private HttpServletRequest request;
-	
+
+
 	@Autowired
 	private CustomerService customerService;
 
 	@Autowired
-	private OrderService orderService;
-	
-	@GetMapping("my-order")
-	public String viewOrder(ModelMap model) {
-		List<Order> list=orderService.findByCustomer_CustomerID(model.getAttribute("customerID").toString());
-		model.addAttribute("listOrder", list);
-		return "customerUI/my-order";
-	}
-	
+	private AccountService accountService;
+
+
 	public void fillCustomerInfo(ModelMap model) {
 		try {
 			Customer customer = customerService.findByUsername(session.getAttribute("username").toString());
-			if (customer.getSex()==null) {
+			if (customer.getSex() == null) {
 				customer.setSex(true);
 			}
 			model.addAttribute("customer", customer);
@@ -69,15 +65,14 @@ public class AccountController {
 			model.addAttribute("mess", e.getMessage());
 		}
 	}
-	
+
 	@GetMapping("profile")
 	public String viewProfile(ModelMap model) {
-		
+
 		fillCustomerInfo(model);
-		
+
 		return "customerUI/profile";
 	}
-	
 
 	@PostMapping("profile/saveOrUpdate")
 	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("customer") CustomerDTO dto, BindingResult result) {
@@ -85,21 +80,62 @@ public class AccountController {
 			return new ModelAndView(viewProfile(model));
 		}
 
-		Customer entity =new Customer();
+		Customer entity = new Customer();
 		BeanUtils.copyProperties(dto, entity);
-		
+
 		if (!dto.getImageFile().isEmpty()) {
 			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), dto.getCustomerID()));
 			storageService.store(dto.getImageFile(), entity.getImg());
 		}
-		
-		Account account=new Account(session.getAttribute("username").toString());
+
+		Account account = new Account(session.getAttribute("username").toString());
 		entity.setAccount(account);
-		
+
 		customerService.save(entity);
 		model.addAttribute("mess", "Product is saved");
-		
+
 		return new ModelAndView(viewProfile(model), model);
 	}
 
+	@GetMapping("account/change-password")
+	public String viewChangePass(ModelMap model) {
+		Optional<Account> account = accountService.findById(session.getAttribute("username").toString());
+		LoginDTO dto = new LoginDTO();
+
+		if (account.isPresent()) {
+			Account entity = account.get();
+			BeanUtils.copyProperties(entity, dto);
+			dto.setPassword(null);
+			dto.setConfirmPassword(null);
+
+			model.addAttribute("account", dto);
+			return "customerUI/change-password";
+		}
+		return "customerUI/change-password";
+	}
+
+	@PostMapping("account/change-password/pChangePassword")
+	public ModelAndView changePass(ModelMap model, @Valid @ModelAttribute("account") LoginDTO dto,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			return new ModelAndView(viewChangePass(model));
+		}
+		if (!dto.getConfirmPassword().equals(dto.getNewPassword())) {
+			model.addAttribute("mess", "Đổi mật khẩu thất bại");
+			return new ModelAndView(viewChangePass(model));
+		}
+
+		Account entity = new Account();
+		Optional<Account> acc = accountService.findById(session.getAttribute("username").toString());
+
+		BeanUtils.copyProperties(dto, entity);
+
+		entity.setPassword(dto.getNewPassword());
+		entity.setRole(session.getAttribute("role").toString());
+
+		accountService.save(entity);
+
+		model.addAttribute("mess", "Đổi mật khẩu thành công");
+		return new ModelAndView(viewChangePass(model));
+	}
 }

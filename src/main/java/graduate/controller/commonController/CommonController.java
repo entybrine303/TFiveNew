@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import graduate.domain.Cart;
 import graduate.domain.Customer;
+import graduate.domain.Driver;
 import graduate.service.CartService;
 import graduate.service.CustomerService;
+import graduate.service.DriverService;
+import graduate.service.WishlistService;
 
 @ControllerAdvice
 public class CommonController {
@@ -31,6 +34,12 @@ public class CommonController {
 	@Autowired
 	private CustomerService customerService;
 
+	@Autowired
+	private WishlistService wishlistService;
+
+	@Autowired
+	private DriverService driverService;
+
 	@ModelAttribute
 	public void globalAttributes(ModelMap model) {
 		if (session.getAttribute("username") == null) {
@@ -39,6 +48,7 @@ public class CommonController {
 		checkUsername(request);
 		checkRole(request);
 		fillCart(model);
+		setRoleID(model);
 	}
 
 	void fillCart(ModelMap model) {
@@ -46,33 +56,48 @@ public class CommonController {
 //		Phương thức này chỉ thực hiện khi người dùng đăng nhập với role là user
 			if (session.getAttribute("role").toString().equals("user")) {
 //		Tìm các sản phẩm được lưu trong giỏ hàng, tương ứng với customerID
-				Customer customer = customerService.findByUsername(session.getAttribute("username").toString());
+				Long numbersProductCart = cartService.countByCustomerID(session.getAttribute("customerID").toString());
+				model.addAttribute("numbersProductCart", numbersProductCart);
+				Long numbersProductWishlist = wishlistService
+						.countByCustomerID(session.getAttribute("customerID").toString());
+				model.addAttribute("numbersProductWishlist", numbersProductWishlist);
 				
-				Long numbersProduct=cartService.countByCustomerID(customer.getCustomerID());
-				model.addAttribute("numbersProduct", numbersProduct);
-				
-				List<Cart> list = cartService.findByCustomer_CustomerID(customer.getCustomerID());
-				model.addAttribute("customerID", customer.getCustomerID());
-				
+				List<Cart> list = cartService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
+
 //		Tính tổng tiền của các sản phẩm đã được lưu trong giỏ hàng
 				double totalPrice = 0;
+				int totalQuantity = 0;
 				for (int i = 0; i < list.size(); i++) {
 					totalPrice += list.get(i).getTotalAmount();
+					totalQuantity += list.get(i).getQuantity();
 				}
-				
+
 				if (list.isEmpty()) {
 					model.addAttribute("cartItems", null);
 				} else {
 					model.addAttribute("cartItems", list);
 					model.addAttribute("cartTotalPrice", totalPrice);
+					model.addAttribute("cartTotalQuantity", totalQuantity);
 				}
-			}
-			else {
+			} else {
 				return;
 			}
-			
+
 		} catch (Exception e) {
-			
+
+			return;
+		}
+	}
+
+	void setRoleID(ModelMap model) {
+		if (session.getAttribute("role").toString().equals("user")) {
+			Customer customer = customerService.findByUsername(session.getAttribute("username").toString());
+			session.setAttribute("customerID", customer.getCustomerID());
+			return;
+		}
+		if (session.getAttribute("role").toString().equals("driver")) {
+			Driver driver = driverService.findByUsername(session.getAttribute("username").toString());
+			session.setAttribute("driverID", driver.getDriverID());
 			return;
 		}
 	}
@@ -93,7 +118,7 @@ public class CommonController {
 		HttpSession session = request.getSession();
 		String role = (String) session.getAttribute("role");
 		if (role == null) {
-			role = "guest"; 
+			role = "guest";
 			session.setAttribute("role", role);
 		}
 

@@ -77,6 +77,12 @@ main{
 
 .c-box-order{
     padding: 0 14px;
+    border-bottom: 1px black solid;
+    
+}
+
+.c-box-order >a{
+	color:black;
 }
 
 .c-box-order .order-head{
@@ -105,7 +111,7 @@ main{
 
 .order-body{
     font-size: 16px;
-    padding: 10px 0;
+    padding: 10px 0 20px;
 }
 
 .order-body .dot-icon{
@@ -199,7 +205,6 @@ main{
 }
 
 .box-some-order-info{
-    border-left: 1px gainsboro solid;
     text-align: right;
 }
 

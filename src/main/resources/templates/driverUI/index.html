@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,11 +20,30 @@
     <script src="/assets/js/driverUI/index.js"></script>
 </head>
 <body>
+<div class="pcUI bold">
+	<!-- Start error section -->
+            <section class="error__section section--padding">
+                <div class="container">
+                    <div class="row row-cols-1">
+                        <div class="col">
+                            <div class="error__content text-center">
+                                <img class="error__content--img display-block mb-50" src="/assets/img/other/404-thumb.webp" alt="error-img">
+                                <h2 class="error__content--title">Thông báo</h2>
+                                <p class="error__content--desc">Hiện tại chức năng này chỉ khả dụng trên điện thoại, vui lòng đăng nhập bằng điện thoại của bạn</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End error section -->
+</div>
+
+<main class="mobileUI">
     <header>
-        <div class="head-info" id="head-info" onclick="displayTabs()">
+        <div class="head-info" id="head-info" onclick="displayTabs()" th:object="${driver}">
             <img class="driver-avt" src="/assets/img/t-avt.jpg" alt="Driver Img" height="70px">
-            <label for="" class="driver-name">Tên tài xế</label>
-            <small class="work-status">Trạng thái làm việc</small>
+            <label for="" class="driver-name" th:text="*{name}">Tên tài xế</label>
+            <small class="work-status" th:text="*{workStatus==true?'Đang làm việc':'Tạm nghỉ'}">Trạng thái làm việc</small>
         </div>
     </header>
     <div class="body">
@@ -32,7 +51,6 @@
             <button class="btn-reload"><i class="ti-reload"></i></button>
             <button class="btn-filter"><i class="ti-filter"></i></button>
         </div>
-
         <div class="tabs">
             <ul class="t-nav nav nav-tabs w-100" id="myTab" role="tablist">
                 <li class="t-nav-item nav-item w-50">
@@ -45,41 +63,34 @@
               <div class="tab-content box-ctn-order" id="myTabContent">
                 <div class="order-list tab-pane fade show active" id="order-list" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
-                        <div class="box-order col col-md-4 col-sm-6 col-12">
-                            <div class="order-head">
-                                <small class="shipping-money bold">20k</small>
-                                <hr>
-                            </div>
+                        <div class="box-order col col-md-4 col-sm-6 col-12" th:if="*{order.driver==null and order.status=='Xác nhận'}" th:each="order : ${listOrder}">
                             <div class="order-body">
                                 <div class="ctn-t">
-                                    <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">Tên nhà hàng</span></label>
-                                    <label class="pay float-r bland">Trả: <span class="payment" style="color: red; font-weight: bold;">10k</span></label>
-                                    <div class="clear"></div>
-                                    <p class="retaurant-locate">Địa chỉ nhà hàng</p>
+                                    <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">TFive - Foods and Drinks</span></label>
+
+                                    <p class="retaurant-locate" th:text="*{order.restaurant.address}">Địa chỉ nhà hàng</p>
                                 </div>
                                 <hr>
                                 <div class="ctn-b">
                                     <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label class="deliver bland" >Giao: <span class="customer-name">Tên khách</span></label>
-                                    <label class="collect float-r bland">Thu: <span class="collect-money" style="color: green; font-weight: bold;">20k</span></label>
-                                    <div class="clear"></div>
-                                    <p class="retaurant-locate">Địa chỉ khách</p>
+                                    
+                                    <p class="retaurant-locate" th:text="*{order.customer.address}">Địa chỉ khách</p>
                                     <label class="length">2.0 km</label>
                                 </div>
                             </div>
                             <div class="order-bottom">
-                                <button class="btn-receive btn btn-danger w-50">Nhận đơn</button>
+                                <a th:href="@{'/tfive/driver/received-order/' + *{order.orderID}}" class="btn-receive btn btn-danger w-50">Nhận đơn</a>
                             </div>
                         </div>
                     
                 </div>
                 </div>
                 <div class="tab-pane fade" id="order-received" role="tabpanel" aria-labelledby="profile-tab">
-
-                    <div class="box-order-received" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/order-detail'} + '\')'">
+                    <div th:if="*{order.driver!=null and order.driver.driverID==#httpSession.getAttribute('driverID')}" class="box-order-received" th:each="order : ${listOrder}">
+                    <a class="a-detail hover-none" th:href="@{'/tfive/driver/detail/'+*{order.orderID}}">
                         <div class="order-head row">
                             <div class="ctn-l col-6">
-                                <p class="order-id">Mã đơn hàng</p>
-                                <small class="shipping-money">Tiền ship</small>
+                                <p class="order-id" th:text="*{order.orderID}">Mã đơn hàng</p>
                             </div>
                             <div class="ctn-r col-6">
                                 <div class="delivery-icon">
@@ -91,30 +102,28 @@
                         </div>
                         <div class="order-body">
                             <div class="ctn-t">
-                                <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">Tên nhà hàng</span></label>
-                                <label class="pay float-r bland">Trả: <span class="payment" style="color: red; font-weight: bold;">10k</span></label>
-                                <div class="clear"></div>
-                                <p class="retaurant-locate">Địa chỉ nhà hàng</p>
+                                <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">TFive - Foods and Drinks</span></label>
+ 
+                                <p class="retaurant-locate" th:text="*{order.restaurant.address}">Địa chỉ nhà hàng</p>
                             </div>
                             <hr>
                             <div class="ctn-b">
-                                <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label class="deliver bland" >Giao: <span class="customer-name">Tên khách</span></label>
-                                <label class="collect float-r bland">Thu: <span class="collect-money" style="color: green; font-weight: bold;">20k</span></label>
+                                <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label class="deliver bland" >Giao: <span class="customer-name" th:text="*{order.customer.name}">Tên khách</span></label>
                                 <div class="clear"></div>
-                                <p class="retaurant-locate">Địa chỉ khách</p>
-                                <label class="length">2.0 km</label>
+                                <p class="retaurant-locate" th:text="*{order.customer.address}">Địa chỉ khách</p>
                             </div>
                             <hr>
                         </div>
-                        <div class="order-bottom">
-                            <div class="box-note">
+                        <div class="order-bottom" th:if="*{noteForDriver!=null}">
+                            <div class="box-note" >
                                 <p style="color: red; font-size: 16px; font-weight:bold;">Khách ghi chú:</p>
-                                <p class="note">Ghi chú của khách...........</p>
+                                <p class="note" th:text="*{noteForDriver}">Ghi chú của khách...........</p>
                             </div>
                             <hr>
                             <small class="receive bland">Đã nhận đơn hàng lúc <span class="receiving-time">00:00 10/10/2020</span></small>
                             <hr>
                         </div>
+                        </a>
                     </div>
                 </div>
               </div>
@@ -146,7 +155,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center" >
                       Cài đặt
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/account/logout'} + '\')'">
                         Đăng xuất 
                       </li>
                   </ul>
@@ -155,7 +164,7 @@
         </div>
     </div>
 
-
+</main>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

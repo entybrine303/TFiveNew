@@ -43,6 +43,8 @@ public class Dish implements Serializable {
     private List<OrderDetail> orderDetails;
 	@OneToMany(mappedBy = "dish")
     private List<Cart> carts;
+	@OneToMany(mappedBy = "dish")
+    private List<Wishlist> wishlists;
 	
 	public Dish(String dishID) {
 		this.dishID = dishID;

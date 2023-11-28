@@ -1,5 +1,6 @@
 package graduate.controller.adminController;
 
+import graduate.domain.Restaurant;
 import graduate.domain.Voucher;
 import graduate.dto.VoucherDTO;
 import graduate.service.VoucherService;
@@ -28,8 +29,6 @@ public class ManagementVoucherController {
 	@Autowired
 	private VoucherService voucherService;
 
-	@Autowired
-    private RedirectHelper redirectHelper;
 
 	void fillToTable(ModelMap model) {
 		List<Voucher> list = voucherService.findAll();
@@ -59,6 +58,14 @@ public class ManagementVoucherController {
 
 		Voucher entity = new Voucher();
 		BeanUtils.copyProperties(dto, entity);
+		entity.setRestaurant(new Restaurant("R01"));
+		if (entity.getDescription()==null || entity.getDescription().equals("")) {
+			if (entity.getVoucherType()==false) {
+				entity.setDescription("Áp mã "+entity.getVoucherID()+" để giảm ngay "+entity.getReducedPrice()+"đ phí vận chuyển");	
+			}else {
+				entity.setDescription("Áp mã "+entity.getVoucherID()+" để giảm ngay "+entity.getReducedPrice());
+			}
+		}
 		dto.setIsEdit(false);
 		voucherService.save(entity);
 		if (dto.getIsEdit()) {
@@ -67,14 +74,14 @@ public class ManagementVoucherController {
 			model.addAttribute("mess", "Voucher is update");
 		}
 
-		return redirectHelper.redirectTo("/tfive/admin/voucher/view");
+		return RedirectHelper.redirectTo("/tfive/admin/voucher/view");
 	}
 
 	@GetMapping("delete/{voucherID}")
 	public ModelAndView delete(ModelMap model, @PathVariable("voucherID") String voucherID) {
 		voucherService.deleteById(voucherID);
 		model.addAttribute("mess", "Category id delete");
-		return redirectHelper.redirectTo("/tfive/admin/voucher/view");
+		return RedirectHelper.redirectTo("/tfive/admin/voucher/view");
 	}
 
 	@GetMapping("edit/{voucherID}")
@@ -93,6 +100,6 @@ public class ManagementVoucherController {
 		}
 		model.addAttribute("mess", "Category is not existed");
 
-		return redirectHelper.redirectTo("/tfive/admin/voucher/view");
+		return RedirectHelper.redirectTo("/tfive/admin/voucher/view");
 	}
 }

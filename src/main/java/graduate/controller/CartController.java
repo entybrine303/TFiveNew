@@ -47,8 +47,6 @@ public class CartController {
 	@Autowired
 	private DishService dishService;
 	
-	@Autowired
-	private RedirectHelper redirectHelper;
 	
 	@Autowired
 	private CustomerService customerService;
@@ -78,7 +76,7 @@ public class CartController {
 		cartService.save(entity);
 		model.addAttribute("mess", "Product is saved");
 
-		return redirectHelper.redirectTo("/tfive/cart");
+		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 	
 	@GetMapping("cart/addToCart/{dishID}")
@@ -98,7 +96,7 @@ public class CartController {
 		
 		cartService.save(entity);
 		model.addAttribute("mess", "Product is saved");
-		return redirectHelper.redirectTo("/tfive/cart");
+		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 	
 	@GetMapping("cart/delete/{cartID}")
@@ -106,7 +104,7 @@ public class CartController {
 		cartService.deleteById(cartID);
 		model.addAttribute("mess", "Category id delete");
 
-		return redirectHelper.redirectTo("/tfive/cart");
+		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 
 	@GetMapping("cart/delete-all/{customerID}")
@@ -114,7 +112,7 @@ public class CartController {
 		cartService.deleteByCustomer_CustomerID(customerID);
 		model.addAttribute("mess", "Category id delete");
 
-		return redirectHelper.redirectTo("/tfive/cart");
+		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 	
 }

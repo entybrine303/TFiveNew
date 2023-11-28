@@ -36,8 +36,11 @@ public class Order implements Serializable{
 	@Column(columnDefinition = "nvarchar(100)")
 	private String status;
 	private Double totalPrice;
+	private Integer totalQuantity;
 	@Column(columnDefinition = "nvarchar(max)")
 	private String noteForRestaurant;
+	@Column(columnDefinition = "nvarchar(max)")
+	private String noteForDriver;
 	private Double shipMoney;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderDate;
@@ -54,6 +57,9 @@ public class Order implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "customerID", referencedColumnName = "customerID")
 	private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "driverID", referencedColumnName = "driverID")
+	private Driver driver;
 	@ManyToOne
     @JoinColumn(name = "voucherID", referencedColumnName = "voucherID")
     private Voucher voucher;

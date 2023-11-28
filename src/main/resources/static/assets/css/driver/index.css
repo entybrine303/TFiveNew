@@ -104,6 +104,7 @@ header{
 
 .box-order-received{
     padding: 0 14px;
+    border-bottom: 1px gray solid;
 }
 
 .box-order-received .order-head{
@@ -219,6 +220,17 @@ header{
     margin: 10px 0;
 }
 
+.btn-receive{
+	padding: 16px 18px;
+}
+
+.a-detail{
+	color: black;
+}
+
+.a-detail:hover{
+	color: black;
+}
 
 @keyframes onTabs {
     from {

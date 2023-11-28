@@ -129,7 +129,7 @@
                                       </a>  
                                 </div>
                                   <div class="collapse" id="collapseExample">
-                                    <div class="card card-body" th:each="item : ${vouchers}" th:if="${item.isShare}">
+                                    <div class="card card-body" th:each="item : ${vouchers}" th:if="${item.isShare and totalMoney>= item.minimumPrice}">
                                     	<a th:href="@{'/tfive/checkout/selectVoucher/'+${item.voucherID}}">
                                                 <span th:text="${'Mã '+item.voucherID}" th:if="${item.voucherType}" class="bold"  style="color: blue;">Đơn hàng</span>
                                                 <span th:text="${'Mã '+item.voucherID}" th:if="${item.voucherType==false}" class="bold" style="color: green;">Vận chuyển</span>

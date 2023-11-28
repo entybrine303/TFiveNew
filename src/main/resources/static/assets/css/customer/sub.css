@@ -7,6 +7,10 @@ p{
     margin: 0;
 }
 
+.alg-ctr{
+	text-align: center;
+}
+
 .fs-16{
     font-size: 16px;
 }
@@ -318,7 +322,6 @@ section> .container{
     background: #F1F1F1;
     cursor: pointer;
 }
-
 
 /* MOBILE */
 @media (max-width: 739px) {

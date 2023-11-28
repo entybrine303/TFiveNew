@@ -3,6 +3,7 @@ package graduate.service.imp;
 import graduate.domain.DriverRegister;
 import graduate.domain.Order;
 import graduate.repository.CartRepository;
+import graduate.repository.DeliveryRepository;
 import graduate.repository.OrderRepository;
 import graduate.service.CartService;
 import graduate.service.OrderService;
@@ -23,7 +24,29 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private DeliveryRepository deliveryRepository;
 
+	@Override
+	public void updateStatus(String value, String id) {
+		orderRepository.updateStatusdById(value, id);
+		
+		String fieldName = null;
+		if (value.equals("Xác nhận")) fieldName="Confimed";
+		else if (value.equals("Đã xong")) fieldName="Finished";
+		else if (value.equals("Đã nhận")) fieldName="Received";
+		else if (value.equals("Đã lấy")) fieldName="Took";
+		else if (value.equals("Đã huỷ")) fieldName="Canceled";
+		else if (value.equals("Hoàn thành")) fieldName="Completed";
+		deliveryRepository.updateSavedDateByOrderID(fieldName, id);
+	}
+	
+	@Override
+	public void receivedOrder(String driverID, String orderID) {
+		orderRepository.receivedOrder(driverID, orderID);
+	}
+	
 	@Override
 	public void deleteByCustomer_CustomerID(String customerID) {
 		orderRepository.deleteByCustomer_CustomerID(customerID);
@@ -179,5 +202,6 @@ public class OrderServiceImpl implements OrderService {
 	public <S extends Order> List<S> findAll(Example<S> example, Sort sort) {
 		return orderRepository.findAll(example, sort);
 	}
+
 
 }

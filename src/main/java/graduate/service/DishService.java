@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 public interface DishService {
-
+	List<Dish> findRandomDishes();
 
   List<Dish> findByNameContaining(String name);
 

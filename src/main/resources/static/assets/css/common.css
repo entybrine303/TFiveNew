@@ -86,3 +86,32 @@ ul{
 .btn-confirm:first-child{
     border-right: 1px solid gray;
 }
+
+
+.error__section{
+	padding: 40px 0;
+	
+}
+
+.error__section .error__content--img{
+	height: 300px;
+}
+
+.error__section .error__content--title{
+	padding: 12px 0
+}
+
+
+.mobileUI{
+    	display: none;
+    }
+
+/* MOBILE */
+@media (max-width: 739px) {
+    .mobileUI{
+    	display: block;
+    }
+.pcUI{
+	display: none;
+}
+}

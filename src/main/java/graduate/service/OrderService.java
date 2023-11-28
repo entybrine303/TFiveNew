@@ -10,13 +10,19 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderService {
 	void deleteByCustomer_CustomerID(String customerID);
 
+	void updateStatus(String value, String id);
+	
+	void receivedOrder(String driverID, String orderID);
+
 	List<Order> findByCustomer_CustomerID(String customerID);
+
 	Order save(Order entity);
 
 	<S extends Order> Optional<S> findOne(Example<S> example);

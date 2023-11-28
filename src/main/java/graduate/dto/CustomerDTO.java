@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class CustomerDTO {
 	private String customerID;
+	private String restaurantID;
   private String address;
   private String email;
   private String img;

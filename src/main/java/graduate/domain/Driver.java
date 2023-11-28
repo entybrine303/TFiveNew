@@ -38,7 +38,7 @@ public class Driver implements Serializable{
 	private String img;
 
 	@OneToMany(mappedBy = "driver")
-    private List<Delivery> deliveries;
+    private List<Order> orders;
 	
 	@OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
