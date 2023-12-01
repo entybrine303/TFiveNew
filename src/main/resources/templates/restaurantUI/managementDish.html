@@ -101,7 +101,9 @@
                                 <button class="btn btn-info" th:text="${dish.isEdit? 'Update' : 'Save'}">Save</button>
                                 <a><button th:if="${dish.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
                                 <a th:if="${dish.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/dish/view}">Reset</a>
-                                <a style="background-color:#ED1D24" th:if="${dish.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/dish/delete/' + ${dish.dishID}}">Delete</a>
+                                <a style="background-color:#ED1D24" th:if="${dish.isEdit==true}" class="btn btn-primary"
+                                onclick="showConfirmationBox(event, this, 'Bạn muốn xoá sản phẩm này?')"
+                                 th:href="@{'/tfive/admin/dish/delete/' + ${dish.dishID}}">Delete</a>
 
                             </div>
                         </form>
@@ -131,7 +133,7 @@
                                     <td th:text="${item.category.name}"></td>
                                     <td th:text="${item.status == true ? 'Còn món' : 'Hết món'}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/dish/edit/' + ${item.dishID}}">Edit</a>
-                                        | <a th:href="@{'/tfive/admin/dish/delete/' + ${item.dishID}}">Delete</a>
+                                        | <a th:href="@{'/tfive/admin/dish/delete/' + ${item.dishID}}" onclick="showConfirmationBox(event, this, 'Bạn muốn xoá sản phẩm này?')">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>

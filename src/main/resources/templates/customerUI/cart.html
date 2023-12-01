@@ -54,10 +54,10 @@
                                             </tr>
                                                 <tr class="cart__table--body__items" th:each="cart : ${cartItems}">
                                                 <td class="cart__table--body__list">
-                                                <button class="cart__remove--btn" aria-label="search button" type="button" 
-                                                             th:data-cartID="${cart.cartID}" th:onclick="'deleteCartItem(this,\'' + @{'/tfive/cart/delete/'} + '\')'">
+                                                <a class="cart__remove--btn " onclick="showConfirmationBox(event, this, 'Bạn muốn xoá sản phẩm này khỏi giỏ hàng')"
+                                                             th:href="@{'/tfive/cart/delete/'+ ${cart.cartID}}" >
                                                                 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
-                                                            </button>
+                                                            </a>
                                                             </td>
                                                 <td class="cart__table--body__list">
                                                         <div class="cart__product d-flex align-items-center">
@@ -89,8 +89,9 @@
                                         </table> 
                                         <div class="continue__shopping d-flex justify-content-between">
                                             <a class="continue__shopping--link" href="shop.html">Tiếp tục mua sắm</a>
-                                            <button th:if="${cartItems!=null}" class="continue__shopping--clear btn-delete-all" type="button"
-                                            th:data-customerID="${customerID}" th:onclick="'deleteCartByCustomerID(this,\'' + @{'/tfive/cart/delete-all/'} + '\')'">Xoá tất cả</button>
+                                            <a th:if="${cartItems!=null}" class="continue__shopping--clear btn-delete-all"
+                                             onclick="showConfirmationBox(event, this, 'Bạn muốn xoá tất cả sản phẩm này khỏi giỏ hàng')"
+                                             th:href="@{'/tfive/cart/delete-all/'+${#httpSession.getAttribute('customerID')}}">Xoá tất cả</a>
                                         </div>
                                     </div>
                                 </div>

@@ -30,7 +30,6 @@
             <!-- my account section start -->
             <section class="my__account--section section--padding" th:object="${order}">
                 <div class="container box-order-status">
-                    <p class="account__welcome--text">Bạn ơi, đơn hàng của bạn <span class="order-status" style="text-transform: capitalize;" th:text="*{status}">đã được quán xác nhận</span></p>
                     <div class="my__account--section__inner border-radius-10">
                             <div class="row order-status-list">
                                 <div th:class="*{'col-4 '+ (status!='Ðã lấy' and status!='Hoàn thành' ? 'this-step' : 'passed-step')}"><i class="fa-solid fa-cart-arrow-down"></i><p>Đã đặt hàng </p><span class="bland" th:text="*{#dates.format(orderDate, 'hh:mm dd/MM/yyyy')}"> 10:00 21/10/2023</span></div>
@@ -48,7 +47,8 @@
                                     <img class="driver-avt" src="/assets/img/product/small-product/product1.webp" alt="Driver Img">
                                 </div>
                                 <div class="driver-info-right" style="margin-left: 14px;">
-                                    <strong class="driver-name" th:text="*{driver.name!=null ? driver.name : 'Đang tìm tài xế'}">Tên tài xế</strong>
+                                    <strong class="driver-name" th:if="*{driver!=null}" th:text="*{driver.name}">Tên tài xế</strong>
+                                    <strong class="driver-name" th:if="*{driver==null}">Chưa tìm thấy tài xế</strong>
                                     <ul class="rating product__card--rating d-flex">
                                         <li class="rating__list">
                                             <span class="rating__icon">
@@ -89,7 +89,7 @@
                                     <button class="btn-contact" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-phone"></i></button>
                                     <div class="dropdown-menu list-phone-number" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="#">Quán: <span class="retaurant-phone-number" th:text="*{restaurant.phoneNumber}">01234567</span></a>
-                                        <a class="dropdown-item" href="#">Tài xế: <span class="driver-phone-number" th:text="*{driver.phoneNumber}">09876543</span></a>
+                                        <a class="dropdown-item" href="#">Tài xế: <span class="driver-phone-number" th:if="*{driver!=null}" th:text="*{driver.phoneNumber}">09876543</span></a>
                                       </div>
                                     <button class="btn-contact"><i class="fa-solid fa-comment"></i></button>
                                 </div>
@@ -168,7 +168,10 @@
                                     </tbody>
                                   </table>
                             </div>
-                            <a class="primary__btn text-white w-100" style="margin-top: 30px; text-align:center;" th:href="@{'/tfive/cancel-order/'+ *{orderID}}">Huỷ đơn</a>
+                            <a class="primary__btn text-white w-100" style="margin-top: 30px; text-align:center;" 
+                             onclick="showConfirmationBox(event, this, 'Bạn muốn huỷ đơn này?')"
+                             th:if="*{status=='Đã đặt'}"
+                            th:href="@{'/tfive/cancel-order/'+ *{orderID}}">Huỷ đơn</a>
                     </div>
                 </div>
             </section>

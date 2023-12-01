@@ -41,7 +41,7 @@ public class Cart implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "dishID", referencedColumnName = "dishID")
-	private Dish dish ;
+	private Dish dish;
 	@ManyToOne
 	@JoinColumn(name = "customerID", referencedColumnName = "customerID")
 	private Customer customer;

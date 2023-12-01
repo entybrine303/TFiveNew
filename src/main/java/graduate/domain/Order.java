@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -64,9 +65,9 @@ public class Order implements Serializable{
     @JoinColumn(name = "voucherID", referencedColumnName = "voucherID")
     private Voucher voucher;
 
-	@OneToMany(mappedBy = "orders")
+	@OneToMany(mappedBy = "orders" , cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
-	@OneToOne(mappedBy = "orders")
+	@OneToOne(mappedBy = "orders" , cascade = CascadeType.ALL)
     private Delivery delivery;
 
 	public Order(String orderID) {

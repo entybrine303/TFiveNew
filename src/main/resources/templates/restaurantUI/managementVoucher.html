@@ -56,7 +56,9 @@
                                 <button class="btn btn-info" th:text="${voucher.isEdit? 'Update' : 'Save'}">Save</button>
                                 <a><button th:if="${voucher.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
                                 <a th:if="${voucher.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/voucher/view}">Reset</a>
-                                <a style="background-color:#ED1D24" th:if="${voucher.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/voucher/delete/' + ${voucher.voucherID}}">Delete</a>
+                                <a style="background-color:#ED1D24" th:if="${voucher.isEdit==true}" 
+                                 onclick="showConfirmationBox(event, this, 'Bạn muốn xoá voucher này?')"
+                                class="btn btn-primary" th:href="@{'/tfive/admin/voucher/delete/' + ${voucher.voucherID}}">Delete</a>
 
                             </div>
                         </form>
@@ -82,7 +84,8 @@
                                     <td th:text="${item.isShare ? 'Công khai' : 'Không công khai'}"></td>
                                     <td th:text="${item.voucherType ? 'Món' : 'Vận chuyển'}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/voucher/edit/' + ${item.voucherID}}">Edit</a>
-                                        | <a th:href="@{'/tfive/admin/voucher/delete/' + ${item.voucherID}}">Delete</a>
+                                        | <a th:href="@{'/tfive/admin/voucher/delete/' + ${item.voucherID}}"
+                                         onclick="showConfirmationBox(event, this, 'Bạn muốn xoá voucher này?')">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>

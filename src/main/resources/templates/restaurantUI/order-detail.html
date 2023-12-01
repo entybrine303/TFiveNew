@@ -161,7 +161,8 @@
                        <div th:if="*{status!='Đã huỷ' and status!='Đã xong'}" class="box-btn-status">
 	                       <div th:if="*{status=='Đã đặt'}">
 	                       	<a id="a-received" th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Xác nhận'}" class="btn btn-success btn-status">Nhận đơn</a>
-	                       	<a id="a-canceled" th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Đã huỷ'}" class="btn btn-danger btn-status">Huỷ đơn</a>
+	                       	<a id="a-canceled"  onclick="showConfirmationBox(event, this, 'Bạn muốn huỷ đơn hàng này?')"
+	                       	th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Đã huỷ'}" class="btn btn-danger btn-status">Huỷ đơn</a>
 	                       </div>
 	                       <div th:if="*{status=='Xác nhận'}">
 	                       	<a id="a-finished" th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Đã xong'}" class="btn btn-primary btn-status">Đã xong món</a>

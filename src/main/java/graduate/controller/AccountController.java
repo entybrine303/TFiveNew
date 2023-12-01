@@ -92,7 +92,6 @@ public class AccountController {
 		entity.setAccount(account);
 
 		customerService.save(entity);
-		model.addAttribute("mess", "Product is saved");
 
 		return new ModelAndView(viewProfile(model), model);
 	}

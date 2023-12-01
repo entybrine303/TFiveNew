@@ -18,6 +18,7 @@ public interface OrderService {
 	void deleteByCustomer_CustomerID(String customerID);
 
 	void updateStatus(String value, String id);
+	List<Order> findByDriver_DriverID(String driverID);
 	
 	void receivedOrder(String driverID, String orderID);
 

@@ -3,6 +3,7 @@ package graduate.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class Voucher implements Serializable{
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")
 	private Restaurant restaurant;
 
-	@OneToMany(mappedBy = "voucher")
+	@OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL)
     private List<Order> orders;
 
 	public Voucher(String voucherID) {

@@ -100,10 +100,10 @@
                         </a></h1>
                     </div>
                     <div class="header__search--widget d-none d-lg-block header__sticky--none">
-                        <form class="d-flex header__search--form border-radius-5" action="#">
+                        <form class="d-flex header__search--form border-radius-5" th:action="@{/tfive/search}">
                             <div class="header__search--box">
                                 <label>
-                                    <input class="header__search--input" placeholder="Tên món........." type="text">
+                                    <input class="header__search--input" name="name" placeholder="Tên món........." type="text">
                                 </label>
                                 <button class="header__search--button bg__primary text-white" aria-label="search button" type="submit">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -615,9 +615,9 @@
         <div class="predictive__search--box ">
             <div class="predictive__search--box__inner">
                 <h2 class="predictive__search--title">Tìm kiếm sản phẩm</h2>
-                <form class="predictive__search--form" action="#">
+                <form class="predictive__search--form" th:action="@{/tfive/search}">
                     <label>
-                        <input class="predictive__search--input" placeholder="Nhập tên sản phẩm" type="text">
+                        <input class="predictive__search--input" name="name" placeholder="Nhập tên sản phẩm" type="text">
                     </label>
                     <button class="predictive__search--button text-white" aria-label="search button"><svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="30.51" height="25.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"/></svg>  </button>
                 </form>

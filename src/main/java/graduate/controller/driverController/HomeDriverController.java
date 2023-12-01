@@ -53,19 +53,23 @@ public class HomeDriverController {
 		model.addAttribute("listOrder", list);
 	}
 	
+	void fillReceivedOrder(ModelMap model) {
+		List<Order> list=orderService.findByDriver_DriverID(session.getAttribute("driverID").toString());
+		model.addAttribute("listReceivedOrder", list);
+	}
+	
 	@GetMapping("home")
 	public String viewHome(ModelMap model) {
 		fillDriverInfo(model);
 		fillAllOrder(model);
-		
+		fillReceivedOrder(model);
 		return "driverUI/index";
 	}
 	
 
 	@GetMapping("history-order")
 	public String viewhistoryOrder(ModelMap model) {
-		fillDriverInfo(model);
-		fillAllOrder(model);
+		fillReceivedOrder(model);
 		
 		return "driverUI/historyOrder";
 	}

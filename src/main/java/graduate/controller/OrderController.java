@@ -89,6 +89,52 @@ public class OrderController {
 		model.addAttribute("vouchers", list);
 	}
 
+	public void fillProduct(ModelMap model, String orderID) {
+		try {
+			Optional<Order> order = orderService.findById(orderID);
+			Order getOrder = order.get();
+			if (getOrder.getNoteForRestaurant() == null)
+				model.addAttribute("displayNote", false);
+			else
+				model.addAttribute("displayNote", true);
+			model.addAttribute("order", getOrder);
+
+			List<OrderDetail> list = orderDetailService.findByOrder_OrderID(orderID);
+			model.addAttribute("listOrder", list);
+
+			double reducedPrice=0;
+			if (getOrder.getVoucher()!=null) {
+				reducedPrice=getOrder.getVoucher().getReducedPrice();
+			}
+			int totalQuantity = 0;
+			for (int i = 0; i < list.size(); i++) {
+				totalQuantity += list.get(i).getQuantity();
+			}
+
+			model.addAttribute("totalQuantity", totalQuantity);
+			model.addAttribute("totalMoney",
+					getOrder.getTotalPrice() + getOrder.getShipMoney() - reducedPrice);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("mess", e.getMessage());
+		}
+	}
+	
+
+	public void fillDelivery(ModelMap model, String orderID) {
+		try {
+			Delivery delivery=deliveryService.findByOrder_OrderId(orderID);
+			
+			model.addAttribute("took", delivery.getTookOrder());
+			model.addAttribute("complete", delivery.getCompleteOrder());
+			Date time=deliveryService.findLatestUpdateDate(orderID);
+			model.addAttribute("time", time);
+			} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("mess", e.getMessage());
+		}
+	}
+
 	double calculaterTotalMoney(ModelMap model) {
 		double totalPrice, shipMoney, reducedPrice;
 		totalPrice = (double) model.getAttribute("cartTotalPrice");
@@ -231,56 +277,11 @@ public class OrderController {
 
 	}
 
-	public void fillProduct(ModelMap model, String orderID) {
-		try {
-			Optional<Order> order = orderService.findById(orderID);
-			Order getOrder = order.get();
-			if (getOrder.getNoteForRestaurant() == null)
-				model.addAttribute("displayNote", false);
-			else
-				model.addAttribute("displayNote", true);
-			model.addAttribute("order", getOrder);
-
-			List<OrderDetail> list = orderDetailService.findByOrder_OrderID(orderID);
-			model.addAttribute("listOrder", list);
-
-			double reducedPrice=0;
-			if (getOrder.getVoucher()!=null) {
-				reducedPrice=getOrder.getVoucher().getReducedPrice();
-			}
-			int totalQuantity = 0;
-			for (int i = 0; i < list.size(); i++) {
-				totalQuantity += list.get(i).getQuantity();
-			}
-
-			model.addAttribute("totalQuantity", totalQuantity);
-			model.addAttribute("totalMoney",
-					getOrder.getTotalPrice() + getOrder.getShipMoney() - reducedPrice);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("mess", e.getMessage());
-		}
-	}
-	
-
-	public void fillDelivery(ModelMap model, String orderID) {
-		try {
-			Delivery delivery=deliveryService.findByOrder_OrderId(orderID);
-			
-			model.addAttribute("took", delivery.getTookOrder());
-			model.addAttribute("complete", delivery.getCompleteOrder());
-			Date time=deliveryService.findLatestUpdateDate(orderID);
-			model.addAttribute("time", time);
-			} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("mess", e.getMessage());
-		}
-	}
 
 	@GetMapping("order-detail/{orderID}")
 	public String viewOrderDetail(ModelMap model, @PathVariable("orderID") String orderID) {
-
 		fillProduct(model, orderID);
+		
 		return "customerUI/order-detail";
 	}
 	

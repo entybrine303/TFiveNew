@@ -1,6 +1,7 @@
 package graduate.dto;
 
 
+import graduate.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,6 @@ public class CustomerDTO {
   private MultipartFile imageFile;
   private String phoneNumber;
   private Boolean sex;
+  private Boolean isEdit = false;
+  private String username;
 }

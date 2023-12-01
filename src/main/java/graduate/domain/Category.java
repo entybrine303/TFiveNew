@@ -1,6 +1,8 @@
 package graduate.domain;
 
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.List;
@@ -36,7 +38,7 @@ public class Category implements Serializable{
 	@Column(columnDefinition = "nvarchar(100)")
 	private String name;
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Dish> dishes;
 	
 	@ManyToOne

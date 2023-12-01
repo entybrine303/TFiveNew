@@ -33,10 +33,11 @@ import graduate.service.CategoryService;
 import graduate.service.DishService;
 import graduate.service.StorageService;
 import graduate.utils.RamdomID;
+
 @Controller
 @RequestMapping("tfive/admin/dish")
 public class ManagementDishController {
-	
+
 	@Autowired
 	private DishRepository dishRepository;
 	@Autowired
@@ -63,9 +64,9 @@ public class ManagementDishController {
 	@GetMapping("view")
 	public String viewForm(ModelMap model) {
 		fillToTable(model);
-		
-		DishDTO dishDTO=new DishDTO();
-		dishDTO.setDishID("D-"+RamdomID.generateRandomId());
+
+		DishDTO dishDTO = new DishDTO();
+		dishDTO.setDishID("D-" + RamdomID.generateRandomId());
 		model.addAttribute("dish", dishDTO);
 		return "restaurantUI/managementDish";
 	}
@@ -86,19 +87,24 @@ public class ManagementDishController {
 			return new ModelAndView(viewForm(model));
 		}
 
+		if (dishService.existsById(dto.getDishID()) && dto.getIsEdit() == false) {
+			model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
+			return new ModelAndView(viewForm(model), model);
+		}
+
 		Dish entity = new Dish();
 		BeanUtils.copyProperties(dto, entity);
-		
+
 		Category category = new Category();
 		category.setCategoryID(dto.getCategoryID());
 		entity.setCategory(category);
-		
+
 		if (!dto.getImageFile().isEmpty()) {
 			UUID uuid = UUID.randomUUID();
 			String uuString = uuid.toString();
 			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), uuString));
 			storageService.storeResizedImage(dto.getImageFile(), entity.getImg(), 209, 171);
-			}
+		}
 		entity.setRestaurant(new Restaurant("R01"));
 		dishService.save(entity);
 		model.addAttribute("mess", "Product is saved");
@@ -127,7 +133,7 @@ public class ManagementDishController {
 			dto.setImg(entity.getImg());
 			model.addAttribute("dish", dto);
 
-			return new ModelAndView("restaurantUI/managementDish", model);
+			return new ModelAndView(viewForm(model), model);
 		}
 		model.addAttribute("mess", "Dish is not existed");
 

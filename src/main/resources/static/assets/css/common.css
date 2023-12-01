@@ -47,13 +47,16 @@ ul{
 
 
 .box-noti{
-    display: none;
     text-align: center;
     z-index: 1000;
     height: 100vh;
     position: fixed;
     width: 100vw;
     background: rgba(0, 0, 0, 0.5);
+}
+
+#box-confirm{
+	display: none;
 }
 
 .box-confirm{

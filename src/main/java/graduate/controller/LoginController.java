@@ -86,6 +86,7 @@ public class LoginController {
         if (account.getRole().equals("admin")) return RedirectHelper.redirectTo("/tfive/admin/category/view");
         if (account.getRole().equals("driver")) return RedirectHelper.redirectTo("/tfive/driver/home");
 		
+        System.out.println(session.getAttribute("role")+" Login");
 		 return RedirectHelper.redirectTo("/tfive/");
 	}
 

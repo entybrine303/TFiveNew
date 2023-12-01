@@ -3,6 +3,7 @@ package graduate.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -39,11 +40,11 @@ public class Dish implements Serializable {
 	@JoinColumn(name = "categoryID", referencedColumnName = "categoryID")
 	private Category category;
 	
-	@OneToMany(mappedBy = "dish")
+	@OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
-	@OneToMany(mappedBy = "dish")
+	@OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     private List<Cart> carts;
-	@OneToMany(mappedBy = "dish")
+	@OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     private List<Wishlist> wishlists;
 	
 	public Dish(String dishID) {

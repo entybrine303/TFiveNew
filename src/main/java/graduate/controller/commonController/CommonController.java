@@ -47,8 +47,8 @@ public class CommonController {
 		}
 		checkUsername(request);
 		checkRole(request);
-		fillCart(model);
 		setRoleID(model);
+		fillCart(model);
 	}
 
 	void fillCart(ModelMap model) {

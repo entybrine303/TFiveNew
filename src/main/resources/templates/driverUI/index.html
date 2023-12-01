@@ -63,7 +63,7 @@
               <div class="tab-content box-ctn-order" id="myTabContent">
                 <div class="order-list tab-pane fade show active" id="order-list" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
-                        <div class="box-order col col-md-4 col-sm-6 col-12" th:if="*{order.driver==null and order.status=='Xác nhận'}" th:each="order : ${listOrder}">
+                        <div class="box-order col col-md-4 col-sm-6 col-12" th:if="*{order.driver==null and (order.status=='Xác nhận' or order.status=='Đã xong')}" th:each="order : ${listOrder}">
                             <div class="order-body">
                                 <div class="ctn-t">
                                     <i class="fa-solid fa-circle dot-icon" style="color: red;"></i><label class="give bland" >Lấy: <span class="retaurant-name">TFive - Foods and Drinks</span></label>
@@ -86,7 +86,7 @@
                 </div>
                 </div>
                 <div class="tab-pane fade" id="order-received" role="tabpanel" aria-labelledby="profile-tab">
-                    <div th:if="*{order.driver!=null and order.driver.driverID==#httpSession.getAttribute('driverID')}" class="box-order-received" th:each="order : ${listOrder}">
+                    <div class="box-order-received" th:if="${order.status!='Hoàn thành' and order.status!='Đã huỷ'}" th:each="order : ${listReceivedOrder}">
                     <a class="a-detail hover-none" th:href="@{'/tfive/driver/detail/'+*{order.orderID}}">
                         <div class="order-head row">
                             <div class="ctn-l col-6">
@@ -139,20 +139,20 @@
                             <label for="" class="driver-name">Tên tài xế</label>
                         </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/notify'} + '\')'">
+                    <li class="list-group-item d-flex justify-content-between align-items-center bland" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/notify'} + '\')'">
                       Thông báo
                       <span class="badge badge-primary badge-pill">2</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/wallet'} + '\')'">
-                      Ví
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/history-order'} + '\')'">
                       Lịch sử đơn hàng
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/income'} + '\')'">
+                    <li class="list-group-item d-flex justify-content-between align-items-center bland" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/wallet'} + '\')'">
+                      Ví
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center bland" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/income'} + '\')'">
                       Thu nhập
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    <li class="list-group-item d-flex justify-content-between align-items-center bland" >
                       Cài đặt
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/account/logout'} + '\')'">

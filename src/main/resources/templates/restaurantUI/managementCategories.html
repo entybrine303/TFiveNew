@@ -44,7 +44,9 @@
 								<button class="btn btn-info" th:text="${category.isEdit? 'Update' : 'Save'}">Save</button>
 								<a><button th:if="${category.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
 								<a th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/category/view}">Reset</a>
-								<a style="background-color:#ED1D24" th:if="${category.isEdit==true}" type="button" class="btn btn-primary" th:href="@{'/tfive/admin/category/delete/' + ${category.categoryID}}">Delete</a>
+								<a style="background-color:#ED1D24" th:if="${category.isEdit==true}" class="btn btn-primary" 
+								 onclick="showConfirmationBox(event, this, 'Bạn muốn xoá danh mục này?')"
+								th:href="@{'/tfive/admin/category/delete/' + ${category.categoryID}}">Delete</a>
 
 							</div>
 						</form>
@@ -65,7 +67,8 @@
 									<td scope="row" th:text="${item.categoryID}"></td>
 									<td scope="row" th:text="${item.name}"></td>
 									<td><a class="edit" th:href="@{'/tfive/admin/category/edit/' + ${item.categoryID}}">Edit</a> 
-									| <a th:href="@{'/tfive/admin/category/delete/' + ${item.categoryID}}">Delete</a>
+									| <a th:href="@{'/tfive/admin/category/delete/' + ${item.categoryID}}"
+									onclick="showConfirmationBox(event, this, 'Bạn muốn xoá danh mục này?')">Delete</a>
 									</td>
 								</tr>
 							</tbody>

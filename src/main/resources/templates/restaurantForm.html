@@ -23,32 +23,23 @@
 
     <!-- JAVASCRIPT -->
     <script src="/assets/js/restaurantUI/management.js"></script>
+    <script src="/assets/js/common.js"></script>
 </head>
 
 <body>
     <section class="view-body">
-        <div class="box-noti" id="box-noti" style="display: none;">
-        <div class="box-confirm " >
+        <!-- Thông báo xác nhận -->
+<div class="box-noti" id="box-confirm">
+        <div class="box-confirm">
             <div class="noti-header">
                 <p class="confirm-title">Thông báo</p>
             </div>
             <div class="noti-body">
-                <p class="confirm-content">Nội dung thông báo</p>
+                <p id="test" class="confirm-content" >Nội dung thông báo</p>
             </div>
             <div class="noti-footer">
-                <button class="btn-confirm w-50" onclick="offNoti()">Huỷ</button>
-                <button class="btn-confirm w-50">Xác nhận</button>
-            </div>
-        </div>
-        <div class="box-alert box-confirm ">
-            <div class="noti-header">
-                <p class="confirm-title">Thông báo</p>
-            </div>
-            <div class="noti-body">
-                <p class="confirm-content">Nội dung thông báo</p>
-            </div>
-            <div class="noti-footer">
-                <button class="btn-confirm w-100" onclick="offNoti()">Xác nhận</button>
+                <button class="btn-confirm w-50" onclick="offNoti('confirm')">Huỷ</button>
+                <button class="btn-confirm w-50" onclick="confirmAndRedirect()">Xác nhận</button>
             </div>
         </div>
     </div>

@@ -74,7 +74,6 @@ public class CartController {
 		entity.setCustomer(new Customer(customer.getCustomerID()));
 		
 		cartService.save(entity);
-		model.addAttribute("mess", "Product is saved");
 
 		return RedirectHelper.redirectTo("/tfive/cart");
 	}
@@ -91,27 +90,23 @@ public class CartController {
 		entity.setDish(opt.get());
 		
 //		Lưu thông tin customer vào cart
-		Customer customer=customerService.findByUsername(session.getAttribute("username").toString());
-		entity.setCustomer(new Customer(customer.getCustomerID()));
+		entity.setCustomer(new Customer(session.getAttribute("customerID").toString()));
 		
 		cartService.save(entity);
-		model.addAttribute("mess", "Product is saved");
 		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 	
 	@GetMapping("cart/delete/{cartID}")
 	public ModelAndView delete(ModelMap model, @PathVariable("cartID") String cartID) {
 		cartService.deleteById(cartID);
-		model.addAttribute("mess", "Category id delete");
-
+		
 		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 
 	@GetMapping("cart/delete-all/{customerID}")
 	public ModelAndView deleteAll(ModelMap model,  @PathVariable("customerID") String customerID) {
 		cartService.deleteByCustomer_CustomerID(customerID);
-		model.addAttribute("mess", "Category id delete");
-
+		
 		return RedirectHelper.redirectTo("/tfive/cart");
 	}
 	

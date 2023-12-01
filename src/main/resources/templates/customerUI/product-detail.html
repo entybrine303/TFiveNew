@@ -33,7 +33,8 @@
                     <div class="row row-cols-lg-2 row-cols-md-2">
                         <div class="col">
                             <div class="product__details--media">
-                                <img class="img-dish w-100" th:src="@{/assets/img/uploads/} + *{img}" alt="product-img">
+                                <img class="img-dish w-100" onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" 
+                                th:src="@{/assets/img/uploads/} + *{img}" alt="product-img">
                             </div>
                         </div>   
                         <div class="col">

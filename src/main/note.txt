@@ -1,13 +1,3 @@
-Fill sp
-Tìm kiếm sp
-*Check id có trùng hay không khi tạo mới một bảng
-*Dù k upload ảnh lên thẻ input, nhưng thẻ input vẫn lấy giá trị là null để set vào db
-
-
-Làm thông báo 
-Làm chức năng lọc theo giá, sắp xếp ở page menu
-
-
 Đơn hàng gồm có 6 trạng thái: 
 +Đã đặt
 +Xác nhận
@@ -16,3 +6,15 @@ Làm chức năng lọc theo giá, sắp xếp ở page menu
 +Đã lấy
 +Đã huỷ
 +Hoàn thành
+
+
+Làm thông báo - xong bước đầu
+Làm chức năng lọc theo giá, sắp xếp ở page menu
+Fill sản phẩm theo đk page menu
+Tìm kiếm sản phẩm -
+Validation form 
+Check id có trùng hay không khi tạo mới một bảng -
+Phân trang
+Đặt username cho driver
+
+

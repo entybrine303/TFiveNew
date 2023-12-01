@@ -3,6 +3,7 @@ package graduate.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,17 +36,16 @@ public class Customer implements Serializable{
 	private String img;
 	
 
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Cart> carts;
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orders;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<Wishlist> wishlists;
 	
 	@OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
-
-	@OneToMany(mappedBy = "customer")
-    private List<Wishlist> wishlists;
 
 	public Customer(String customerID) {
 		this.customerID = customerID;

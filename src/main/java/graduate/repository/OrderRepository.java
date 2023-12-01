@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface OrderRepository extends JpaRepository<Order, String> {
 	List<Order> findByCustomer_CustomerID(String customerID);
+	
+	List<Order> findByDriver_DriverID(String driverID);
 
 	@Transactional
 	void deleteByCustomer_CustomerID(String customerID);

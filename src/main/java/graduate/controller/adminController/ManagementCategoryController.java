@@ -22,6 +22,7 @@ import graduate.domain.Restaurant;
 import graduate.dto.CategoryDTO;
 import graduate.service.CategoryService;
 import graduate.utils.RamdomID;
+import graduate.utils.RedirectHelper;
 
 @Controller
 @RequestMapping("tfive/admin/category/")
@@ -56,6 +57,7 @@ public class ManagementCategoryController {
 			model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
 			return new ModelAndView(viewForm(model), model);
 		}
+		
 		Category entity = new Category();
 		BeanUtils.copyProperties(dto, entity);
 		entity.setRestaurant(new Restaurant("R01"));
@@ -66,14 +68,13 @@ public class ManagementCategoryController {
 			model.addAttribute("mess", "Category is saved");
 		}
 
-		return new ModelAndView(viewForm(model), model);
+		return RedirectHelper.redirectTo("tfive/admin/category/view");
 	}
 
 	@GetMapping("delete/{categoryId}")
 	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") String categoryId) {
 		categoriesService.deleteById(categoryId);
-		model.addAttribute("mess", "Category id delete");
-		return new ModelAndView(viewForm(model), model);
+		return RedirectHelper.redirectTo("tfive/admin/category/view");
 	}
 
 	@GetMapping("edit/{categoryId}")
@@ -90,7 +91,6 @@ public class ManagementCategoryController {
 			model.addAttribute("category", dto);
 			return new ModelAndView("restaurantUI/managementCategories", model);
 		}
-		model.addAttribute("mess", "Category is not existed");
 
 		return new ModelAndView("restaurantUI/managementCategories", model);
 	}

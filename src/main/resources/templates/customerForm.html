@@ -29,9 +29,41 @@
 	<link rel="stylesheet" href="/assets/css/customer/style.css">
 	<link rel="stylesheet" href="/assets/css/customer/sub.css">
 
+	<script src="/assets/js/common.js"></script>
 </head>
 
 <body>
+
+<!-- Thông báo xác nhận -->
+<div class="box-noti" id="box-confirm">
+        <div class="box-confirm">
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p id="test" class="confirm-content" >Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-50" onclick="offNoti('confirm')">Huỷ</button>
+                <button class="btn-confirm w-50" onclick="confirmAndRedirect()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Thông báo thường -->
+        <div class="box-noti" id="box-alert" th:if="${alert!=null}">
+        <div class="box-alert box-confirm ">
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p class="confirm-content" th:text="${alert}">Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-100" onclick="offNoti('alert')">Xác nhận</button>
+            </div>
+        </div>
+    </div>
 	<header>
 		<div th:replace="frame/customer/header:: header"></div>
 	</header>
@@ -78,31 +110,7 @@
 		</div>
 		<!-- End preloader -->
 
-<div class="box-noti" id="box-noti" style="display: none;">
-        <div class="box-confirm " >
-            <div class="noti-header">
-                <p class="confirm-title">Thông báo</p>
-            </div>
-            <div class="noti-body">
-                <p class="confirm-content">Nội dung thông báo</p>
-            </div>
-            <div class="noti-footer">
-                <button class="btn-confirm w-50" onclick="offNoti()">Huỷ</button>
-                <button class="btn-confirm w-50">Xác nhận</button>
-            </div>
-        </div>
-        <div class="box-alert box-confirm ">
-            <div class="noti-header">
-                <p class="confirm-title">Thông báo</p>
-            </div>
-            <div class="noti-body">
-                <p class="confirm-content">Nội dung thông báo</p>
-            </div>
-            <div class="noti-footer">
-                <button class="btn-confirm w-100" onclick="offNoti()">Xác nhận</button>
-            </div>
-        </div>
-    </div>
+
 		<div layout:fragment="body"></div>
 
 		<!-- Scroll top bar -->

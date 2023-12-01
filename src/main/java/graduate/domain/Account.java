@@ -2,6 +2,7 @@ package graduate.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,11 +27,11 @@ public class Account implements Serializable{
 	@Column(length = 20)
 	private String role;
 	
-	@OneToOne(mappedBy = "account")
+	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Restaurant restaurant;
-	@OneToOne(mappedBy = "account")
+	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Customer customer;
-	@OneToOne(mappedBy = "account")
+	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Driver driver;
 	
 	public Account(String username) {

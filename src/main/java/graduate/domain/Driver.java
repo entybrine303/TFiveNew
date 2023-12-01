@@ -3,6 +3,7 @@ package graduate.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,17 +32,22 @@ public class Driver implements Serializable{
 	private Boolean sex;
 	@Column(length = 10)
 	private String phoneNumber;
+//	@Column(length = 10)
+//	private String phoneNumber;
 	private String email;
+	private String motorbike;
 	private Boolean workStatus;
 	@Column(length = 12)
 	private String identificationCard;
 	private String img;
 
-	@OneToMany(mappedBy = "driver")
+	@OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private List<Order> orders;
 	
 	@OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
+
+	private Integer confirm = 0;
 	
 }

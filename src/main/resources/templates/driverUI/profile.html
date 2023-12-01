@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/assets/css/driver/profile.css">
 
     <!-- JAVASCRIPT -->
-    <!-- <script src="/assets/js/driverUI/notify.js"></script> -->
+    <script src="/assets/js/driverUI/index.js"></script>
 </head>
 <body>
     <div class="body" th:object=${driver}>
@@ -35,7 +35,7 @@
                   Họ và tên
                   <span class="driver-name"th:text="*{name}">Tên tài xế</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item d-flex justify-content-between align-items-center" th:onclick="'redirectToPage(\'' + @{'/tfive/driver/profile/detail'} + '\')'">
                   Thông tin tài xế
                   <span><i class="ti-angle-right"></i></span>
                 </li>

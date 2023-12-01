@@ -23,7 +23,7 @@
     <h4 class="w-100" style="padding: 20px; text-align:center">Hoàn thành</h4>
     <hr>
     <div class="body">
-        <div th:if="*{order.driver!=null and order.driver.driverID==#httpSession.getAttribute('driverID') and order.status=='Hoàn thành'}" th:each="order : ${listOrder}"
+        <div th:if="${order.status=='Hoàn thành' and order.status=='Đã huỷ'}" th:each="order : ${listReceivedOrder}"
         class="box-order-received">
          <a class="a-detail hover-none" th:href="@{'/tfive/driver/detail/'+*{order.orderID}}">
             <div class="order-head row">

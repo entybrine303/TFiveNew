@@ -1,81 +1,82 @@
 package graduate.service;
 
-import graduate.domain.Category;
 import graduate.domain.Driver;
 import graduate.domain.DriverRegister;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
+
 public interface DriverService {
 
-	 Driver findByUsername(String username);
+	Driver findByUsername(String username);
+	<S extends Driver> List<S> findAll(Example<S> example, Sort sort);
 
-  List<Driver> findByNameContaining(String name);
+	<S extends Driver> List<S> findAll(Example<S> example);
 
-  Driver save(Driver entity);
+	void deleteAll();
 
-  <S extends Driver> Optional<S> findOne(Example<S> example);
+	Driver getReferenceById(String id);
 
-  List<Driver> findAll();
+	void deleteAll(Iterable<? extends Driver> entities);
 
-  Page<Driver> findAll(Pageable pageable);
+	void deleteAllById(Iterable<? extends String> ids);
 
-  List<Driver> findAll(Sort sort);
+	Driver getById(String id);
 
-  List<Driver> findAllById(Iterable<String> ids);
+	void delete(Driver entity);
 
-  <S extends Driver> List<S> saveAll(Iterable<S> entities);
+	Driver getOne(String id);
 
-  void flush();
+	void deleteById(String id);
 
-  Driver saveAndFlush(Driver entity);
+	void deleteAllInBatch();
 
-  <S extends Driver> List<S> saveAllAndFlush(Iterable<S> entities);
+	long count();
 
-  <S extends Driver> Page<S> findAll(Example<S> example, Pageable pageable);
+	<S extends Driver, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction);
 
-  Optional<Driver> findById(String id);
+	void deleteAllByIdInBatch(Iterable<String> ids);
 
-  void deleteInBatch(Iterable<Driver> entities);
+	<S extends Driver> boolean exists(Example<S> example);
 
-  boolean existsById(String id);
+	void deleteAllInBatch(Iterable<Driver> entities);
 
-  void deleteAllInBatch(List<Driver> entities);
+	<S extends Driver> long count(Example<S> example);
 
-  <S extends Driver> boolean exists(Example<S> example);
+	boolean existsById(String id);
 
-  void deleteAllByIdInBatch(Iterable<String> ids);
+	void deleteInBatch(Iterable<Driver> entities);
 
-  <S extends Driver, R> R findBy(Example<S> example,
-      Function<FetchableFluentQuery<S>, R> queryFunction);
+	Optional<Driver> findById(String id);
 
-  void deleteAllInBatch();
+	<S extends Driver> Page<S> findAll(Example<S> example, Pageable pageable);
 
-  void deleteById(String id);
+	<S extends Driver> List<S> saveAllAndFlush(Iterable<S> entities);
 
-  Driver getOne(String id);
+	<S extends Driver> S saveAndFlush(S entity);
 
-  void delete(Driver entity);
+	void flush();
 
-  Driver getById(String id);
+	<S extends Driver> List<S> saveAll(Iterable<S> entities);
 
-  void deleteAllById(Iterable<? extends String> ids);
+	List<Driver> findAllById(Iterable<String> ids);
 
-  void deleteAll(Iterable<? extends Driver> entities);
+	List<Driver> findAll(Sort sort);
 
-  void deleteAll();
+	Page<Driver> findAll(Pageable pageable);
 
-  Driver getReferenceById(String id);
+	List<Driver> findAll();
 
-  <S extends Driver> List<S> findAll(Example<S> example);
+	<S extends Driver> Optional<S> findOne(Example<S> example);
 
-  <S extends Driver> List<S> findAll(Example<S> example, Sort sort);
+	<S extends Driver> S save(Driver entity);
 
 }

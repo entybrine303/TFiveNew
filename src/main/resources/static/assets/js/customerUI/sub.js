@@ -28,3 +28,4 @@ function changeQuantity(choose) {
 		inputQuantity.value = currentValue - 1;
 	}
 }
+
