@@ -223,7 +223,7 @@
                                 <a class="header__account--btn" th:href="@{/tfive/wishlist}">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                    <span class="items__count" th:text="${numbersProductWishlist}">3</span> 
+                                    <span class="items__count" th:text="${numbersProductWishlist!=null ? numbersProductWishlist : '0'}">3</span> 
                                 </a>
                             </li>
                             <li class="header__account--items header__minicart--items">
@@ -237,7 +237,7 @@
                                           </g>
                                         </g>
                                     </svg>  
-                                    <span class="items__count" th:text="${numbersProductCart}"></span> 
+                                    <span class="items__count" th:text="${numbersProductCart!=null ? numbersProductCart : '0'}"></span> 
                                     <span  class="minicart__btn--text">Giỏ hàng<br> <span th:if="${cartItems!=null}" class="minicart__btn--text__price" th:text="${#numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</span></span>
                                 </a>
                             </li>
@@ -265,7 +265,7 @@
                             <li class="header__account--items d-none d-lg-block">
                                 <a class="header__account--btn" th:href="@{/tfive/wishlist}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                    <span class="items__count" th:text="${numbersProductWishlist}">3</span> 
+                                    <span class="items__count" th:text="${numbersProductWishlist!=null ? numbersProductWishlist : '0'}">3</span> 
                                 </a>
                             </li>
                             <li class="header__account--items header__minicart--items">
@@ -279,7 +279,7 @@
                                           </g>
                                         </g>
                                     </svg>
-                                    <span class="items__count" th:text="${numbersProductCart}">2</span> 
+                                    <span class="items__count" th:text="${numbersProductCart!=null ? numbersProductCart : '0'}">2</span> 
                                 </a>
                             </li>
                         </ul>
@@ -542,7 +542,7 @@
                             </svg> 
                         </span>
                         <span class="offcanvas__stikcy--toolbar__label">Giỏ hàng</span>
-                        <span class="items__count" th:text="${numbersProductCart}">3</span> 
+                        <span class="items__count" th:text="${numbersProductCart!=null ? numbersProductCart : '0'}">3</span> 
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list">
@@ -552,7 +552,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         </span>
                         <span class="offcanvas__stikcy--toolbar__label">Yêu thích</span>
-                        <span class="items__count" th:text="${numbersProductWishlist}">3</span> 
+                        <span class="items__count" th:text="${numbersProductWishlist!=null ? numbersProductWishlist : '0'}">3</span> 
                     </a>
                 </li>
             </ul>

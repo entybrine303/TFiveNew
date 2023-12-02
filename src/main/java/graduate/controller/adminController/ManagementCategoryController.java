@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,14 @@ public class ManagementCategoryController {
 	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("category") CategoryDTO dto,
 			BindingResult result) {
 		if (result.hasErrors()) {
+			  // Lấy danh sách tất cả các lỗi
+		    List<ObjectError> errors = result.getAllErrors();
+		    
+		    // In thông tin về lỗi
+		    for (ObjectError error : errors) {
+		        System.out.println("Error: " + error.getDefaultMessage());
+		    }
+
 			return new ModelAndView("restaurantUI/managementCategories");
 		}
 
@@ -68,13 +77,13 @@ public class ManagementCategoryController {
 			model.addAttribute("mess", "Category is saved");
 		}
 
-		return RedirectHelper.redirectTo("tfive/admin/category/view");
+		return RedirectHelper.redirectTo("/tfive/admin/category/view");
 	}
 
 	@GetMapping("delete/{categoryId}")
 	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") String categoryId) {
 		categoriesService.deleteById(categoryId);
-		return RedirectHelper.redirectTo("tfive/admin/category/view");
+		return RedirectHelper.redirectTo("/tfive/admin/category/view");
 	}
 
 	@GetMapping("edit/{categoryId}")

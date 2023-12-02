@@ -4,6 +4,9 @@ package graduate.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
@@ -20,4 +23,7 @@ public class DishDTO {
   private double price;
   private boolean status;
   private Boolean isEdit = false;
+  private Date createdDate;
+  
+  private double min, max;
 }

@@ -24,6 +24,11 @@ public class DishServiceImpl  implements DishService {
 
 
 @Override
+public List<Dish> findByCategoryId(String categoryID) {
+	return dishRepository.findByCategoryId(categoryID);
+}
+
+@Override
 public List<Dish> findRandomDishes() {
 	return dishRepository.findRandomDishes();
 }
@@ -185,6 +190,27 @@ public List<Dish> findRandomDishes() {
   public <S extends Dish> List<S> findAll(Example<S> example, Sort sort) {
     return dishRepository.findAll(example, sort);
   }
+
+@Override
+public List<Dish> filterByPrice(Double min, Double max) {
+	return dishRepository.findByPriceRange(min, max);
+}
+
+@Override
+public List<Dish> findAllByCreatedDateDesc() {
+	return dishRepository.findAllOrderByCreatedDateDesc();
+}
+
+@Override
+public List<Dish> findTop8ByOrderByCreatedDateDesc() {
+	return dishRepository.findTop8ByOrderByCreatedDateDesc();
+}
+
+@Override
+public List<Dish> sortDishesByNumbersDishIDFromOderDetail() {
+	return dishRepository.findTop8ByOrderByDishCountDesc();
+}
+
 
 
 

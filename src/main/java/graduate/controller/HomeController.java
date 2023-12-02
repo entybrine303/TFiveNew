@@ -35,19 +35,20 @@ public class HomeController {
 
 	@Autowired
 	private DishService dishService;
+	
 
 	public void fillAllProduct(ModelMap model) {
-		List<Dish> list = dishService.findAll();
+		List<Dish> list= dishService.findAll();
 		model.addAttribute("products", list);
 	}
 	
 	@GetMapping("")
 	public String viewHome(ModelMap model) {		
 		fillAllProduct(model);
+		fillNewProducts(model);
 		managementCategoriesController.fillToTable(model);
 		return "customerUI/index";
 	}
-	
 
 	@GetMapping("search")
 	public String searchProduct(ModelMap model, @Valid @ModelAttribute("product") DishDTO dto) {		
@@ -58,6 +59,9 @@ public class HomeController {
 		return "customerUI/search";
 	}
 	
-	
+	void fillNewProducts(ModelMap model) {
+		List<Dish> list= dishService.findTop8ByOrderByCreatedDateDesc();
+		model.addAttribute("newProducts", list);
+	}
 	
 }

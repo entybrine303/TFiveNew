@@ -11,71 +11,79 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 public interface DishService {
 	List<Dish> findRandomDishes();
 
-  List<Dish> findByNameContaining(String name);
+	List<Dish> findByNameContaining(String name);
+	List<Dish> sortDishesByNumbersDishIDFromOderDetail();
+	List<Dish> findTop8ByOrderByCreatedDateDesc();
 
-  Page<Dish> findByNameContaining(Category category, Pageable pageable);
+	List<Dish> filterByPrice(Double min, Double max);
 
-  Dish save(Dish entity);
+	List<Dish> findAllByCreatedDateDesc();
 
-  <S extends Dish> Optional<S> findOne(Example<S> example);
+	Page<Dish> findByNameContaining(Category category, Pageable pageable);
 
-  List<Dish> findAll();
+	List<Dish> findByCategoryId(String categoryID);
 
-  Page<Dish> findAll(Pageable pageable);
+	Dish save(Dish entity);
 
-  List<Dish> findAll(Sort sort);
+	<S extends Dish> Optional<S> findOne(Example<S> example);
 
-  List<Dish> findAllById(Iterable<String> ids);
+	List<Dish> findAll();
 
-  void flush();
+	Page<Dish> findAll(Pageable pageable);
 
-  Dish saveAndFlush(Dish entity);
+	List<Dish> findAll(Sort sort);
 
-  <S extends Dish> List<S> saveAllAndFlush(Iterable<S> entities);
+	List<Dish> findAllById(Iterable<String> ids);
 
-  <S extends Dish> Page<S> findAll(Example<S> example, Pageable pageable);
+	void flush();
 
-  Optional<Dish> findById(String id);
+	Dish saveAndFlush(Dish entity);
 
-  void deleteInBatch(Iterable<Dish> entities);
+	<S extends Dish> List<S> saveAllAndFlush(Iterable<S> entities);
 
-  boolean existsById(String id);
+	<S extends Dish> Page<S> findAll(Example<S> example, Pageable pageable);
 
-  void deleteAllInBatch(List<Dish> entities);
+	Optional<Dish> findById(String id);
 
-  <S extends Dish> boolean exists(Example<S> example);
+	void deleteInBatch(Iterable<Dish> entities);
 
-  void deleteAllByIdInBatch(Iterable<String> ids);
+	boolean existsById(String id);
 
-  <S extends Dish, R> R findBy(Example<S> example,
-      Function<FetchableFluentQuery<S>, R> queryFunction);
+	void deleteAllInBatch(List<Dish> entities);
 
-  void deleteAllInBatch();
+	<S extends Dish> boolean exists(Example<S> example);
 
-  void deleteById(String id);
+	void deleteAllByIdInBatch(Iterable<String> ids);
 
-  Dish getOne(String id);
+	<S extends Dish, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction);
 
-  void delete(Dish entity);
+	void deleteAllInBatch();
 
-  Dish getById(String id);
+	void deleteById(String id);
 
-  void deleteAllById(Iterable<? extends String> ids);
+	Dish getOne(String id);
 
-  void deleteAll(Iterable<? extends Dish> entities);
+	void delete(Dish entity);
 
-  void deleteAll();
+	Dish getById(String id);
 
-  Dish getReferenceById(String id);
+	void deleteAllById(Iterable<? extends String> ids);
 
-  <S extends Dish> List<S> findAll(Example<S> example);
+	void deleteAll(Iterable<? extends Dish> entities);
 
-  <S extends Dish> List<S> findAll(Example<S> example, Sort sort);
+	void deleteAll();
 
-<S extends Dish> List<S> saveAll(Iterable<S> entities);
+	Dish getReferenceById(String id);
+
+	<S extends Dish> List<S> findAll(Example<S> example);
+
+	<S extends Dish> List<S> findAll(Example<S> example, Sort sort);
+
+	<S extends Dish> List<S> saveAll(Iterable<S> entities);
 }

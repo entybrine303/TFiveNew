@@ -1,6 +1,8 @@
 package graduate.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +37,15 @@ public class Dish implements Serializable {
 	private String img;
 	private Double price;
 	private Boolean status;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	
+	@PrePersist
+    public void prePersist() {
+        Calendar calendar = Calendar.getInstance();
+        createdDate = calendar.getTime();
+    }
 
 	@ManyToOne
 	@JoinColumn(name = "restaurantID", referencedColumnName = "restaurantID")

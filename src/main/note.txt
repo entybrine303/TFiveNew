@@ -9,12 +9,13 @@
 
 
 Làm thông báo - xong bước đầu
-Làm chức năng lọc theo giá, sắp xếp ở page menu
-Fill sản phẩm theo đk page menu
-Tìm kiếm sản phẩm -
+
+
 Validation form 
-Check id có trùng hay không khi tạo mới một bảng -
-Phân trang
 Đặt username cho driver
 
-
+`đã xong:
+Tìm kiếm sản phẩm -
+Check id có trùng hay không khi tạo mới một bảng -
+Làm chức năng lọc theo giá, sắp xếp ở page menu -
+Fill sản phẩm theo đk page menu -

@@ -20,5 +20,5 @@ public interface StorageService {
 
 	String getStoredFileName(MultipartFile file, String id);
 
-	void storeResizedImage(MultipartFile file, String storedFilename, int targetWidth, int targetHeight);
+	void storeImageWithResize(MultipartFile file, String storedFilename, int targetWidth, int targetHeight);
 }
