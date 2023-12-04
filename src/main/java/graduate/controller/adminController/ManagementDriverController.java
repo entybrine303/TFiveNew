@@ -16,6 +16,7 @@ import graduate.dto.DriverRegisterDTO;
 import graduate.service.AccountService;
 import graduate.service.DriverRegisterService;
 import graduate.service.DriverService;
+import graduate.service.MailSenderService;
 import graduate.utils.RamdomID;
 import graduate.utils.RedirectHelper;
 
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;import org.springf
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,8 +40,15 @@ import graduate.domain.DriverRegister;
 public class ManagementDriverController {
 	@Autowired
 	private DriverService driverService;
+	
+
+	@Autowired
+	private AccountService accountService;
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	MailSenderService mailSenderService;
 
 	@Autowired
 	private DriverRegisterService driverRegisterService;
@@ -69,23 +78,7 @@ public class ManagementDriverController {
 		return "restaurantUI/update-driver";
 	}
 
-//	Lưu form đăng kí của tài xế
-	@PostMapping("saveOrUpdate")
-	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("driver") DriverRegisterDTO dto, BindingResult result) {
-		if (result.hasErrors()) {
-			return new ModelAndView("customerUI/driver-register");
-		}
-		if (driverRegisterService.existsById(dto.getPhoneNumber())) {
-			
-			return new ModelAndView("customerUI/driver-register");
-		}
-		DriverRegister entity = new DriverRegister();
-		BeanUtils.copyProperties(dto, entity);
-		driverRegisterService.save(entity);
-		model.addAttribute("mess", "Tài khoản đã được lưu thành công");
-		model.addAttribute("driver", new DriverDTO());
-		return new ModelAndView("customerUI/driver-register", model);
-	}
+
 
 //	Cập nhật thông tin tài xế
 	@PostMapping("update")
@@ -117,16 +110,34 @@ public class ManagementDriverController {
 		if (opt.isPresent()) {
 			Driver driver=new Driver();
 			
-			driver.setDriverID("D-"+RamdomID.generateRandomId());
 			
+			Account account=new Account();			
+			account.setUsername(opt.get().getPhoneNumber());
+			account.setPassword(RamdomID.generateRandomId());
+			account.setRole("driver");
+			
+			accountService.save(account);
+			
+			driver.setDriverID("D-"+RamdomID.generateRandomId());
 			driver.setPhoneNumber(opt.get().getPhoneNumber());
 			driver.setEmail(opt.get().getEmail());
 			driver.setName(opt.get().getName());
 			driver.setIdentificationCard(opt.get().getIdentificationCard());
 			driver.setConfirm(1);
-			
+			driver.setAccount(account);	
 			driverService.save(driver);
+			
+			
+			String contentInMail="Chào "+ opt.get().getName()+", \n"
+					+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã được chấp thuận. \n"
+					+ "Chúng tôi gửi bạn thông tin đăng nhập cho tài khoản Driver của bạn: \n"
+					+ "Username: "+ account.getUsername()+"\n"
+					+ "Mật khẩu: "+ account.getPassword();
+//			mailSenderService.sendEmail(opt.get().getEmail(), "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
+			mailSenderService.sendEmail("thanhnmpd06751@fpt.edu.vn", "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
+			
 			driverRegisterService.deleteById(phoneNumber);
+			
 		}
 
 		return RedirectHelper.redirectTo("/tfive/admin/driver/view");

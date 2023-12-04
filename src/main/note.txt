@@ -9,10 +9,10 @@
 
 
 Làm thông báo - xong bước đầu
-
-
 Validation form 
 Đặt username cho driver
+Thêm field discountPrice vào tbl dish
+
 
 `đã xong:
 Tìm kiếm sản phẩm -
