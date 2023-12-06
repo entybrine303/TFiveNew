@@ -21,6 +21,7 @@ public class DishDTO {
   private String img;
   private MultipartFile imageFile;
   private double price;
+  private double discountPrice;
   private boolean status;
   private Boolean isEdit = false;
   private Date createdDate;

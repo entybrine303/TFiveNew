@@ -88,7 +88,7 @@ public class ManagementCustomerController {
 		Customer entity = new Customer();
 		BeanUtils.copyProperties(dto, entity);
 
-		Account account = new Account(session.getAttribute("username").toString());
+		Account account = new Account(dto.getUsername());
 		entity.setAccount(account);
 
 		customerService.save(entity);

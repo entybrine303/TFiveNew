@@ -43,6 +43,11 @@ public class WishListController {
 	@Autowired
 	private WishlistService wishlistService;
 
+	public void fillAllProduct(ModelMap model) {
+		List<Dish> list= dishService.findAll();
+		model.addAttribute("products", list);
+	}
+
 	void fillWishlist(ModelMap model) {
 		try {
 			List<Wishlist> list = wishlistService
@@ -57,6 +62,7 @@ public class WishListController {
 	@GetMapping("wishlist")
 	public String viewWishList(ModelMap model) {
 		fillWishlist(model);;
+		fillAllProduct(model);
 		return "customerUI/wishlist";
 	}
 

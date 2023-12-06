@@ -51,8 +51,15 @@ public class CartController {
 	@Autowired
 	private CustomerService customerService;
 	
+
+	public void fillAllProduct(ModelMap model) {
+		List<Dish> list= dishService.findAll();
+		model.addAttribute("products", list);
+	}
+	
 	@GetMapping("cart")
 	public String viewCart(ModelMap model) {
+		fillAllProduct(model);
 		return "customerUI/cart";
 	}
 	

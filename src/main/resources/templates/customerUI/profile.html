@@ -17,8 +17,8 @@
                         <div class="col">
                             <div class="breadcrumb__content text-center">
                                 <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                                    <li class="breadcrumb__content--menu__items"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb__content--menu__items"><span>My Account</span></li>
+                                    <li class="breadcrumb__content--menu__items"><a th:href="@{/tfive/}">Trang chủ</a></li>
+                                    <li class="breadcrumb__content--menu__items"><span>Hồ sơ</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                             <ul class="account__menu">
                                 <li class="account__menu--list active"><a th:href="@{/tfive/profile}">Thông tin cá nhân</a></li>
                                 <li class="account__menu--list "><a th:href="@{/tfive/my-order}">Đơn hàng</a></li>
-                            <li class="account__menu--list"><a th:href="@{/tfive/wish-list}">Yêu thích</a></li>
+                            <li class="account__menu--list"><a th:href="@{/tfive/wishlist}">Yêu thích</a></li>
                             <li class="account__menu--list "><a th:href="@{/tfive/account/change-password/}">Đổi mật khẩu</a></li>
                                 <li class="account__menu--list"><a th:href="@{/tfive/account/logout}">Đăng xuất</a></li>
                             </ul>
@@ -81,7 +81,8 @@
                                             </table>
                                         </div>
                                         <div class="box-edit-img col-5">
-                                                <img id="image" th:src="${customer.img != null ? '/assets/img/uploads/' + customer.img : '/assets/img/product/main-product/product1.webp'}" 
+                                                <img id="image" th:src="${customer.img != null ? '/assets/img/uploads/' + customer.img : '/assets/img/product/main-product/product1.webp'}"
+                                                onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" 
                                                 onclick="document.getElementById('fileInput').click()" alt="Avt">
                                                 <script>
                                         function chooseFile(fileInput) {

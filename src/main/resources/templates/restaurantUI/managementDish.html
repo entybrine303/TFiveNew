@@ -33,11 +33,22 @@
                                     <label for="name">Tên món </label>
                                     <input th:field="*{name}" type="text" id="name" class="form-control" name="name" >
 
-                                    <label for="price">Giá </label>
-                                    <div class="input-group form-group">
-                                        <input th:field="*{price}" type="number" id="price" class="form-control" name="price" >
-                                        <span class="input-group-text">$</span>
-                                    </div>
+                                    <div class="row">
+								<div class="col-6">
+									<div class="form-group">
+										<label for="">Giá gốc:</label> <input id="my-input"
+											class="form-control" th:field="*{price}" type="text"
+											name="price" >
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group">
+										<label for="">Giảm giá:</label> <input id="my-input"
+											class="form-control" type="text" name="discountPrice"
+											 th:field="*{discountPrice}">
+									</div>
+								</div>
+							</div>
 
                                     <label for="categoryID">Danh mục món</label>
                                     <select class="form-control" name="ccategoriesID" id="categoryID" th:field="*{categoryID}">
@@ -50,8 +61,6 @@
                                     <select class="form-control" name="status" id="status" th:field="*{status}">
                                         <option value="1">Còn món</option>
                                         <option value="0">Tạm hết</option>
-
-
                                     </select>
 
                                     <label for="description" class="w-100">Mô tả của món
@@ -116,7 +125,7 @@
                                     <th scope="col">ID Món</th>
                                     <th scope="col">Tên món</th>
                                     <th scope="col">Giá</th>
-                                    <th scope="col">Danh mục</th>
+                                    <th scope="col">Giảm giá</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
@@ -128,8 +137,8 @@
                                         
                                     <td scope="row" th:text="${item.dishID}"></td>
                                     <td scope="row" th:text="${item.name}"></td>
-                                    <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
-                                    <td th:text="${item.category.name}"></td>
+                                    <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                                    <td th:text="${#numbers.formatDecimal(item.discountPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
                                     <td th:text="${item.status == true ? 'Còn món' : 'Hết món'}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/dish/edit/' + ${item.dishID}}">Edit</a>
                                         | <a th:href="@{'/tfive/admin/dish/delete/' + ${item.dishID}}" onclick="showConfirmationBox(event, this, 'Bạn muốn xoá sản phẩm này?')">Delete</a>

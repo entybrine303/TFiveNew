@@ -43,6 +43,7 @@ public class LoginController {
 
 	@GetMapping("login")
 	public String viewLogin(ModelMap model) {
+
 		
 		model.addAttribute("register", new LoginDTO());
 		return "customerUI/login";
@@ -50,9 +51,7 @@ public class LoginController {
 	
 	@GetMapping("logout")
 	public ModelAndView logout(ModelMap model) {
-//		session.setAttribute("username", null);
-//		session.setAttribute("role", "guest");
-		
+
 		session.invalidate();
 		
 		 return RedirectHelper.redirectTo("/tfive/");

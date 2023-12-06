@@ -28,7 +28,6 @@ public class Voucher implements Serializable{
 	private String voucherID;
 	@Column(columnDefinition = "nvarchar(max)")
 	private String description;
-	private String img;
 	private Double reducedPrice;
 	private Double minimumPrice;
 	private Boolean isShare;

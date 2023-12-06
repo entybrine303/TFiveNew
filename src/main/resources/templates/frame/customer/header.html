@@ -591,8 +591,9 @@
                                 </label>
                                 <button type="button" class="quantity__value">+</button>
                             </div>
-                            <button class="minicart__product--remove" type="button"
-								th:data-cartID="${cart.cartID}" th:onclick="'deleteCartItem(this,\'' + @{'/tfive/cart/delete/'} + '\')'">Xoá</button>
+                            <a class="minicart__product--remove" type="button"
+								onclick="showConfirmationBox(event, this, 'Bạn muốn xoá sản phẩm này khỏi giỏ hàng')"
+								th:href="@{'/tfive/cart/delete/'+${cart.cartID}}">Xoá</a>
                         </div>
                     </div>
                 </div>

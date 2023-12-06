@@ -36,6 +36,7 @@ public class Dish implements Serializable {
 	private String description;
 	private String img;
 	private Double price;
+	private Double discountPrice;
 	private Boolean status;
 	
 	@Temporal(TemporalType.TIMESTAMP)

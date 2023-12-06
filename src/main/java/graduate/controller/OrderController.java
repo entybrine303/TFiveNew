@@ -202,7 +202,7 @@ public class OrderController {
 			e.printStackTrace();
 		}
 		cartService.deleteByCustomer_CustomerID(session.getAttribute("customerID").toString());
-		return new ModelAndView(viewCheckout(model), model);
+		return RedirectHelper.redirectTo("/tfive/my-order");
 
 	}
 
@@ -289,6 +289,7 @@ public class OrderController {
 	@GetMapping("my-order")
 	public String viewOrder(ModelMap model) {
 		List<Order> list=orderService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
+		list.sort((dish1, dish2) -> dish2.getOrderDate().compareTo(dish1.getOrderDate()));
 		model.addAttribute("listOrder", list);
 		return "customerUI/my-order";
 	}
