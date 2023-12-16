@@ -42,20 +42,24 @@
             <section class="categories__section section--padding">
                 <div class="container">
                     <div class="row mb--n25 list-categories">
-                    <div class="col-lg-2 col-md-4 col-sm-4 col-6 mb-25 box-categories">
-                            <div class="categories__card text-center">
-                                <a class="categories__card--link" th:href="@{/tfive/menu/}">
-                                    <h2 class="categories__title categories-name">Tất cả</h2>
-                                </a>
-                            </div>
-                        </div>
-                        <div th:each="item : ${categories}" class="col-lg-2 col-md-4 col-sm-4 col-6 mb-25 box-categories">
-                            <div class="categories__card text-center">
-                                <a class="categories__card--link" th:href="@{'/tfive/menu/category/'+${item.categoryID}}">
-                                    <h2 class="categories__title categories-name" th:text="${item.name}">Coffe</h2>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="product__section--inner pb-15 product__swiper--activation swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" th:each="item : ${categories}">
+					                            <div class="categories__card text-center">
+					                                <a class="categories__card--link" th:href="@{'/tfive/menu/category/'+${item.categoryID}}">
+					                                    <h2 class="categories__title categories-name" th:text="${item.name}">Coffe</h2>
+					                                </a>
+					                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="swiper__nav--btn swiper-button-next" style="top:34%">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </div>
+                                    <div class="swiper__nav--btn swiper-button-prev" style="top:34%">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" -chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    </div>
+                                </div>
                     </div>
                 </div>
             </section>

@@ -53,19 +53,19 @@
                                             <div class="col-12 mb-20">
                                                 <div class="checkout__input--list">
                                                     <label class="checkout__input--label mb-5" for="phoneNumber">Số điện thoại<span class="checkout__input--label__star">*</span></label>
-                                                    <input th:field="*{phoneNumber}" name="phoneNumber" class="checkout__input--field border-radius-5" placeholder="Số điện thoại..." id="phoneNumber" type="text">
+                                                    <input disabled="disabled" th:field="*{phoneNumber}" name="phoneNumber" class="checkout__input--field border-radius-5" placeholder="Số điện thoại..." id="phoneNumber" type="text">
                                                 </div>
                                             </div>
                                             <div class="col-12 mb-20">
                                                 <div class="checkout__input--list">
                                                     <label class="checkout__input--label mb-5" for="fullname">Họ và tên <span class="checkout__input--label__star">*</span></label>
-                                                    <input th:field="*{name}" name="name" class="checkout__input--field border-radius-5" placeholder="Họ và tên..." id="fullname" type="text">
+                                                    <input disabled="disabled" th:field="*{name}" name="name" class="checkout__input--field border-radius-5" placeholder="Họ và tên..." id="fullname" type="text">
                                                 </div>
                                             </div>
                                             <div class="col-12 mb-20">
                                                 <div class="checkout__input--list">
                                                     <label class="checkout__input--label mb-5" for="address">Địa chỉ<span class="checkout__input--label__star">*</span></label>
-                                                    <input th:field="*{address}" name="address" class="checkout__input--field border-radius-5" placeholder="Địa chỉ...." id="address" type="text">
+                                                    <input disabled="disabled" name="address" th:field="*{address}" class="checkout__input--field border-radius-5" placeholder="Địa chỉ...." id="address" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -97,7 +97,9 @@
                                             <td class="cart__table--body__list">
                                                 <div class="product__image two  d-flex align-items-center">
                                                     <div class="product__thumbnail border-radius-5">
-                                                        <a class="display-block" th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img class="display-block border-radius-5" th:src="@{/assets/img/uploads/} + ${cart.dish.img}" alt="cart-product"></a>
+                                                        <a class="display-block" th:href="@{'/tfive/product/' + ${cart.dish.dishID}}"><img class="display-block border-radius-5" 
+                                                        onerror="this.onerror=null; this.src='/assets/img/product/main-product/product1.webp';" 
+                                                        th:src="@{/assets/img/uploads/} + ${cart.dish.img}" alt="cart-product"></a>
                                                         <span class="product__thumbnail--quantity" th:text="${cart.quantity}">1</span>
                                                     </div>
                                                     <div class="product__description">

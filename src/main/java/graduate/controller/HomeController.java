@@ -54,6 +54,7 @@ public class HomeController {
 	public String searchProduct(ModelMap model, @Valid @ModelAttribute("product") DishDTO dto) {		
 		List<Dish> result=dishService.findByNameContaining(dto.getName());
 		
+		model.addAttribute("input", dto.getName());
 		model.addAttribute("result",result);
 		model.addAttribute("numberResult", result.size());
 		return "customerUI/search";

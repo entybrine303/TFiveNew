@@ -20,6 +20,7 @@ import graduate.domain.Account;
 import graduate.domain.Driver;
 import graduate.dto.DriverDTO;
 import graduate.service.DriverService;
+import graduate.utils.RedirectHelper;
 @Controller
 @RequestMapping("tfive/driver")
 public class DriverProfileController {
@@ -69,12 +70,11 @@ public class DriverProfileController {
 		Driver entity = new Driver();
 		BeanUtils.copyProperties(dto, entity);
 		entity.setWorkStatus(dto.getWorkStatus());
-		entity.setConfirm(1);
 		entity.setAccount(new Account(session.getAttribute("username").toString()));
 		driverService.save(entity);
 		model.addAttribute("mess", "Cập nhập thành công");
 		model.addAttribute("driver", new DriverDTO());
-		return new ModelAndView(viewDriverProfile(model), model);
+		return RedirectHelper.redirectTo("/tfive/driver/profile/detail");
 
 	}
 }

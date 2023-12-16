@@ -182,6 +182,11 @@ public void deleteAllInBatch(List<Cart> entities) {
 	
 }
 
+@Override
+public Cart findProductIsPresentInCart(String productId, String customerId) {
+	return cartReponsitory.findByProductIdAndCustomerId(productId, customerId);
+}
+
 
 
 

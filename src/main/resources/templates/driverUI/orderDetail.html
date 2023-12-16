@@ -30,15 +30,15 @@
             <ul class="sub-func func-cancel-order" id="func-cancel-order">
               <li style="padding-right: 0;"><strong style="line-height: 50px;">Lý do huỷ đơn</strong> <button class="btn-close" onclick="closeFunc(event)"><i class="fa-solid fa-xmark"></i></button></li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p><i class="fa-solid fa-shop-slash"></i> Quán đóng cửa </p>
+                <p ><a th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã huỷ'}" style="color: black"><i class="fa-solid fa-shop-slash"></i> Quán đóng cửa </a></p>
                 <i class="ti-angle-right"></i>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p><i class="fa-solid fa-user-slash"></i> Khách yêu cầu huỷ </p>
+                <p ><a th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã huỷ'}" style="color: black"><i class="fa-solid fa-user-slash"></i> Khách yêu cầu huỷ </a></p>
                 <i class="ti-angle-right"></i>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p><i class="fa-solid fa-user-xmark"> </i> Lý do cá nhân </i></p>
+                <p><a th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã huỷ'}" style="color: black"><i class="fa-solid fa-user-xmark"> </i> Lý do cá nhân </i></a></p>
                 <i class="ti-angle-right"></i>
               </li>
           </ul>
@@ -52,7 +52,7 @@
                 <li class="list-func-btn"><button class="btn-func"><i class="fa-solid w-100 fa-file-pen"></i><span>Sửa đơn</span></button></li>
             </ul>
             <div style="display: flex; justify-content: center;">
-            <a th:if="*{status=='Xác nhận'}" th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã lấy'}" 
+            <a th:if="*{status=='Đã nhận'}" th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã lấy'}" 
             class="btn-status"><span>Đã lấy hàng</span></a>
             <a th:if="*{status=='Đã lấy'}" th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Hoàn thành'}" 
             class="btn-status"><span>Đã giao xong</span></a>

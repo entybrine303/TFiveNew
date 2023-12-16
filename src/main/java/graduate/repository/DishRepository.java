@@ -22,7 +22,7 @@ public interface DishRepository extends JpaRepository<Dish, String> {
 	@Query("SELECT d FROM Dish d WHERE d.category.categoryID = :categoryID")
     List<Dish> findByCategoryId(@Param("categoryID") String categoryID);
 	
-	@Query("SELECT d FROM Dish d WHERE d.price BETWEEN :min AND :max")
+	@Query("SELECT d FROM Dish d WHERE d.discountPrice BETWEEN :min AND :max")
     List<Dish> findByPriceRange(@Param("min") Double min, @Param("max") Double max);
 	@Query("SELECT d FROM Dish d ORDER BY d.createdDate DESC")
     List<Dish> findAllOrderByCreatedDateDesc();

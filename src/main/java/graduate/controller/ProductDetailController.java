@@ -24,6 +24,7 @@ import graduate.domain.Category;
 import graduate.domain.Dish;
 import graduate.service.CategoryService;
 import graduate.service.DishService;
+import graduate.service.WishlistService;
 @Controller
 @RequestMapping("tfive")
 public class ProductDetailController {
@@ -38,6 +39,10 @@ public class ProductDetailController {
 
 	@Autowired
 	private DishService dishService;
+	
+
+	@Autowired
+	private WishlistService wishlistService;
 
 	public void fillAllProduct(ModelMap model) {
 		List<Dish> list = dishService.findAll();
@@ -54,11 +59,13 @@ public class ProductDetailController {
 			model.addAttribute("mess", e.getMessage());
 		}
 	}
-	
+
 	@GetMapping("product/{dishID}")
 	public String viewProductDetail(ModelMap model, @PathVariable("dishID") String productID) {
-		
 		fillProduct(model, productID);
+			if (session.getAttribute("customerID")!=null && wishlistService.productIsPresentInWishlist(productID, session.getAttribute("customerID").toString())) {
+				model.addAttribute("inPresent", true);
+			}
 		fillAllProduct(model);
 		return "customerUI/product-detail";
 	}

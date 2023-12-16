@@ -58,14 +58,6 @@
         </div>
       </div>
       <div class="form-group row">
-        <!-- Nhãn cho trường Số điện thoại -->
-        <label for="phoneNumber" class="col-sm-2 col-form-label">CCCD:</label>
-        <!-- Trường nhập liệu số điện thoại -->
-        <div class="col-sm-10">
-          <input th:field="*{identificationCard}" name="identificationCard" type="text" class="form-control" id="identificationCard" readonly>
-        </div>
-      </div>
-      <div class="form-group row">
         <!-- Nhãn cho trường giới tính -->
         <label class="col-sm-2 col-form-label">Giới tính:</label>
         <!-- Trường nhập liệu cho giới tính -->
@@ -79,11 +71,19 @@
         </div>
       </div>
       <div class="form-group row">
+        <!-- Nhãn cho trường Số điện thoại -->
+        <label for="phoneNumber" class="col-sm-2 col-form-label">CCCD:</label>
+        <!-- Trường nhập liệu số điện thoại -->
+        <div class="col-sm-10">
+          <input th:field="*{identificationCard}" name="identificationCard" type="text" class="form-control" id="identificationCard" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
         <!-- Nhãn cho trường email -->
         <label for="address" class="col-sm-2 col-form-label">Loại xe:</label>
         <!-- Trường nhập liệu cho email -->
         <div class="col-sm-10">
-          <input th:field="*{motorbike}" name="motorbike" type="text" class="form-control" id="motorbike" placeholder="Nhập loại xe">
+          <input th:field="*{motorbike}" readonly="readonly" name="motorbike" type="text" class="form-control" id="motorbike" placeholder="Nhập loại xe">
         </div>
       </div>
         <div class="form-group row" >

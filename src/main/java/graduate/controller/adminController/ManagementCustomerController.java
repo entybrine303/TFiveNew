@@ -96,4 +96,15 @@ public class ManagementCustomerController {
 
 		return RedirectHelper.redirectTo("/tfive/admin/customer/edit/"+dto.getCustomerID());
 	}
+	
+	@PostMapping("search")
+	public String searchCustomerByName(ModelMap model, @Valid @ModelAttribute("customer") CustomerDTO dto, BindingResult result) {
+		if (result.hasErrors()) {
+			return "restaurantUI/managementCustomer";
+		}
+		List<Customer> list= customerService.findByNameContaining(dto.getName());
+		
+		model.addAttribute("customers", list);
+		return "restaurantUI/managementCustomer";
+	}
 }

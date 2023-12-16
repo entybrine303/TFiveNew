@@ -13,14 +13,14 @@ INSERT INTO account (username, password, role) VALUES
 
 -- Customer
 INSERT INTO customer (customerID, name, sex, phone_number, email, address, img, username) VALUES
-('U-12345678', 'Nguyễn Văn Tiến', 0, '0123456789', 'customer1@example.com', '123 Đường 2/9, Quận Hải Châu, TP. Đà Nẵng', '', 'user1'),
-('U-23456789', 'Trần Thị Hương', 0, '0123456789', 'customer2@example.com', '456 Đường Hàm Nghi, Quận Thanh Khê, TP. Đà Nẵng', '', 'user2'),
-('U-34567891', 'Lê Văn Quang', 1, '0123456789', 'customer3@example.com', '789 Đường Lê Lợi, Quận Liên Chiểu, TP. Đà Nẵng', '', 'user3'),
-('U-45678912', 'Phạm Thị Anh', 0, '0123456789', 'customer4@example.com', '012 Đường Ngô Quyền, Quận Sơn Trà, TP. Đà Nẵng', '', 'user4'),
-('U-56789123', 'Trần Văn Đông', 1, '0123456789', 'customer5@example.com', '345 Đường Trưng Nữ Vương, Quận Ngũ Hành Sơn, TP. Đà Nẵng', '', 'user5'),
-('U-67891234', 'Lê Thị Bích', 0, '0123456789', 'customer6@example.com', '678 Đường Trần Phú, Quận Cẩm Lệ, TP. Đà Nẵng', '', 'user6'),
-('U-78912345', 'Nguyễn Văn Hải', 1, '0123456789', 'customer7@example.com', '901 Đường Lý Thường Kiệt, Quận Hòa Vang, TP. Đà Nẵng', '', 'user7'),
-('U-123', 'Nguyễn Minh Thành', 1, '0123456789', 'test@example.com', '901 Đường Hùng Vương, Quận Hòa Vang, TP. Đà Nẵng', '', 'user')
+('U-12345678', N'Nguyễn Văn Tiến', 0, '0123456789', 'customer1@example.com', N'123 Đường 2/9, Quận Hải Châu, TP. Đà Nẵng', '', 'user1'),
+('U-23456789', N'Trần Thị Hương', 0, '0123456789', 'customer2@example.com', N'456 Đường Hàm Nghi, Quận Thanh Khê, TP. Đà Nẵng', '', 'user2'),
+('U-34567891', N'Lê Văn Quang', 1, '0123456789', 'customer3@example.com', N'789 Đường Lê Lợi, Quận Liên Chiểu, TP. Đà Nẵng', '', 'user3'),
+('U-45678912', N'Phạm Thị Anh', 0, '0123456789', 'customer4@example.com', N'012 Đường Ngô Quyền, Quận Sơn Trà, TP. Đà Nẵng', '', 'user4'),
+('U-56789123', N'Trần Văn Đông', 1, '0123456789', 'customer5@example.com', N'345 Đường Trưng Nữ Vương, Quận Ngũ Hành Sơn, TP. Đà Nẵng', '', 'user5'),
+('U-67891234', N'Lê Thị Bích', 0, '0123456789', 'customer6@example.com', N'678 Đường Trần Phú, Quận Cẩm Lệ, TP. Đà Nẵng', '', 'user6'),
+('U-78912345', N'Nguyễn Văn Hải', 1, '0123456789', 'customer7@example.com', N'901 Đường Lý Thường Kiệt, Quận Hòa Vang, TP. Đà Nẵng', '', 'user7'),
+('U-123', N'Nguyễn Minh Thành', 1, '0123456789', 'test@example.com', N'901 Đường Hùng Vương, Quận Hòa Vang, TP. Đà Nẵng', '', 'user')
 
 INSERT INTO [dbo].[restaurant]
            ([restaurantid]
@@ -48,11 +48,11 @@ INSERT INTO category (categoryID, name, restaurantid) VALUES
 
 -- Dish
 INSERT INTO dish (dishID, name, description, img, price, discount_price, status, restaurantid, categoryid) VALUES
-('P-23456789', N'Trà Sữa Trân Châu Đường Đen', 'Trà sữa ngon, thêm trân châu đường đen', null, 35000, 0, 1, 'R01', null),
-('P-34567891', N'Cà Phê Đen', 'Cà phê đen thơm ngon', null, 30000, 0, 1, 'R01', null),
-('P-45678912', N'Kem Chocolate', 'Kem chocolate mát lạnh', null, 40000, 0, 1, 'R01', null),
-('P-56789123', N'Bánh Flan Caramel', 'Bánh flan thơm ngon', null, 45000, 0, 1, 'R01', null),
-('P-67891234', N'Pizza Hải Sản', 'Pizza hải sản thơm ngon', null, 55000, 0, 1, 'R01', null)
+('P-23456789', N'Trà Sữa Trân Châu Đường Đen', N'Trà sữa ngon, thêm trân châu đường đen', null, 35000, 0, 1, 'R01', 'C-23456789'),
+('P-34567891', N'Cà Phê Đen', N'Cà phê đen thơm ngon', null, 30000, 0, 1, 'R01', 'C-34567891'),
+('P-45678912', N'Kem Chocolate', N'Kem chocolate mát lạnh', null, 40000, 0, 1, 'R01', 'C-45678912'),
+('P-56789123', N'Bánh Flan Caramel', N'Bánh flan thơm ngon', null, 45000, 0, 1, 'R01', 'C-56789123'),
+('P-67891234', N'Pizza Hải Sản', N'Pizza hải sản thơm ngon', null, 55000, 0, 1, 'R01', 'C-67891234')
 
 -- Driver
 INSERT INTO driver (driverID, license_plates, name, sex, phone_number, email, motorbike, work_status, identification_card, img, username) VALUES

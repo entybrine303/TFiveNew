@@ -138,7 +138,7 @@
                                         </thead>
                                         <tbody>
                                           <tr  th:each="item : ${listOrder}">
-                                            <th scope="row">01. <span class="dish-name" th:text="${item.dish.name}">Bánh mì</span></th>
+                                            <th scope="row"><span class="dish-name" th:text="${itemStat.index + 1  + '. '+  item.dish.name}">Bánh mì</span></th>
                                             <td class="quantity" th:text="${item.quantity}">4</td>
                                             <td class="total-amount" th:text="${#numbers.formatDecimal(item.totalAmount, 0, 'COMMA', 0, 'POINT')} + 'đ'">12.000 đ</td>
                                           </tr>

@@ -52,7 +52,6 @@ public class WishListController {
 		try {
 			List<Wishlist> list = wishlistService
 					.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
-			System.out.println(list.get(0).getDish().getDishID()+"hjhgkd");
 			model.addAttribute("listWishlist", list);
 		} catch (Exception e) {
 			return;
@@ -76,16 +75,23 @@ public class WishListController {
 
 		wishlistService.save(entity);
 		model.addAttribute("mess", "Product is saved");
-		return RedirectHelper.redirectTo("/tfive/wishlist");
+		return RedirectHelper.redirectTo("/tfive/product/"+productID);
 	}
-	
 
-	@GetMapping("wishlist/delete/{dishID}")
-	public ModelAndView delete(ModelMap model, @PathVariable("dishID") String dishID) {
-		wishlistService.deleteByDish_DishID(dishID);
+	@GetMapping("wishlist/delete/{wishListId}")
+	public ModelAndView delete(ModelMap model, @PathVariable("wishListId") String wishListId) {
+		wishlistService.deleteById(wishListId);
 		model.addAttribute("mess", "Đã xoá");
 
 		return RedirectHelper.redirectTo("/tfive/wishlist");
+	}
+	
+	@GetMapping("wishlist/deleteBy/{productId}")
+	public ModelAndView deleteByProductIdAndCustomerId(ModelMap model, @PathVariable("productId") String productId) {
+		System.out.println(productId+"hhehehehe "+ session.getAttribute("customerID"));
+		wishlistService.deleteByProductIdAndCustomerId(productId, session.getAttribute("customerID").toString());
+
+		return RedirectHelper.redirectTo("/tfive/product/"+productId);
 	}
 	
 

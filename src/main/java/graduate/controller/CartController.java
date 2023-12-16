@@ -72,7 +72,7 @@ public class CartController {
 		Cart entity = new Cart();
 		BeanUtils.copyProperties(dto, entity);
 		entity.setCartID("C-"+RamdomID.generateRandomId());
-		entity.setTotalAmount(dto.getQuantity()*dto.getPrice());
+		entity.setTotalAmount(dto.getQuantity()*dto.getDiscountPrice());
 		
 		entity.setDish(new Dish(dto.getDishID()));
 		
@@ -89,10 +89,17 @@ public class CartController {
 	public ModelAndView saveOneProduct(ModelMap model, @PathVariable("dishID") String productID) {
 		Optional<Dish> opt = dishService.findById(productID);
 		
+		Cart optC =cartService.findProductIsPresentInCart(productID, session.getAttribute("customerID").toString());
+		if (optC!=null) {
+			optC.setQuantity(optC.getQuantity()+1);
+			cartService.save(optC);
+			return RedirectHelper.redirectTo("/tfive/");
+		}
+		
 		Cart entity = new Cart();
 		entity.setCartID("C-"+RamdomID.generateRandomId());
 		entity.setQuantity(1);
-		entity.setTotalAmount(opt.get().getPrice());
+		entity.setTotalAmount(opt.get().getDiscountPrice());
 		
 		entity.setDish(opt.get());
 		
@@ -100,7 +107,7 @@ public class CartController {
 		entity.setCustomer(new Customer(session.getAttribute("customerID").toString()));
 		
 		cartService.save(entity);
-		return RedirectHelper.redirectTo("/tfive/cart");
+		return RedirectHelper.redirectTo("/tfive/");
 	}
 	
 	@GetMapping("cart/delete/{cartID}")

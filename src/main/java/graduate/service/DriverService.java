@@ -24,7 +24,8 @@ public interface DriverService {
 	void deleteAll();
 
 	Driver getReferenceById(String id);
-
+	List<Driver> findByNameContaining(String name);
+	
 	void deleteAll(Iterable<? extends Driver> entities);
 
 	void deleteAllById(Iterable<? extends String> ids);

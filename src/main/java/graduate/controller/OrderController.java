@@ -1,10 +1,9 @@
 package graduate.controller;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +39,7 @@ import graduate.dto.VoucherDTO;
 import graduate.service.CartService;
 import graduate.service.CustomerService;
 import graduate.service.DeliveryService;
+import graduate.service.DishService;
 import graduate.service.OrderDetailService;
 import graduate.service.OrderService;
 import graduate.service.VoucherService;
@@ -61,6 +61,10 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+
+	@Autowired
+	private DishService dishService;
 
 	@Autowired
 	private OrderDetailService orderDetailService;
@@ -207,9 +211,9 @@ public class OrderController {
 	}
 
 	@GetMapping("cancel-order/{orderID}")
-	public String cancelOrder(ModelMap model, @PathVariable("orderID") String orderID) {
-		orderService.updateStatus(orderID, "Đã huỷ");
-		return "customerUI/index";
+	public ModelAndView cancelOrder(ModelMap model, @PathVariable("orderID") String orderID) {
+		orderService.updateStatus("Đã huỷ",orderID);
+		return RedirectHelper.redirectTo("/tfive/order-detail/"+orderID);
 	}
 
 	void insertToOrderTbl(ModelMap model, CheckoutDTO dto, BindingResult result, String orderID) {
@@ -248,14 +252,14 @@ public class OrderController {
 
 	void insertToOrderDetailTbl(ModelMap model, CheckoutDTO dto, BindingResult result, String orderID) {
 		try {
-			OrderDetail entity = new OrderDetail();
-
 			List<Cart> list = cartService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
-			for (int i = 0; i < list.size(); i++) {
+			for (Cart cart : list) {
+				Dish product = dishService.findById(cart.getDish().getDishID()).get();
+				OrderDetail entity = new OrderDetail();
 				entity.setOrders(new Order(orderID));
-				entity.setDish(new Dish(list.get(i).getDish().getDishID()));
-				entity.setQuantity(list.get(i).getQuantity());
-				entity.setTotalAmount(list.get(i).getTotalAmount());
+				entity.setDish(product);
+				entity.setQuantity(cart.getQuantity());
+				entity.setTotalAmount(cart.getTotalAmount());
 				orderDetailService.save(entity);
 			}
 		} catch (Exception e) {
@@ -289,8 +293,10 @@ public class OrderController {
 	@GetMapping("my-order")
 	public String viewOrder(ModelMap model) {
 		List<Order> list=orderService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
-		list.sort((dish1, dish2) -> dish2.getOrderDate().compareTo(dish1.getOrderDate()));
-		model.addAttribute("listOrder", list);
+		
+		List<Order> list1= list.stream().sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
+        .collect(Collectors.toList());
+		model.addAttribute("listOrder", list1);
 		return "customerUI/my-order";
 	}
 }

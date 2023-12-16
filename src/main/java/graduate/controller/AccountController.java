@@ -84,8 +84,10 @@ public class AccountController {
 		BeanUtils.copyProperties(dto, entity);
 
 		if (!dto.getImageFile().isEmpty()) {
-			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), dto.getCustomerID()));
-			storageService.store(dto.getImageFile(), entity.getImg());
+			UUID uuid = UUID.randomUUID();
+			String uuString = uuid.toString();
+			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), uuString));
+			storageService.storeImageWithResize(dto.getImageFile(), entity.getImg(), 209, 171);
 		}
 
 		Account account = new Account(session.getAttribute("username").toString());
@@ -113,19 +115,28 @@ public class AccountController {
 		return "customerUI/change-password";
 	}
 
+
 	@PostMapping("account/change-password/pChangePassword")
 	public ModelAndView changePass(ModelMap model, @Valid @ModelAttribute("account") LoginDTO dto,
 			BindingResult result) {
 		if (result.hasErrors()) {
+			model.addAttribute("error", "Lỗi dữ liệu đầu vào!");
+			return new ModelAndView(viewChangePass(model));
+		}
+		
+		Optional<Account> acc = accountService.findById(session.getAttribute("username").toString());
+
+		if (!dto.getPassword().equals(acc.get().getPassword())) {
+			model.addAttribute("error", "Mật khẩu cũ sai!");
+			
 			return new ModelAndView(viewChangePass(model));
 		}
 		if (!dto.getConfirmPassword().equals(dto.getNewPassword())) {
-			model.addAttribute("mess", "Đổi mật khẩu thất bại");
+			model.addAttribute("error", "Mật khẩu không trùng khớp");
 			return new ModelAndView(viewChangePass(model));
 		}
-
+		
 		Account entity = new Account();
-		Optional<Account> acc = accountService.findById(session.getAttribute("username").toString());
 
 		BeanUtils.copyProperties(dto, entity);
 

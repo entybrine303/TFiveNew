@@ -96,9 +96,13 @@ public class CommonController {
 			return;
 		}
 		if (session.getAttribute("role").toString().equals("driver")) {
-			Driver driver = driverService.findByUsername(session.getAttribute("username").toString());
-			session.setAttribute("driverID", driver.getDriverID());
-			return;
+			try {
+				Driver driver = driverService.findByUsername(session.getAttribute("username").toString());
+				session.setAttribute("driverID", driver.getDriverID());
+				return;				
+			} catch (Exception e) {
+				return ;
+			}
 		}
 	}
 

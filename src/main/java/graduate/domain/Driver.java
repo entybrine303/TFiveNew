@@ -32,8 +32,6 @@ public class Driver implements Serializable{
 	private Boolean sex;
 	@Column(length = 10)
 	private String phoneNumber;
-//	@Column(length = 10)
-//	private String phoneNumber;
 	private String email;
 	private String motorbike;
 	private Boolean workStatus;
@@ -48,6 +46,5 @@ public class Driver implements Serializable{
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
-	private Integer confirm = 0;
 	
 }

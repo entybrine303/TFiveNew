@@ -42,7 +42,7 @@
                             </ul>
                         </div>
                         <div class="account__wrapper">
-                            <div class="account__content profile-c" th:if="${#httpSession.getAttribute('role')=='user'}">
+                            <div class="account__content profile-c">
                                 <h2>Quản lý hồ sơ cá nhân</h2>
                                 <hr>
                                 <form th:action="@{/tfive/profile/saveOrUpdate}" method="post"
@@ -57,15 +57,15 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="td-left"><label class="bland" for="name">Họ và tên: </label></td>
-                                                    <td class="td-right"><input th:field="*{name}" name="name" class="form-control" type="text" id="name"></td>
+                                                    <td class="td-right"><input th:field="*{name}" name="name" class="form-control" maxlength="100" type="text" id="name" required="required"></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-left"><label class="bland" for="email">Email: </label></td>
-                                                    <td class="td-right"><input th:field="*{email}" name="email" class="form-control" type="email" id="email"></td>
+                                                    <td class="td-right"><input th:field="*{email}" name="email" class="form-control" type="email" maxlength="255" id="email" required="required"></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-left"><label class="bland" for="phone-number">Số điện thoại: </label></td>
-                                                    <td class="td-right"><input th:field="*{phoneNumber}" name="phoneNumber" class="form-control" type="tel" id="phone-number"></td>
+                                                    <td class="td-right"><input th:field="*{phoneNumber}" maxlength="10" name="phoneNumber" class="form-control" type="text"  id="phone-number" required="required"></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-left"><label class="bland" for="">Giới tính</label></td>
@@ -76,7 +76,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="td-left"><label class="bland" for="address">Địa chỉ: </label></td>
-                                                    <td class="td-right"><textarea th:field="*{address}" name="address" id="address" cols="30" rows="2"></textarea></td>
+                                                    <td class="td-right"><textarea th:field="*{address}" name="address" id="address" cols="30" rows="2" required="required"></textarea></td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -110,43 +110,6 @@
                                             onchange="chooseFile(this)"/>
                                         </div>
                                         <div class="account__details--footer d-flex w-75">
-                                            <button class="account__details--footer__btn" type="submit">Cập nhật</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="account__content profile-restarant" th:if="${#httpSession.getAttribute('role')=='admin'}">
-                                <h2>Quản lý hồ sơ quán</h2>
-                                <hr>
-                                <form action="" th:object="${restaurant}">
-                                <div class="box-customer-info row">
-                                        <div class="box-edit-info col-7">
-                                            <table>
-                                                <tr>
-                                                    <td class="td-left"><p class="bland">Tên đăng nhập: </p></td>
-                                                    <td class="td-right" th:text="${#httpSession.getAttribute('username')}">Thanhducam</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td-left"><label class="bland" for="email">Email: </label></td>
-                                                    <td class="td-right"><input th:field="*{email}" class="form-control" type="email" id="email"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td-left"><label class="bland" for="phone-number">Số điện thoại: </label></td>
-                                                    <td class="td-right"><input th:field="*{email}" class="form-control" type="tel" id="phone-number"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td-left"><label class="bland" for="address">Địa chỉ: </label></td>
-                                                    <td class="td-right"><textarea th:field="*{address}" name="" id="address" cols="30" rows="2"></textarea></td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        <div class="box-edit-img col-5">
-                                            <a href="#">
-                                                <img src="/assets/img/product/main-product/product1.webp" alt="Avt">
-                                            </a>
-                                            <button class="btn-select-img" type="button">Chọn ảnh</button>
-                                        </div>
-                                        <div class="account__details--footer d-flex">
                                             <button class="account__details--footer__btn" type="submit">Cập nhật</button>
                                         </div>
                                     </div>

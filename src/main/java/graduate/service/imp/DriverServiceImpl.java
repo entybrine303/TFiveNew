@@ -181,4 +181,9 @@ public class DriverServiceImpl implements DriverService {
 		return (S) driverRepository.save(entity);
 	}
 
+	@Override
+	public List<Driver> findByNameContaining(String name) {
+		return driverRepository.findByNameContaining(name);
+	}
+
 }

@@ -103,7 +103,7 @@
                         <form class="d-flex header__search--form border-radius-5" th:action="@{/tfive/search}">
                             <div class="header__search--box">
                                 <label>
-                                    <input class="header__search--input" name="name" placeholder="Tên món........." type="text">
+                                    <input class="header__search--input" name="name" placeholder="Tên món........." type="text" required="required">
                                 </label>
                                 <button class="header__search--button bg__primary text-white" aria-label="search button" type="submit">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,63 +121,8 @@
                                     </a>
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link" th:href="@{/tfive/menu}">Thực đơn
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
-                                            <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
-                                        </svg>
+                                    <a class="header__menu--link" th:href="@{/tfive/menu}">Cửa hàng
                                     </a>
-                                    <ul class="header__mega--menu d-flex">
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Coffe</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Coffe Phin</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Coffe Espresso</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Trà</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Trà Vải</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Trà đào </a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Trà chanh</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Xem thêm <i class="ti-angle-right icon-nav"></i> </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Kem</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Kem bơ</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Kem dừa</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Kem socola</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Xem thêm <i class="ti-angle-right icon-nav"></i> </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Đồ ăn vặt</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Cá viên chiên</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Bánh ngọt</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Nem chua rán</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Xem thêm <i class="ti-angle-right icon-nav"></i> </a></li>
-                                            </ul>
-                                        </li>
-
-                                        <!-- MÓN SALE -->
-                                        <li class="header__mega--menu__li fullscreen__style d-flex">
-                                            <a class="header__mega--menu__banner display-block" th:href="@{/tfive/menu}"><img class="header__mega--menu__banner--img" src="/assets/img/banner/banner1.webp" alt="banner-menu">
-                                            <div class="banner__content">
-                                                    <span class="banner__content--subtitle text__secondary mb-10">20% off</span>
-                                                    <h2 class="banner__content--title"><span class="banner__content--title__inner">New</span> COLLECTION</h2>
-                                                    <span class="banner__content--price">$22.99</span>
-                                                </div>
-                                            </a>
-                                                <div class="banner__content right">
-                                                    <span class="banner__badge--style2">20% Off</span>
-                                                    <h2 class="banner__content--title"><span class="banner__content--title__inner"> ON </span> SALE <br> PRODUCT</h2>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="header__menu--items">
                                     <a class="header__menu--link" th:href="@{/tfive/blog}">Tin tức</a>
@@ -298,66 +243,8 @@
                                     </a>
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link" th:href="@{/tfive/menu}">Thực đơn
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
-                                            <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
-                                        </svg>
+                                    <a class="header__menu--link" th:href="@{/tfive/menu}">Cửa hàng
                                     </a>
-                                    <ul class="header__mega--menu d-flex">
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Coffe</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Coffe Phin</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Coffe Espresso</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Trà</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Trà Vải</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Trà đào </a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Trà chanh</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Xem thêm <i class="ti-angle-right icon-nav"></i> </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Kem</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Kem bơ</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Kem dừa</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Kem socola</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Xem thêm <i class="ti-angle-right icon-nav"></i> </a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="header__mega--menu__li">
-                                            <ul class="header__mega--sub__menu">
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title bold" href="#">Đồ ăn vặt</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Cá viên chiên</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Bánh ngọt</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Nem chua rán</a></li>
-                                                <li class="header__mega--sub__menu_li"><a class="header__mega--sub__menu--title" href="#">Xem thêm <i class="ti-angle-right icon-nav"></i> </a></li>
-                                            </ul>
-                                        </li>
-
-                                        <!-- MÓN SALE -->
-                                        <li class="header__mega--menu__li fullscreen__style d-flex">
-                                            <a class="header__mega--menu__banner display-block" th:href="@{/tfive/menu}"><img class="header__mega--menu__banner--img" src="/assets/img/banner/banner1.webp" alt="banner-menu">
-
-                                                <div class="banner__content">
-                                                    <span class="banner__content--subtitle text__secondary mb-10">20% off</span>
-                                                    <h2 class="banner__content--title"><span class="banner__content--title__inner">New</span> COLLECTION</h2>
-                                                    <span class="banner__content--price">$22.99</span>
-                                                </div>
-                                            </a>
-                                            <a class="header__mega--menu__banner display-block" th:href="@{/tfive/menu}"><img class="header__mega--menu__banner--img" src="/assets/img/banner/banner2.webp" alt="banner-menu">
-
-                                                <div class="banner__content right">
-                                                    <span class="banner__badge--style2">20% Off</span>
-                                                    <h2 class="banner__content--title"><span class="banner__content--title__inner"> ON </span> SALE <br> PRODUCT</h2>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="header__menu--items">
                                     <a class="header__menu--link" th:href="@{/tfive/blog}">Tin tức</a>
@@ -423,48 +310,8 @@
                             <a class="offcanvas__menu_item" th:href="@{/tfive/}">Trang chủ</a>
                         </li>
                         <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" th:href="@{/tfive/menu}">Thực đơn</a>
+                            <a class="offcanvas__menu_item" th:href="@{/tfive/menu}">Cửa hàng</a>
 
-                            <ul class="offcanvas__sub_menu">
-                                <li class="offcanvas__sub_menu_li">
-                                    <a href="#" class="offcanvas__sub_menu_item">Coffe</a>
-                                    <ul class="offcanvas__sub_menu">
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" th:href="@{/tfive/menu}">Coffe Phine</a></li>
-
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="shop-right-sidebar.html">Coffe Espresso</a></li>
-                                    </ul>
-                                </li>
-                                <li class="offcanvas__sub_menu_li">
-                                    <a href="#" class="offcanvas__sub_menu_item">Trà</a>
-                                    <ul class="offcanvas__sub_menu">
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="product-details.html">Trà vải</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="product-video.html">Trà đào</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="product-details.html">Trà chanh</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="product-left-sidebar.html">Trà xã tắc</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="product-gallery.html">Xem thêm</a></li>
-                                    </ul>
-                                </li>
-                                <li class="offcanvas__sub_menu_li">
-                                    <a href="#" class="offcanvas__sub_menu_item">Kem</a>
-                                    <ul class="offcanvas__sub_menu">
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="my-account.html">Kem bơ</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="my-account-2.html">Kem dừa</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="404.html">Kem socola</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="login.html">Kem matcha</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="faq.html">Xem thêm</a></li>
-                                    </ul>
-                                </li>
-                                <li class="offcanvas__sub_menu_li">
-                                    <a href="#" class="offcanvas__sub_menu_item">Đồ ăn vặt</a>
-                                    <ul class="offcanvas__sub_menu">
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="about.html">Cá viên chiên</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="contact.html">Bánh ngọt</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="portfolio.html">Nem chua rán</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="compare.html">Đùi gà bó xôi</a></li>
-                                        <li class="offcanvas__sub_menu_li"><a class="offcanvas__sub_menu_item" href="checkout.html">Xem thêm</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
                         <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">Tin tức</a></li>
                         <li class="offcanvas__menu_li">
@@ -517,7 +364,7 @@
                     <span class="offcanvas__stikcy--toolbar__icon"> 
                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18.51" height="17.443" viewBox="0 0 448 512"><path d="M416 32H32A32 32 0 0 0 0 64v384a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm-16 48v152H248V80zm-200 0v152H48V80zM48 432V280h152v152zm200 0V280h152v152z"></path></svg>
                         </span>
-                    <span class="offcanvas__stikcy--toolbar__label">Thực đơn</span>
+                    <span class="offcanvas__stikcy--toolbar__label">Cửa hàng</span>
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list ">
@@ -580,8 +427,9 @@
                     <div class="minicart__text">
                         <h4 class="minicart__subtitle"><a th:href="@{'/tfive/product/' + ${cart.dish.dishID}}" th:text="${cart.dish.name}">Tên sản phẩm</a></h4>
                         <div class="minicart__price">
-                            <span class="minicart__current--price" th:text="*{#numbers.formatDecimal(cart.dish.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">$125.00</span>
-                            <span class="minicart__old--price">$140.00</span>
+                             <span class="minicart__current--price" 
+                             th:text="${cart.dish.discountPrice!=null ? #numbers.formatDecimal(cart.dish.discountPrice, 0, 'COMMA', 0, 'POINT') : #numbers.formatDecimal(cart.dish.price, 0, 'COMMA', 0, 'POINT')} + 'đ'">20M VNĐ</span>
+                             <span class="minicart__old--price" th:if="${cart.dish.discountPrice!=null}" th:text="${#numbers.formatDecimal(cart.dish.price, 0, 'COMMA', 0, 'POINT')+'đ'}">21M VNĐ</span>
                         </div>
                         <div class="minicart__text--footer d-flex align-items-center">
                             <div class="quantity__box minicart__quantity">
@@ -618,7 +466,7 @@
                 <h2 class="predictive__search--title">Tìm kiếm sản phẩm</h2>
                 <form class="predictive__search--form" th:action="@{/tfive/search}">
                     <label>
-                        <input class="predictive__search--input" name="name" placeholder="Nhập tên sản phẩm" type="text">
+                        <input class="predictive__search--input" name="name" placeholder="Nhập tên món..." type="text" required="required">
                     </label>
                     <button class="predictive__search--button text-white" aria-label="search button"><svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="30.51" height="25.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"/></svg>  </button>
                 </form>

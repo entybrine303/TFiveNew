@@ -43,7 +43,7 @@
                                 <input type="hidden" name="dishID" th:field="*{dishID}"> 
                                     <h2 th:text="*{name}" name="name" class="product__details--info__title mb-15 dish-name">Tên món</h2>
                                     <div class="product__details--info__price mb-12">
-                                    	<input type="hidden" name="price" th:field="*{price}"> 
+                                    	<input type="hidden" name="discountPrice" th:field="*{discountPrice}"> 
                                         <span class="current__price" 
                                                     th:text="*{discountPrice!=null ? #numbers.formatDecimal(discountPrice, 0, 'COMMA', 0, 'POINT') : #numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')} + 'đ'">20M VNĐ</span>
                                                     <span class="old__price" th:if="*{discountPrice!=null}" th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')+'đ'}">21M VNĐ</span>
@@ -99,10 +99,16 @@
                                                 <button type="button" id="increase" onclick="changeQuantity('+')" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                             </div>
                                         </div>
-                                        <div class="product__variant--list mb-15">
+                                        <div class="product__variant--list mb-15" th:if="${inPresent==null}">
                                             <a class="variant__wishlist--icon mb-15" th:href="@{'/tfive/wishlist/addToWishlist/'+*{dishID}}" title="Add to wishlist">
                                                 <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
                                                 Yêu thích
+                                            </a>
+                                            <button class="primary__btn quickview__cart--btn" type="submit">Thêm vào giỏ hàng</button> 
+                                        </div>
+                                        <div class="product__variant--list mb-15"  th:if="${inPresent==true}">
+                                            <a class="variant__wishlist--icon mb-15" th:href="@{'/tfive/wishlist/deleteBy/'+*{dishID}}" title="Add to wishlist">
+                                                <i class="fa-solid fa-heart" style="color: red; padding-right: 6px;"></i> Bỏ yêu thích
                                             </a>
                                             <button class="primary__btn quickview__cart--btn" type="submit">Thêm vào giỏ hàng</button> 
                                         </div>

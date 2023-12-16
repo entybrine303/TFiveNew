@@ -13,7 +13,7 @@ public class CartDTO {
   private String dishID;
 //  private String customerID;
   private String name;
-  private double price;
+  private double discountPrice;
   private int quantity;
   private Boolean isEdit=false;
 }

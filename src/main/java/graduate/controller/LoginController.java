@@ -61,26 +61,19 @@ public class LoginController {
 	public ModelAndView login(ModelMap model, 
 			@Valid @ModelAttribute("account") LoginDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
+			model.addAttribute("messL", "Sai dữ liệu, mời nhập lại");
 			return new ModelAndView("customerUI/login", model);
 		}
-		
+
 		Account account=accountService.login(dto.getUsername(), dto.getPassword());
 		if (account==null) {
-			model.addAttribute("mess", "Invalid username or password");
+			model.addAttribute("messL", "Không tìm thấy thông tin đăng nhập");
 			return new ModelAndView("customerUI/login", model);
 		}
-		
+
 		session.setAttribute("username", account.getUsername());
 		session.setAttribute("role", account.getRole());
-		
-		 // Lấy đường dẫn trang trước đó từ session
-        String referer = (String) request.getSession().getAttribute("referer");
-        if (referer != null && !referer.isEmpty()) {
-            // Xóa thông tin đã lưu trong session
-            request.getSession().removeAttribute("referer");
-            // Chuyển hướng về trang trước đó
-            return new ModelAndView("redirect:" + referer);
-        }
+	
         
         if (account.getRole().equals("admin")) return RedirectHelper.redirectTo("/tfive/admin/category/view");
         if (account.getRole().equals("driver")) return RedirectHelper.redirectTo("/tfive/driver/home");
@@ -93,34 +86,38 @@ public class LoginController {
 	public ModelAndView saveorUpdate(ModelMap model, 
 			@Valid @ModelAttribute("register") LoginDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
+			model.addAttribute("messR", "Sai dữ liệu đầu vào");
 			return new ModelAndView("customerUI/login");
+		}
+
+		if (accountService.existsById(dto.getUsername())) {
+			model.addAttribute("messR", "Tên đăng nhập đã tồn tại");
+			return new ModelAndView("customerUI/register");
 		}
 		
 		if (!dto.getConfirmPassword().equals(dto.getPassword())) {
-			model.addAttribute("mess", "Đăng kí thất bại! Mật khẩu không trùng khớp");
-			return new ModelAndView("customerUI/login");
-		}
-		
-		if (accountService.existsById(dto.getUsername())) {
-			model.addAttribute("mess", "Tên đăng nhập đã tồn tại");
+			model.addAttribute("messR", "Đăng kí thất bại! Mật khẩu không trùng khớp");
 			return new ModelAndView("customerUI/register");
 		}
+		
 		Account entity = new Account();
 		
 		BeanUtils.copyProperties(dto, entity);
+		
+//		Khi người dùng đăng kí ở form của người dùng, thì mặc định set role cho người dùng là 'user'
 		entity.setRole("user");
 		
 		accountService.save(entity);
 		
-//		Tạo customerID để lưu trữ dữ liệu của user, dữ liêu được lưu ở bảng Customer
-//		Khởi tạo trường customerID và username tương ứng với account được đăng kí
-		Customer customer=new Customer();
-		customer.setCustomerID("U-"+RamdomID.generateRandomId());
-		customer.setAccount(new Account(entity.getUsername()));
-		customerService.save(customer);
+		/*Khi người dùng đăng kí thành công thì tự động set userID ngẫu nhiên vào bảng User,
+		 sau đó cũng lưu username vừa được đăng kí vào bảng User*/
+		Customer user=new Customer();
+		user.setCustomerID("U-"+RamdomID.generateRandomId());
+		user.setAccount(new Account(entity.getUsername()));
+		customerService.save(user);
 		
-		model.addAttribute("mess", "Đăng kí thành công");
-		 return RedirectHelper.redirectTo("/tfive/account/login");
+		model.addAttribute("messL", "Đăng kí thành công");
+		return RedirectHelper.redirectTo("/tfive/account/login");
 	}
 
 }

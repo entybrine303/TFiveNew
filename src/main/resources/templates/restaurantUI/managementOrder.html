@@ -1,126 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{restaurantForm.html}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{restaurantForm.html}">
+
 <head>
-	<title>QUẢN LÝ ĐƠN HÀNG</title>
+    <title>QUẢN LÝ ĐƠN HÀNG</title>
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/restaurant/order.css">
 </head>
+
 <body>
     <section layout:fragment="body">
         <main>
             <div class="body">
-                <div class="box-btn-control">
-                    <button class="btn-reload"><i class="ti-reload"></i></button>
-                    <button class="btn-filter"><i class="ti-filter"></i></button>
-                </div>
-    
-                <div class="tabs">
-                    <ul class="t-nav nav nav-tabs w-100" id="myTab" role="tablist">
-                        <li class="t-nav-item nav-item w-25">
-                            <a class="nav-link " data-toggle="tab" href="#order-reserve" role="tab"
-                                aria-controls="order-reserve" aria-selected="true">Đặt trước</a>
-                        </li>
-                        <li class="t-nav-item nav-item w-25">
-                            <a class="nav-link active" data-toggle="tab" href="#order-new" role="tab"
-                                aria-controls="order-new" aria-selected="false">Đơn mới</a>
-                        </li>
-                        <li class="t-nav-item nav-item w-25">
-                            <a class="nav-link" data-toggle="tab" href="#order-received" role="tab"
-                                aria-controls="order-received" aria-selected="false">Đã nhận</a>
-                        </li>
-                        <li class="t-nav-item nav-item w-25">
-                            <a class="nav-link" data-toggle="tab" href="#order-history" role="tab"
-                                aria-controls="order-history" aria-selected="false">Lịch sử</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content box-ctn-order" id="myTabContent">
-                        <div class="order-list tab-pane fade show" id="order-reserve" role="tabpanel">
-                            <div class="box-order-reserve c-box-order">
-                                <div class="order-head row">
-                                    <div class="ctn-l col-6">
-                                        <p class="order-id">Mã đơn hàng</p>
-                                    </div>
-                                </div>
-                                <div class="order-body">
-                                    <div class="ctn-b">
-                                        <p>Số lượng món: <span class="total-quantity" ></span></p>
-                                        <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label
-                                            class="deliver bland">Tổng tiền: <span
-                                                class="customer-name" >20.000đ</span></label>
-                                         <div class="clear"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-list tab-pane fade show active" id="order-new" role="tabpanel">
-                            <div class="box-order-new c-box-order" th:if="*{order.status=='Đã đặt'}" th:each="order : ${listOrder}">
-                        <a th:href="@{'/tfive/admin/order/detail/'+*{order.orderID}}">
-                                <div class="order-head row">
-                                    <div class="ctn-l col-6">
-                                        <p class="order-id" th:text="${order.orderID}">Mã đơn hàng</p>
-                                    </div>
-                                </div>
-                                <div class="order-body">
-                                    <div class="ctn-b">
-                                        <p>Số lượng món: <span class="total-quantity" th:text="*{order.totalQuantity}"></span></p>
-                                        <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label
-                                            class="deliver bland">Tổng tiền: <span
-                                                class="customer-name" th:text="*{#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">20.000đ</span></label>
-                                         <div class="clear"></div>
-                                    </div>
-                                </div>
-                            </a>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="order-received" role="tabpanel">
-                            <div th:if="*{order.status=='Xác nhận'}" class="box-order-received c-box-order" th:each="order : ${listOrder}">
-                        <a th:href="@{'/tfive/admin/order/detail/'+*{order.orderID}}">
-                                <div class="order-head row">
-                                    <div class="ctn-l col-6">
-                                        <p class="order-id" th:text="${order.orderID}">Mã đơn hàng</p>
-                                    </div>
-                                </div>
-                                <div class="order-body">
-                                    <div class="ctn-b">
-                                        <p>Số lượng món: <span class="total-quantity"  th:text="*{order.totalQuantity}"></span></p>
-                                        <i class="fa-solid fa-circle dot-icon" style="color: green;"></i><label
-                                            class="deliver bland">Tổng tiền: <span
-                                                class="customer-name" th:text="*{#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">20.000đ</span></label>
-                                         <div class="clear"></div>
-                                    </div>
-                                </div>
-                            </a>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="order-history" role="tabpanel">
-                            <div class="box-order-history c-box-order" th:each="order : ${listOrder}">
-                            <a th:if="*{order.status!='Xác nhận' and order.status!='Đã đặt'}"
-                             th:href="@{'/tfive/admin/order/detail/'+*{order.orderID}}" style="color: black">
-                                <div class="order-head row">
-                                    <div class="ctn-l col-6">
-                                        <p th:if="*{order.status=='Đã huỷ'}" style="color: red" class="order-id" th:text="${order.orderID}">Mã đơn hàng</p>
-                                        <p th:if="*{order.status!='Đã huỷ'}" style="color: green" class="order-id" th:text="${order.orderID}">Mã đơn hàng</p>
-                                    </div>
-                                </div>
-                                <div class="order-body">
-                                    <div class="ctn-b">
-                                            <div class="row box-some-order-info" style="margin: 0 20px">
-                                                <p class="col-6" style="text-align: left;"><i class="fa-solid fa-utensils"></i> <span class="total-quantity" th:text="*{order.totalQuantity}"></span> món</p>
-                                                <p class="col-6" style="text-align: right;"><i class="fa-solid fa-file-invoice-dollar"></i> <span class="total-quantity" th:text="*{#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">50.000đ</span></p>
-                                            </div>
-                                        </div>
-                                </div>
-                                </a>
-                                
+                <div style="padding: 30px 20px;">
+                    <div class="app-title">
+                        <ul class="app-breadcrumb breadcrumb side">
+                            <li class="breadcrumb-item active"><a href="#"><b>Danh sách đơn hàng</b></a></li>
+                        </ul>
+                        <div id="clock"></div>
+                    </div>
+				      <div class="box-filter">
+				        <ul>
+				          <li><a th:href="@{'/tfive/admin/order/view'}">Tất cả </a></li>
+				          | <li><a th:href="@{'/tfive/admin/order/filterByStatus/Đã đặt'}">Chưa xác nhận</a></li>
+				          | <li><a th:href="@{'/tfive/admin/order/filterByStatus/Đang giao'}">Đang giao</a></li>
+				          | <li><a th:href="@{'/tfive/admin/order/filterByStatus/Hoàn thành'}">Đã hoàn tất</a></li>
+				          | <li><a th:href="@{'/tfive/admin/order/filterByStatus/Đã huỷ'}">Đã huỷ</a></li>
+				        </ul>
+				      </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tile">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID đơn hàng</th>
+                                            <th>Khách hàng</th>
+                                            <th>Số lượng</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order : ${listOrder}" th:if="${delivering==null}">
+                                          <td th:text="${'#'+order.orderID}"></td>
+                                          <td th:text="${order.customer.name}"></td>
+                                          <td th:text="${order.totalQuantity}"></td>
+                                          <td  th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                                          <td>
+                                           <span th:if="${order.status!='Đã đặt' and order.status!='Đã huỷ'}" th:text="${order.status}" class="cl-white badge bg-success">Hoàn thành</span>
+                                           <span th:if="${order.status=='Đã đặt'}"class="cl-white badge bg-warning">Chờ xác nhận</span>
+                                           <span th:if="${order.status=='Đã huỷ'}" th:text="${order.status}" class="cl-white badge bg-danger"></span>
+                                          </td>
+                                          <td>
+                                          <!-- <button class="btn btn-primary btn-sm trash" type="button"
+                                                  title="Xóa"><i class="fas fa-trash-alt"></i> </button>
+                                              <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i
+                                                      class="fa fa-edit"></i></button> -->
+                                                      <a class="btn btn-primary btn-sm trash" th:href="@{'/tfive/admin/order/detail/'+${order.orderID}}" title="Chi tiết"><i class="fa-regular fa-eye"></i></a>
+                                                      <a class="btn btn-success btn-sm trash" title="Xác nhận"
+                                                      th:if="${order.status=='Đã đặt'}"
+                                                      th:href="@{'/tfive/admin/order/updateStatus/'+${order.orderID}+'/Xác nhận'}" ><i class="fa-regular fa-square-check"></i></a>
+                                                      <a class="btn btn-danger btn-sm trash" href="" title="Từ chối"
+                                                      	onclick="showConfirmationBox(event, this, 'Bạn muốn huỷ đơn hàng này?')"
+                                                      th:if="${order.status=='Đã đặt'}"
+	                       								th:href="@{'/tfive/admin/order/updateStatus/'+${order.orderID}+'/Đã huỷ'}">
+	                       									<i class="fa-regular fa-rectangle-xmark"></i>
+	                       								</a>
+                                          </td>
+                                      </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                
             </div>
         </main>
-        
+
     </section>
 
 </body>

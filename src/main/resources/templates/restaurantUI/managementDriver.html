@@ -9,13 +9,12 @@
 <body>
     <section layout:fragment="body">
         <nav class="nav-search w-100">
-            <form action="">
+             <form th:action="@{/tfive/admin/driver/search}" method="post">
                 <div class="box-search">
-                    <input class="input-search" type="text" placeholder="Tìm kiếm.....">
-                    <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input class="input-search" name="name" type="text" placeholder="Tìm kiếm.....">
+                    <button class="btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </form>
-    
         </nav>
     
         <main class="mt-74">
@@ -39,7 +38,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="item : ${driver}" th:if="${item.confirm == 1}">
+                                <tr th:each="item : ${drivers}">
                                     <th scope="row" th:text="${item.driverID}"></th>
                                     <td scope="row" th:text="${item.name}"></td>
                                     <td scope="row" th:text="${item.phoneNumber}"></td>

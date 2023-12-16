@@ -35,11 +35,6 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 
 	@Override
-	public void deleteByCustomer_CustomerID(String customerID) {
-		wishlistRepository.deleteByCustomer_CustomerID(customerID);
-	}
-
-	@Override
 	public List<Wishlist> findByCustomer_CustomerID(String customerID) {
 		// TODO Auto-generated method stub
 		return wishlistRepository.findByCustomer_CustomerID(customerID);
@@ -189,6 +184,26 @@ public class WishlistServiceImpl implements WishlistService {
 	public void deleteAllInBatch(List<Wishlist> entities) {
 		wishlistRepository.deleteInBatch(entities);
 
+	}
+
+	@Override
+	public boolean productIsPresentInWishlist(String productId, String customerId) {
+		Optional<Wishlist> w=  wishlistRepository.findByProductIdAndCustomerId(productId, customerId);
+		if (w.isPresent()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void deleteByCustomer_CustomerID(String customerID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteByProductIdAndCustomerId(String productId, String customerId) {
+		wishlistRepository.deleteByProductIdAndCustomerId(productId, customerId);
 	}
 
 }

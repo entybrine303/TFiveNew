@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import graduate.domain.Account;
+import graduate.domain.Customer;
 import graduate.domain.Dish;
 import graduate.domain.Driver;
+import graduate.dto.CustomerDTO;
 import graduate.dto.DishDTO;
 import graduate.dto.DriverDTO;
 import graduate.dto.DriverRegisterDTO;
@@ -55,7 +57,7 @@ public class ManagementDriverController {
 
 	void fillToTable(ModelMap model) {
 		List<Driver> list = driverService.findAll();
-		model.addAttribute("driver", list);
+		model.addAttribute("drivers", list);
 		List<DriverRegister> list2 = driverRegisterService.findAll();
 		model.addAttribute("rDriver", list2);
 	}
@@ -78,8 +80,6 @@ public class ManagementDriverController {
 		return "restaurantUI/update-driver";
 	}
 
-
-
 //	Cập nhật thông tin tài xế
 	@PostMapping("update")
 	public ModelAndView update(ModelMap model, @Valid @ModelAttribute("driver") DriverDTO dto, BindingResult result) {
@@ -94,7 +94,6 @@ public class ManagementDriverController {
 		BeanUtils.copyProperties(dto, entity);
 		entity.setDriverID(dto.getDriverID());
 		entity.setWorkStatus(dto.getWorkStatus());
-		entity.setConfirm(1);
 		Optional<Driver> driver=driverService.findById(dto.getDriverID());
 		entity.setAccount(driver.get().getAccount());
 		driverService.save(entity);
@@ -123,19 +122,17 @@ public class ManagementDriverController {
 			driver.setEmail(opt.get().getEmail());
 			driver.setName(opt.get().getName());
 			driver.setIdentificationCard(opt.get().getIdentificationCard());
-			driver.setConfirm(1);
 			driver.setAccount(account);	
 			driverService.save(driver);
 			
-			
-			String contentInMail="Chào "+ opt.get().getName()+", \n"
-					+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã được chấp thuận. \n"
-					+ "Chúng tôi gửi bạn thông tin đăng nhập cho tài khoản Driver của bạn: \n"
-					+ "Username: "+ account.getUsername()+"\n"
-					+ "Mật khẩu: "+ account.getPassword();
-//			mailSenderService.sendEmail(opt.get().getEmail(), "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
-			mailSenderService.sendEmail("thanhnmpd06751@fpt.edu.vn", "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
-			
+//			
+//			String contentInMail="Chào "+ opt.get().getName()+", \n"
+//					+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã được chấp thuận. \n"
+//					+ "Chúng tôi gửi bạn thông tin đăng nhập cho tài khoản Driver của bạn: \n"
+//					+ "Username: "+ account.getUsername()+"\n"
+//					+ "Mật khẩu: "+ account.getPassword();
+//			mailSenderService.sendEmail("thanhnmpd06751@fpt.edu.vn", "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
+//			
 			driverRegisterService.deleteById(phoneNumber);
 			
 		}
@@ -144,16 +141,11 @@ public class ManagementDriverController {
 	}
 
 	@GetMapping("delete/{driverID}")
-	public ModelAndView delete(ModelMap model, @PathVariable("driverID") String dishID) {
-		Optional<Driver> opt = driverService.findById(dishID);
-
-		if (opt.isPresent()) {
-			Driver driver = opt.get();
-			driver.setConfirm(2);
-			driverService.save(driver); // Assuming you have a save/update method in your service
-		}
-
-		return new ModelAndView(viewDriver(model), model);
+	public ModelAndView delete(ModelMap model, @PathVariable("driverID") String driverID) {
+		System.out.println(driverID);
+		driverService.deleteById(driverID);
+		
+		return RedirectHelper.redirectTo("/tfive/admin/driver/view");
 	}
 
 	@GetMapping("edit/{driverID}")
@@ -170,8 +162,18 @@ public class ManagementDriverController {
 
 			return new ModelAndView("restaurantUI/update-driver", model);
 		}
-		model.addAttribute("mess", "Dish is not existed");
+		model.addAttribute("mess", "");
 
-		return new ModelAndView("restaurantUI/managementDish", model);
+		return new ModelAndView("restaurantUI/managementDriver", model);
+	}
+	
+	@PostMapping("search")
+	public String searchCustomerByName(ModelMap model, @Valid @ModelAttribute("driver") DriverDTO dto, BindingResult result) {
+		if (result.hasErrors()) {
+			return "restaurantUI/managementCustomer";
+		}
+		List<Driver> list= driverService.findByNameContaining(dto.getName());
+		model.addAttribute("drivers", list);
+		return "restaurantUI/managementDriver";
 	}
 }
