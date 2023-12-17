@@ -100,14 +100,14 @@
                                                 <tbody>
                                                     <tr class="cart__summary--total__list">
                                                         <td class="cart__summary--total__title text-left">Tổng cộng</td>
-                                                        <td class="cart__summary--amount text-right" th:text="${#numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">$860.00</td>
+                                                        <td class="cart__summary--amount text-right" th:text="${cartTotalPrice==null? '0' : #numbers.formatDecimal(cartTotalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">$860.00</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="cart__summary--footer">
                                             <p class="cart__summary--footer__desc">Phí vận chuyển và các phí khác sẽ được tính khi thanh toán</p>
-                                            <a style="text-align: center;" class="w-100 cart__summary--footer__btn primary__btn checkout" th:href="@{/tfive/checkout}">Thanh toán</a>
+                                            <a th:if="${cartItems!=null}" style="text-align: center;" class="w-100 cart__summary--footer__btn primary__btn checkout" th:href="@{/tfive/checkout}">Thanh toán</a>
                                         </div>
                                     </div> 
                                 </div>

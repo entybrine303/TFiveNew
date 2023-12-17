@@ -61,7 +61,6 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
 
 	@Autowired
 	private DishService dishService;
@@ -106,9 +105,9 @@ public class OrderController {
 			List<OrderDetail> list = orderDetailService.findByOrder_OrderID(orderID);
 			model.addAttribute("listOrder", list);
 
-			double reducedPrice=0;
-			if (getOrder.getVoucher()!=null) {
-				reducedPrice=getOrder.getVoucher().getReducedPrice();
+			double reducedPrice = 0;
+			if (getOrder.getVoucher() != null) {
+				reducedPrice = getOrder.getVoucher().getReducedPrice();
 			}
 			int totalQuantity = 0;
 			for (int i = 0; i < list.size(); i++) {
@@ -116,24 +115,22 @@ public class OrderController {
 			}
 
 			model.addAttribute("totalQuantity", totalQuantity);
-			model.addAttribute("totalMoney",
-					getOrder.getTotalPrice() + getOrder.getShipMoney() - reducedPrice);
+			model.addAttribute("totalMoney", getOrder.getTotalPrice() + getOrder.getShipMoney() - reducedPrice);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("mess", e.getMessage());
 		}
 	}
-	
 
 	public void fillDelivery(ModelMap model, String orderID) {
 		try {
-			Delivery delivery=deliveryService.findByOrder_OrderId(orderID);
-			
+			Delivery delivery = deliveryService.findByOrder_OrderId(orderID);
+
 			model.addAttribute("took", delivery.getTookOrder());
 			model.addAttribute("complete", delivery.getCompleteOrder());
-			Date time=deliveryService.findLatestUpdateDate(orderID);
+			Date time = deliveryService.findLatestUpdateDate(orderID);
 			model.addAttribute("time", time);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("mess", e.getMessage());
 		}
@@ -166,26 +163,28 @@ public class OrderController {
 		return "customerUI/checkout";
 	}
 
-	@GetMapping("checkout/selectVoucher/{voucherID}")
-	public ModelAndView updateOrder(ModelMap model, @PathVariable("voucherID") String voucherID) {
-		return useVoucher(voucherID, model);
-	}
-
 	@PostMapping("checkout/findVoucher")
 	public ModelAndView findVoucher(ModelMap model, @Valid @ModelAttribute("voucher") VoucherDTO dto,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			return new ModelAndView("customerUI/checkout");
 		}
-		return useVoucher(dto.getVoucherID(), model);
+		Optional<Voucher> opt = voucherService.findById(dto.getVoucherID());
+		
+		dto.setVoucherID(dto.getVoucherID());
+		model.addAttribute("voucher", dto);
+		if (!opt.isPresent()) {
+			model.addAttribute("mess", "Không tìm thấy voucher này");
+			return new ModelAndView(viewCheckout(model), model);
+		}
 
-	}
-
-	ModelAndView useVoucher(String voucherID, ModelMap model) {
-		Optional<Voucher> opt = voucherService.findById(voucherID);
+		if ((double) model.getAttribute("cartTotalPrice") < opt.get().getMinimumPrice()) {
+			model.addAttribute("mess", "Đơn hàng phải tối thiểu " + opt.get().getMinimumPrice()+"đ");
+			return new ModelAndView(viewCheckout(model), model);
+		}
 
 		model.addAttribute("reducedPrice", opt.get().getReducedPrice());
-		model.addAttribute("ipVoucherID", voucherID);
+		model.addAttribute("ipVoucherID",dto.getVoucherID());
 		return new ModelAndView(viewCheckout(model), model);
 	}
 
@@ -201,10 +200,10 @@ public class OrderController {
 			insertToOrderTbl(model, dto, result, orderID);
 			insertToOrderDetailTbl(model, dto, result, orderID);
 			insertToDeliveryTbl(model, dto, result, orderID);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		voucherService.decreaseQuantityByOne(dto.getVoucherID());
 		cartService.deleteByCustomer_CustomerID(session.getAttribute("customerID").toString());
 		return RedirectHelper.redirectTo("/tfive/my-order");
 
@@ -212,8 +211,8 @@ public class OrderController {
 
 	@GetMapping("cancel-order/{orderID}")
 	public ModelAndView cancelOrder(ModelMap model, @PathVariable("orderID") String orderID) {
-		orderService.updateStatus("Đã huỷ",orderID);
-		return RedirectHelper.redirectTo("/tfive/order-detail/"+orderID);
+		orderService.updateStatus("Đã huỷ", orderID);
+		return RedirectHelper.redirectTo("/tfive/order-detail/" + orderID);
 	}
 
 	void insertToOrderTbl(ModelMap model, CheckoutDTO dto, BindingResult result, String orderID) {
@@ -224,13 +223,13 @@ public class OrderController {
 			entity.setShipMoney((double) 20000);
 			entity.setStatus("Đã đặt");
 			entity.setTotalPrice(calculaterTotalMoney(model));
-			
-			int totalQuantity=(int) model.getAttribute("cartTotalQuantity");
-			entity.setTotalQuantity(totalQuantity);	
-			
+
+			int totalQuantity = (int) model.getAttribute("cartTotalQuantity");
+			entity.setTotalQuantity(totalQuantity);
+
 			// Lưu thông tin customer vào đơn hàng
 			entity.setCustomer(new Customer(session.getAttribute("customerID").toString()));
-			
+
 			entity.setRestaurant(new Restaurant("R01"));
 			entity.setNoteForRestaurant(dto.getNoteForR());
 			entity.setNoteForDriver(dto.getNoteForD());
@@ -281,21 +280,19 @@ public class OrderController {
 
 	}
 
-
 	@GetMapping("order-detail/{orderID}")
 	public String viewOrderDetail(ModelMap model, @PathVariable("orderID") String orderID) {
 		fillProduct(model, orderID);
-		
+
 		return "customerUI/order-detail";
 	}
-	
 
 	@GetMapping("my-order")
 	public String viewOrder(ModelMap model) {
-		List<Order> list=orderService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
-		
-		List<Order> list1= list.stream().sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
-        .collect(Collectors.toList());
+		List<Order> list = orderService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
+
+		List<Order> list1 = list.stream().sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
+				.collect(Collectors.toList());
 		model.addAttribute("listOrder", list1);
 		return "customerUI/my-order";
 	}

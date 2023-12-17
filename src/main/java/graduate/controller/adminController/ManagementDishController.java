@@ -36,6 +36,7 @@ import graduate.service.DishService;
 import graduate.service.StorageService;
 import graduate.utils.RamdomID;
 import graduate.utils.RedirectHelper;
+import groovyjarjarantlr4.v4.runtime.atn.SemanticContext.AND;
 
 @Controller
 @RequestMapping("tfive/admin/dish")
@@ -73,17 +74,7 @@ public class ManagementDishController {
 		model.addAttribute("dish", dishDTO);
 		return "restaurantUI/managementDish";
 	}
-
-//  Dùng để load ảnh đã được lưu 
-//	@GetMapping("/uploads/{filename:.+}")
-//	@ResponseBody
-//	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-//		Resource file = storageService.loadAsResource(filename);
-//		return ResponseEntity.ok()
-//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-//				.body(file);
-//	}
-
+	
 	@PostMapping("saveOrUpdate")
 	public ModelAndView save(ModelMap model, @Valid @ModelAttribute("dish") DishDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
@@ -115,8 +106,9 @@ public class ManagementDishController {
 			String uuString = uuid.toString();
 			entity.setImg(storageService.getStoredFileName(dto.getImageFile(), uuString));
 			storageService.storeImageWithResize(dto.getImageFile(), entity.getImg(), 209, 171);
+		}else if (dto.getImageFile().isEmpty() && dto.getIsEdit()==true) {
+			entity.setImg(dto.getImg());
 		}
-		
 		entity.setRestaurant(new Restaurant("R01"));
 		dishService.save(entity);
 		model.addAttribute("mess", "Product is saved");

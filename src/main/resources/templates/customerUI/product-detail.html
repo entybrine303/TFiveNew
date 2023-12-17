@@ -92,11 +92,11 @@
                                     <div class="product__variant">
                                         <div class="product__variant--list quantity d-flex align-items-center mb-20">
                                             <div class="quantity__box">
-                                                <button type="button" id="decrease" onclick="changeQuantity('')" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
+                                                <button type="button" id="decrease" onclick="changeQuantity('-')" class="quantity__value quickview__value--quantity decrease" >-</button>
                                                 <label>
                                                     <input id="txt-quantity" name="quantity" type="number" class="quantity__number quickview__value--number" value="1" data-counter />
                                                 </label>
-                                                <button type="button" id="increase" onclick="changeQuantity('+')" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
+                                                <button type="button" id="increase" onclick="changeQuantity('+')" class="quantity__value quickview__value--quantity increase">+</button>
                                             </div>
                                         </div>
                                         <div class="product__variant--list mb-15" th:if="${inPresent==null}">

@@ -14,7 +14,7 @@ public class VoucherDTO {
   private String img;
   private double reducedPrice;
   private double minimumPrice;
-  private boolean IsShare;
+  private int quantity;
   private boolean VoucherType;
   private Boolean isEdit = false;
 }

@@ -16,8 +16,12 @@ public interface VoucherService {
 //  List<Voucher> findByNameContaining(String name);
 //
 //  Page<Voucher> findByNameContaining(String name, Pageable pageable);
+	
+	Page<Voucher> getAll(Integer pageNo);
 
   Voucher save(Voucher entity);
+  
+  void decreaseQuantityByOne(String voucherID);
 
   <S extends Voucher> Optional<S> findOne(Example<S> example);
 

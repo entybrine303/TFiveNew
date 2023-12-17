@@ -119,26 +119,15 @@
                                 method="post" th:object="${voucher}">
                                 <div class="d-flex">
                                     <label>
-                                        <input class="checkout__discount--code__input--field border-radius-5" name="voucherID" placeholder="Nhập mã giảm giá"  type="text">
+                                    
+                                        <input class="checkout__discount--code__input--field border-radius-5" th:field="*{voucherID}" name="voucherID" placeholder="Nhập mã giảm giá"  type="text">
                                     </label>
                                     <button class="checkout__discount--code__btn primary__btn border-radius-5" type="submit">Áp</button>
                                 </div>
+                                    <small style="padding-left: 4px;color: red;font-weight: bold;font-size: 14px;"
+                                    th:if="${mess!=null}" th:text="${'*'+mess}"></small>
                                 </form>
                                 <hr>
-                                <div class="show-voucher">
-                                    <a class="w-100" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        Chọn voucher <i class="fa-solid fa-angle-right"></i>
-                                      </a>  
-                                </div>
-                                  <div class="collapse" id="collapseExample">
-                                    <div class="card card-body" th:each="item : ${vouchers}" th:if="${item.isShare and totalMoney>= item.minimumPrice}">
-                                    	<a th:href="@{'/tfive/checkout/selectVoucher/'+${item.voucherID}}">
-                                                <span th:text="${'Mã '+item.voucherID}" th:if="${item.voucherType}" class="bold"  style="color: blue;">Đơn hàng</span>
-                                                <span th:text="${'Mã '+item.voucherID}" th:if="${item.voucherType==false}" class="bold" style="color: green;">Vận chuyển</span>
-                                                <p class="voucher-description" th:text="${item.description}">Mô tả .............</p>
-                                            </a>
-                                    </div>
-                                </div>
                             </div>
                             <div class="checkout__total">
                                 <table class="checkout__total--table">

@@ -21,7 +21,7 @@
                         <form th:action="@{/tfive/admin/dish/saveOrUpdate}" method="post"
                               class="card container form-management" th:object="${dish}"
                             enctype="multipart/form-data">
-                            
+                            <input type="hidden" th:field="*{img}" name="img">
                             <div class="row">
                                 <div class="box-l col-sm-7">
                                         <input type="hidden" th:field="*{isEdit}" name="isEdit" >

@@ -131,6 +131,11 @@ public class AccountController {
 			
 			return new ModelAndView(viewChangePass(model));
 		}
+		if (dto.getNewPassword().equals(dto.getPassword())) {
+			model.addAttribute("error", "Mật khẩu mới trùng với mật khẩu cũ!");
+			
+			return new ModelAndView(viewChangePass(model));
+		}
 		if (!dto.getConfirmPassword().equals(dto.getNewPassword())) {
 			model.addAttribute("error", "Mật khẩu không trùng khớp");
 			return new ModelAndView(viewChangePass(model));

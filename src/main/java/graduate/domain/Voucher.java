@@ -30,7 +30,7 @@ public class Voucher implements Serializable{
 	private String description;
 	private Double reducedPrice;
 	private Double minimumPrice;
-	private Boolean isShare;
+	private Integer quantity;
 	private Boolean VoucherType;
 	
 	@ManyToOne

@@ -23,68 +23,66 @@ import graduate.service.AccountService;
 import graduate.service.CustomerService;
 import graduate.utils.RamdomID;
 import graduate.utils.RedirectHelper;
+
 @Controller
 @RequestMapping("tfive/account")
 public class LoginController {
-	
+
 	@Autowired
 	AccountService accountService;
-	
+
 	@Autowired
 	CustomerService customerService;
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private HttpServletRequest request;
-	
-	
 
 	@GetMapping("login")
 	public String viewLogin(ModelMap model) {
 
-		
 		model.addAttribute("register", new LoginDTO());
 		return "customerUI/login";
 	}
-	
+
 	@GetMapping("logout")
 	public ModelAndView logout(ModelMap model) {
 
 		session.invalidate();
-		
-		 return RedirectHelper.redirectTo("/tfive/");
+
+		return RedirectHelper.redirectTo("/tfive/");
 	}
-	
+
 	@PostMapping("pLogin")
-	public ModelAndView login(ModelMap model, 
-			@Valid @ModelAttribute("account") LoginDTO dto, BindingResult result) {
+	public ModelAndView login(ModelMap model, @Valid @ModelAttribute("account") LoginDTO dto, BindingResult result) {
 		if (result.hasErrors()) {
 			model.addAttribute("messL", "Sai dữ liệu, mời nhập lại");
 			return new ModelAndView("customerUI/login", model);
 		}
 
-		Account account=accountService.login(dto.getUsername(), dto.getPassword());
-		if (account==null) {
+		Account account = accountService.login(dto.getUsername(), dto.getPassword());
+		if (account == null) {
 			model.addAttribute("messL", "Không tìm thấy thông tin đăng nhập");
 			return new ModelAndView("customerUI/login", model);
 		}
 
 		session.setAttribute("username", account.getUsername());
 		session.setAttribute("role", account.getRole());
-	
-        
-        if (account.getRole().equals("admin")) return RedirectHelper.redirectTo("/tfive/admin/category/view");
-        if (account.getRole().equals("driver")) return RedirectHelper.redirectTo("/tfive/driver/home");
-		
-        System.out.println(session.getAttribute("role")+" Login");
-		 return RedirectHelper.redirectTo("/tfive/");
+
+		if (account.getRole().equals("admin"))
+			return RedirectHelper.redirectTo("/tfive/admin/category/view");
+		if (account.getRole().equals("driver"))
+			return RedirectHelper.redirectTo("/tfive/driver/home");
+
+		System.out.println(session.getAttribute("role") + " Login");
+		return RedirectHelper.redirectTo("/tfive/");
 	}
 
 	@PostMapping("/pRegister")
-	public ModelAndView saveorUpdate(ModelMap model, 
-			@Valid @ModelAttribute("register") LoginDTO dto, BindingResult result) {
+	public ModelAndView saveorUpdate(ModelMap model, @Valid @ModelAttribute("register") LoginDTO dto,
+			BindingResult result) {
 		if (result.hasErrors()) {
 			model.addAttribute("messR", "Sai dữ liệu đầu vào");
 			return new ModelAndView("customerUI/login");
@@ -94,28 +92,30 @@ public class LoginController {
 			model.addAttribute("messR", "Tên đăng nhập đã tồn tại");
 			return new ModelAndView("customerUI/register");
 		}
-		
+
 		if (!dto.getConfirmPassword().equals(dto.getPassword())) {
 			model.addAttribute("messR", "Đăng kí thất bại! Mật khẩu không trùng khớp");
 			return new ModelAndView("customerUI/register");
 		}
-		
+
 		Account entity = new Account();
-		
+
 		BeanUtils.copyProperties(dto, entity);
-		
+
 //		Khi người dùng đăng kí ở form của người dùng, thì mặc định set role cho người dùng là 'user'
 		entity.setRole("user");
-		
+
 		accountService.save(entity);
-		
-		/*Khi người dùng đăng kí thành công thì tự động set userID ngẫu nhiên vào bảng User,
-		 sau đó cũng lưu username vừa được đăng kí vào bảng User*/
-		Customer user=new Customer();
-		user.setCustomerID("U-"+RamdomID.generateRandomId());
+
+		/*
+		 * Khi người dùng đăng kí thành công thì tự động set userID ngẫu nhiên vào bảng
+		 * User, sau đó cũng lưu username vừa được đăng kí vào bảng User
+		 */
+		Customer user = new Customer();
+		user.setCustomerID("U-" + RamdomID.generateRandomId());
 		user.setAccount(new Account(entity.getUsername()));
 		customerService.save(user);
-		
+
 		model.addAttribute("messL", "Đăng kí thành công");
 		return RedirectHelper.redirectTo("/tfive/account/login");
 	}
