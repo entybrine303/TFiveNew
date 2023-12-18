@@ -181,6 +181,11 @@ public Customer findByUsername(String username) {
     return customerReponsitory.findAll(example, sort);
   }
 
+@Override
+public Customer findByEmail(String email) {
+	return customerReponsitory.findByEmail(email);
+}
+
 
 
 }

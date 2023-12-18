@@ -60,7 +60,7 @@ public class ManagementVoucherController {
 
 		if (voucherService.existsById(dto.getVoucherID()) && dto.getIsEdit() == false) {
 			model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
-			return new ModelAndView(viewForm(model), model);
+			return new ModelAndView(viewForm(model, 1), model);
 		}
 
 		Voucher entity = new Voucher();
@@ -93,7 +93,7 @@ public class ManagementVoucherController {
 
 	@GetMapping("edit/{voucherID}")
 	public ModelAndView edit(ModelMap model, @PathVariable("voucherID") String voucherID) {
-		fillToTable(model);
+		fillToTable(model, 1);
 		Optional<Voucher> opt = voucherService.findById(voucherID);
 		VoucherDTO dto = new VoucherDTO();
 

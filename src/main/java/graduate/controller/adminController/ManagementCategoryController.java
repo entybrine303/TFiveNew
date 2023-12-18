@@ -2,6 +2,7 @@ package graduate.controller.adminController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -63,7 +64,7 @@ public class ManagementCategoryController {
 		}
 
 		if (categoriesService.existsById(dto.getCategoryID()) && dto.getIsEdit() == false) {
-			model.addAttribute("mess", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
+			model.addAttribute("error", "ID này đã tồn tại. Vui lòng chọn một ID khác.");
 			return new ModelAndView(viewForm(model), model);
 		}
 		

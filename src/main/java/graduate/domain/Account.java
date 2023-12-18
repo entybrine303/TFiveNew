@@ -27,11 +27,11 @@ public class Account implements Serializable{
 	@Column(length = 20)
 	private String role;
 	
-	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "account")
     private Restaurant restaurant;
-	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "account")
     private Customer customer;
-	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "account")
     private Driver driver;
 	
 	public Account(String username) {

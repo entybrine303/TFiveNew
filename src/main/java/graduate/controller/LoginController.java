@@ -18,9 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import graduate.domain.Account;
 import graduate.domain.Customer;
+import graduate.dto.CustomerDTO;
 import graduate.dto.LoginDTO;
 import graduate.service.AccountService;
 import graduate.service.CustomerService;
+import graduate.service.MailSenderService;
 import graduate.utils.RamdomID;
 import graduate.utils.RedirectHelper;
 
@@ -33,6 +35,9 @@ public class LoginController {
 
 	@Autowired
 	CustomerService customerService;
+
+	@Autowired
+	MailSenderService mailSenderService;
 
 	@Autowired
 	private HttpSession session;
@@ -117,7 +122,39 @@ public class LoginController {
 		customerService.save(user);
 
 		model.addAttribute("messL", "Đăng kí thành công");
-		return RedirectHelper.redirectTo("/tfive/account/login");
+		return new ModelAndView("customerUI/login");
 	}
 
+	@GetMapping("forgot-password")
+	public String viewForgotPassword(ModelMap model) {
+
+		model.addAttribute("register", new LoginDTO());
+		return "customerUI/forgot-password";
+	}
+
+	@PostMapping("pForgotPass")
+	public ModelAndView forgotPassword(ModelMap model, @Valid @ModelAttribute("account") CustomerDTO dto,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("messL", "Sai dữ liệu, mời nhập lại");
+			return new ModelAndView("customerUI/login", model);
+		}
+
+		Customer customer = customerService.findByEmail(dto.getEmail());
+		if (customer == null) {
+			model.addAttribute("messL", "Không tìm thấy email này");
+			return new ModelAndView("customerUI/forgot-password", model);
+		}
+		
+		String contentInMail="Chào "+ customer.getName()+", \n"
+				+ "Chúng tôi xin gửi bạn thông tin đăng nhập\n"
+				+ "Vui lòng không cung cấp cho người khác để tránh bị chiếm đoạt tài khoản\n"
+				+ "Username: "+ customer.getAccount().getUsername()+"\n"
+				+ "Mật khẩu: "+ customer.getAccount().getPassword();
+		mailSenderService.sendEmail(dto.getEmail(), "THÔNG TIN ĐĂNG NHẬP", contentInMail);
+
+		model.addAttribute("messL", "Chúng tôi đã gửi thông tin đăng nhập về mail của bạn");
+
+		return RedirectHelper.redirectTo("/tfive/account/login");
+	}
 }

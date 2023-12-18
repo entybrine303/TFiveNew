@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import graduate.domain.Account;
 import graduate.domain.Driver;
 import graduate.dto.DriverDTO;
+import graduate.dto.LoginDTO;
+import graduate.service.AccountService;
 import graduate.service.DriverService;
 import graduate.utils.RedirectHelper;
 @Controller
@@ -30,6 +32,10 @@ public class DriverProfileController {
 	
 	@Autowired
 	private DriverService driverService;
+	
+
+	@Autowired
+	private AccountService accountService;
 	
 	void fillDriverInfo(ModelMap model) {
 		try {
@@ -56,7 +62,23 @@ public class DriverProfileController {
 		return "driverUI/update-driver";
 	}
 	
+	@GetMapping("profile/change-password")
+	public String viewChangePassword(ModelMap model) {
+		Optional<Account> account = accountService.findById(session.getAttribute("username").toString());
+		LoginDTO dto = new LoginDTO();
 
+		if (account.isPresent()) {
+			Account entity = account.get();
+			BeanUtils.copyProperties(entity, dto);
+			dto.setPassword(null);
+			dto.setConfirmPassword(null);
+
+			model.addAttribute("account", dto);
+			return "driverUI/change-password";
+		}
+		return "driverUI/change-password";
+	}
+	
 //	Cập nhật thông tin tài xế
 	@PostMapping("profile/update")
 	public ModelAndView update(ModelMap model, @Valid @ModelAttribute("driver") DriverDTO dto, BindingResult result) {
@@ -76,5 +98,43 @@ public class DriverProfileController {
 		model.addAttribute("driver", new DriverDTO());
 		return RedirectHelper.redirectTo("/tfive/driver/profile/detail");
 
+	}
+
+	@PostMapping("profile/change-password/pChangePassword")
+	public ModelAndView changePass(ModelMap model, @Valid @ModelAttribute("account") LoginDTO dto,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("error", "Lỗi dữ liệu đầu vào!");
+			return new ModelAndView(viewChangePassword(model));
+		}
+		
+		Optional<Account> acc = accountService.findById(session.getAttribute("username").toString());
+
+		if (!dto.getPassword().equals(acc.get().getPassword())) {
+			model.addAttribute("error", "Mật khẩu cũ sai!");
+			
+			return new ModelAndView(viewChangePassword(model));
+		}
+		if (dto.getNewPassword().equals(dto.getPassword())) {
+			model.addAttribute("error", "Mật khẩu mới trùng với mật khẩu cũ!");
+			
+			return new ModelAndView(viewChangePassword(model));
+		}
+		if (!dto.getConfirmPassword().equals(dto.getNewPassword())) {
+			model.addAttribute("error", "Mật khẩu không trùng khớp");
+			return new ModelAndView(viewChangePassword(model));
+		}
+		
+		Account entity = new Account();
+
+		BeanUtils.copyProperties(dto, entity);
+
+		entity.setPassword(dto.getNewPassword());
+		entity.setRole(session.getAttribute("role").toString());
+
+		accountService.save(entity);
+
+		model.addAttribute("mess", "Đổi mật khẩu thành công");
+		return new ModelAndView(viewChangePassword(model));
 	}
 }

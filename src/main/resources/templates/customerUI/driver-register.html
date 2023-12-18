@@ -16,7 +16,7 @@
                             <div class="box-register">
                             <h3>Điền thông tin để đăng kí Tài xế</h3>
                             <hr>
-
+							<div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
                              <input name="name" id="name" type="text" placeholder="Họ và tên" required>
                              <input name="phoneNumber" type="text" placeholder="Số điện thoại" maxlength="10" required>
                              <input name="email" type="email" placeholder="Email" required>

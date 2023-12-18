@@ -12,12 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CustomerService {
 
 	 Customer findByUsername(String username);
 
   List<Customer> findByNameContaining(String name);
+  Customer findByEmail(String email);
 
   Customer save(Customer entity);
 
@@ -58,6 +60,7 @@ public interface CustomerService {
 
   void deleteAllInBatch();
 
+  @Transactional
   void deleteById(String id);
 
   Customer getOne(String id);

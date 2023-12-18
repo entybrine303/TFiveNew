@@ -57,7 +57,7 @@ public class ManagementCustomerController {
 	public ModelAndView delete(ModelMap model, @PathVariable("customerId") String customerId) {
 		customerService.deleteById(customerId);
 		model.addAttribute("mess", "Customer id delete");
-		return RedirectHelper.redirectTo("tfive/admin/customer/view");
+		return RedirectHelper.redirectTo("/tfive/admin/customer/view");
 	}
 
 	@GetMapping("edit/{customerId}")

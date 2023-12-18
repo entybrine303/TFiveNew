@@ -125,14 +125,14 @@ public class ManagementDriverController {
 			driver.setAccount(account);	
 			driverService.save(driver);
 			
-//			
-//			String contentInMail="Chào "+ opt.get().getName()+", \n"
-//					+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã được chấp thuận. \n"
-//					+ "Chúng tôi gửi bạn thông tin đăng nhập cho tài khoản Driver của bạn: \n"
-//					+ "Username: "+ account.getUsername()+"\n"
-//					+ "Mật khẩu: "+ account.getPassword();
-//			mailSenderService.sendEmail("thanhnmpd06751@fpt.edu.vn", "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
-//			
+			
+			String contentInMail="Chào "+ opt.get().getName()+", \n"
+					+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã được chấp thuận. \n"
+					+ "Chúng tôi gửi bạn thông tin đăng nhập cho tài khoản Driver của bạn: \n"
+					+ "Username: "+ account.getUsername()+"\n"
+					+ "Mật khẩu: "+ account.getPassword();
+			mailSenderService.sendEmail(opt.get().getEmail(), "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
+			
 			driverRegisterService.deleteById(phoneNumber);
 			
 		}
@@ -142,9 +142,13 @@ public class ManagementDriverController {
 
 	@GetMapping("delete/{driverID}")
 	public ModelAndView delete(ModelMap model, @PathVariable("driverID") String driverID) {
-		System.out.println(driverID);
 		driverService.deleteById(driverID);
-		
+		return RedirectHelper.redirectTo("/tfive/admin/driver/view");
+	}
+	
+	@GetMapping("cancel-driver/{phoneNumber}")
+	public ModelAndView cancelDriver(ModelMap model, @PathVariable("phoneNumber") String phoneNumber) {
+		driverRegisterService.deleteById(phoneNumber);
 		return RedirectHelper.redirectTo("/tfive/admin/driver/view");
 	}
 

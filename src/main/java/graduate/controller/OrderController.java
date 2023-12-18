@@ -153,7 +153,8 @@ public class OrderController {
 	public String viewCheckout(ModelMap model) {
 		fillCustomerInfo(model);
 		fillVoucher(model);
-
+		
+		model.addAttribute("voucher", new VoucherDTO());
 		model.addAttribute("shipMoney", 20000);
 		model.addAttribute("totalMoney", calculaterTotalMoney(model));
 
@@ -291,9 +292,9 @@ public class OrderController {
 	public String viewOrder(ModelMap model) {
 		List<Order> list = orderService.findByCustomer_CustomerID(session.getAttribute("customerID").toString());
 
-		List<Order> list1 = list.stream().sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
+		list = list.stream().sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
 				.collect(Collectors.toList());
-		model.addAttribute("listOrder", list1);
+		model.addAttribute("listOrder", list);
 		return "customerUI/my-order";
 	}
 }

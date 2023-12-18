@@ -16,15 +16,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import graduate.domain.Driver;
 import graduate.domain.DriverRegister;
 import graduate.dto.DriverRegisterDTO;
 import graduate.service.DriverRegisterService;
+import graduate.service.DriverService;
+import graduate.utils.RedirectHelper;
 import graduate.service.DriverRegisterService;
 @Controller
 @RequestMapping("tfive/account/driver-register")
 public class DriverRegisterController {
 	@Autowired
 	private DriverRegisterService driverRegisterService;
+
+	@Autowired
+	private DriverService driverService;
 	
 	@GetMapping("view")
 	public String viewRegister(ModelMap model) {
@@ -39,18 +45,16 @@ public class DriverRegisterController {
 		if (result.hasErrors()) {
 			return new ModelAndView("customerUI/driver-register");
 		}
-
+		
 		DriverRegister entity = new DriverRegister();
 		BeanUtils.copyProperties(dao, entity);
 		
-
 		driverRegisterService.save(entity);
 		
-
 		model.addAttribute("mess", "Tài khoản đã được lưu thành công");
 		model.addAttribute("driver", new DriverRegisterDTO());
 		
-		return new ModelAndView("customerUI/driver-register", model);
+		return RedirectHelper.redirectTo("/tfive/account/driver-register/view");
 	}
 	
 }

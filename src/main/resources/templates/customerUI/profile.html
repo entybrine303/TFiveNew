@@ -51,7 +51,10 @@
                                 <div class="box-customer-info row">
                                         <div class="box-edit-info col-7">
                                             <table>
-                                                <tr>
+                                                <tr th:if="${error!=null}">
+                                                    <td class="td-left"></td>
+                                                    <td class="td-right"><p style="color: red; font-weight: bold;" th:text="${'*'+error}"></p></td>
+                                                </tr><tr>
                                                     <td class="td-left"><p class="bland">Tên đăng nhập: </p></td>
                                                     <td class="td-right" th:text="*{account.username}">Thanhducam</td>
                                                 </tr>
@@ -108,6 +111,7 @@
                                             <input name="imageFile"
                                              id="fileInput" type="file" style="display: none;"
                                             onchange="chooseFile(this)"/>
+                                            
                                         </div>
                                         <div class="account__details--footer d-flex w-75">
                                             <button class="account__details--footer__btn" type="submit">Cập nhật</button>

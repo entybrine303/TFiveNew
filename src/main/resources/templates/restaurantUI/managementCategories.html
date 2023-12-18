@@ -31,6 +31,8 @@
 							<div class="box-l">
 
                           <input type="hidden" th:field="*{isEdit}" name="isEdit" >
+                          <div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+   			<div th:if="${mess}" th:text="${mess}" class="alert alert-success" role="alert"></div>
                           <label for="categoryID">Id:</label>
                           <input type="text" class="form-control" id="categoryID" placeholder="ID Danh mục"
                           readonly th:field="*{categoryID}" name="categoryID" >

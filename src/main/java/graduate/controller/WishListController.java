@@ -88,10 +88,9 @@ public class WishListController {
 	
 	@GetMapping("wishlist/deleteBy/{productId}")
 	public ModelAndView deleteByProductIdAndCustomerId(ModelMap model, @PathVariable("productId") String productId) {
-		System.out.println(productId+"hhehehehe "+ session.getAttribute("customerID"));
 		wishlistService.deleteByProductIdAndCustomerId(productId, session.getAttribute("customerID").toString());
 
-		return RedirectHelper.redirectTo("/tfive/product/"+productId);
+		return RedirectHelper.redirectTo("/tfive/wishlist");
 	}
 	
 

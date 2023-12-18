@@ -69,7 +69,7 @@
                                     <td th:text="${item.email}"></td>
                                     <td th:text="${item.identificationCard}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/driver/confirm/'+${item.phoneNumber}}">Xác nhận</a>
-                                        | <a th:href="@{'/tfive/admin/driver/delete/' +${item.phoneNumber}} ">Từ chối</a>
+                                        | <a th:href="@{'/tfive/admin/driver/cancel-driver/' +${item.phoneNumber}} ">Từ chối</a>
 
                                     </td>
                                 </tr>
