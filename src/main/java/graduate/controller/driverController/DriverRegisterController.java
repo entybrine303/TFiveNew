@@ -45,14 +45,27 @@ public class DriverRegisterController {
 		if (result.hasErrors()) {
 			return new ModelAndView("customerUI/driver-register");
 		}
+		if(driverRegisterService.existsById(dao.getPhoneNumber())) {
+			model.addAttribute("mess", "SDT trùng");
+			
+		}
+		List<Driver> drivers = driverService.findAll();
+		for (Driver driver : drivers) {
+		    if (driver.getPhoneNumber().equals(dao.getPhoneNumber())) {
+		    	model.addAttribute("mess", "SDT trùng");
+		    }
+		}
+		 
+			DriverRegister entity = new DriverRegister();
+			BeanUtils.copyProperties(dao, entity);
+			
+			driverRegisterService.save(entity);
+			
+			model.addAttribute("mess", "Tài khoản đã được lưu thành công");
+			model.addAttribute("driver", new DriverRegisterDTO());
 		
-		DriverRegister entity = new DriverRegister();
-		BeanUtils.copyProperties(dao, entity);
 		
-		driverRegisterService.save(entity);
 		
-		model.addAttribute("mess", "Tài khoản đã được lưu thành công");
-		model.addAttribute("driver", new DriverRegisterDTO());
 		
 		return RedirectHelper.redirectTo("/tfive/account/driver-register/view");
 	}

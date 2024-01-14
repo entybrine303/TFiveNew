@@ -24,6 +24,7 @@ import graduate.utils.RedirectHelper;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;import org.springframework.data.convert.DtoInstantiatingConverter;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -90,6 +91,7 @@ public class ManagementDriverController {
 			model.addAttribute("mess", "Bạn không được thay đổi số điện thoại");
 			return new ModelAndView(viewDriver(model), model);
 		}
+		SimpleMailMessage msg = new SimpleMailMessage();
 		Driver entity = new Driver();
 		BeanUtils.copyProperties(dto, entity);
 		entity.setDriverID(dto.getDriverID());
@@ -124,7 +126,7 @@ public class ManagementDriverController {
 			driver.setIdentificationCard(opt.get().getIdentificationCard());
 			driver.setAccount(account);	
 			driverService.save(driver);
-			
+			driverRegisterService.deleteById(phoneNumber);
 			
 			String contentInMail="Chào "+ opt.get().getName()+", \n"
 					+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã được chấp thuận. \n"
@@ -133,7 +135,7 @@ public class ManagementDriverController {
 					+ "Mật khẩu: "+ account.getPassword();
 			mailSenderService.sendEmail(opt.get().getEmail(), "ĐĂNG KÍ THÀNH CÔNG", contentInMail);
 			
-			driverRegisterService.deleteById(phoneNumber);
+			
 			
 		}
 

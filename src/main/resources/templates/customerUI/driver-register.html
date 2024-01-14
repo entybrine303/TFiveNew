@@ -16,8 +16,11 @@
                             <div class="box-register">
                             <h3>Điền thông tin để đăng kí Tài xế</h3>
                             <hr>
-							<div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
-                             <input name="name" id="name" type="text" placeholder="Họ và tên" required>
+								<div th:if="${mess}" th:text="${mess}" class="alert alert-success"
+									role="alert"></div>
+									<div th:if="${messfail}" th:text="${messfail}" class="alert alert-danger"
+									role="alert"></div>
+								<input name="name" id="name" type="text" placeholder="Họ và tên" required>
                              <input name="phoneNumber" type="text" placeholder="Số điện thoại" maxlength="10" required>
                              <input name="email" type="email" placeholder="Email" required>
                              <input maxlength="12" name="identificationCard" type="text" placeholder="Số CMND / CCCD" required>
@@ -27,7 +30,9 @@
                      </form>
                     </div>
                     <div class="box-intro col-md-7">
-                        <h2>Trở thành đối tác và đồng hành cùng chúng tôi</h2>
+                    
+                  
+                        <h2>Trở thành đối tác và đồng hành cùng chúng tôi </h2>
                         <label for="name" class="c-btn-register"><i class="ti-arrow-circle-left"></i> ĐĂNG KÍ NGAY</label>
                         
                     </div>

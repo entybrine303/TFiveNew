@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import graduate.domain.Account;
@@ -21,6 +22,7 @@ import graduate.domain.Customer;
 import graduate.dto.CustomerDTO;
 import graduate.dto.LoginDTO;
 import graduate.service.AccountService;
+import graduate.service.CookieService;
 import graduate.service.CustomerService;
 import graduate.service.MailSenderService;
 import graduate.utils.RamdomID;
@@ -44,11 +46,15 @@ public class LoginController {
 
 	@Autowired
 	private HttpServletRequest request;
+	
+	@Autowired
+	CookieService cookieService;
 
 	@GetMapping("login")
 	public String viewLogin(ModelMap model) {
 
 		model.addAttribute("register", new LoginDTO());
+		
 		return "customerUI/login";
 	}
 
@@ -56,12 +62,15 @@ public class LoginController {
 	public ModelAndView logout(ModelMap model) {
 
 		session.invalidate();
+		cookieService.remove("username");
+		cookieService.remove("password");
 
 		return RedirectHelper.redirectTo("/tfive/");
 	}
 
 	@PostMapping("pLogin")
-	public ModelAndView login(ModelMap model, @Valid @ModelAttribute("account") LoginDTO dto, BindingResult result) {
+	public ModelAndView login(ModelMap model, @Valid @ModelAttribute("account") LoginDTO dto, BindingResult result,
+			@RequestParam(value = "rememberMe", required = false) boolean rememberMe) {
 		if (result.hasErrors()) {
 			model.addAttribute("messL", "Sai dữ liệu, mời nhập lại");
 			return new ModelAndView("customerUI/login", model);
@@ -75,6 +84,17 @@ public class LoginController {
 
 		session.setAttribute("username", account.getUsername());
 		session.setAttribute("role", account.getRole());
+		
+		if (rememberMe == true) {
+	        // Tạo một cookie
+	        cookieService.add("username", dto.getUsername(), 1);
+	        cookieService.add("password", dto.getPassword(), 1);
+	        model.addAttribute("username", cookieService.get("username"));
+	        model.addAttribute("password", cookieService.get("password"));
+		}else {
+			cookieService.remove("username");
+			cookieService.remove("password");
+		}
 
 		if (account.getRole().equals("admin"))
 			return RedirectHelper.redirectTo("/tfive/admin/category/view");
@@ -102,6 +122,7 @@ public class LoginController {
 			model.addAttribute("messR", "Đăng kí thất bại! Mật khẩu không trùng khớp");
 			return new ModelAndView("customerUI/register");
 		}
+		
 
 		Account entity = new Account();
 
@@ -119,6 +140,7 @@ public class LoginController {
 		Customer user = new Customer();
 		user.setCustomerID("U-" + RamdomID.generateRandomId());
 		user.setAccount(new Account(entity.getUsername()));
+		user.setSex(true);
 		customerService.save(user);
 
 		model.addAttribute("messL", "Đăng kí thành công");
