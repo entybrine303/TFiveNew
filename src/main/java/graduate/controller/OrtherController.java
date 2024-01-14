@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import graduate.domain.Driver;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import graduate.domain.Driver;
 import graduate.domain.DriverRegister;
 import graduate.dto.DriverDTO;
 import graduate.dto.DriverRegisterDTO;
@@ -35,9 +35,8 @@ public class OrtherController {
 
 	@Autowired
 	private DriverRegisterService driverRegisterService;
-	
 	@Autowired
-	DriverService driverService;
+	private DriverService driverService;
 
 	
 	@Autowired
@@ -94,13 +93,12 @@ public class OrtherController {
 
 		if (driverRegisterService.existsById(dto.getPhoneNumber())) {
 			model.addAttribute("messfail", "Tài khoản đã tồn tại");
-			System.out.println("Tài khoản đã tồn tại");
 		}
 		else {
 			List<Driver> drivers = driverService.findAll();
 			for (Driver driver : drivers) {
 				if (driver.getPhoneNumber().equals(dto.getPhoneNumber())) {
-					model.addAttribute("messfail", "SDT trùng");
+					model.addAttribute("messfail", "Tài khoản đã tồn tại");
 				}else {
 					DriverRegister entity = new DriverRegister();
 					BeanUtils.copyProperties(dto, entity);
@@ -112,4 +110,5 @@ public class OrtherController {
 		}
 		return new ModelAndView("customerUI/driver-register", model);
 	}
+	
 }

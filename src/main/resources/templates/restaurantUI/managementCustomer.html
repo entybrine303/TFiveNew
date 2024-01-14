@@ -24,7 +24,7 @@
                     <table class="table tbl-cart">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">ID Khách</th>
+                                <th scope="col">Tài khoản</th>
                                 <th scope="col">Họ và tên</th>
                                 <th scope="col">Giới tính</th>
                                 <th scope="col">Số điện thoại</th>
@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="item : ${customers}" >
-                                <td scope="row" th:text="${item.customerID}"></td>
+                                <td scope="row" th:text="${item.account.username}"></td>
                                 <td scope="row" th:text="${item.name}"></td>
                                 <td th:text="${item.sex == true ? 'Nam' : 'Nữ'}"></td>
                                 <td th:text="${item.phoneNumber}"></td>
