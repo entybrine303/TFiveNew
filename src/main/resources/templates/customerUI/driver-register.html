@@ -12,7 +12,7 @@
             <div class="container" >
                 <div class="row c--box" >
                     <div class="box-form col-md-5 col-12">
-                        <form th:action="@{/tfive/account/driverRegister/saveOrUpdate}" method="post" th:object="${driver}">
+                        <form th:action="@{/tfive/account/driverRegister/saveOrUpdate}" method="post"  enctype="multipart/form-data" th:object="${driver}">
                             <div class="box-register">
                             <h3>Điền thông tin để đăng kí Tài xế</h3>
                             <hr>
@@ -24,7 +24,38 @@
                              <input name="phoneNumber" type="text" placeholder="Số điện thoại" maxlength="10" required>
                              <input name="email" type="email" placeholder="Email" required>
                              <input maxlength="12" name="identificationCard" type="text" placeholder="Số CMND / CCCD" required>
-                             <hr>
+                                <div>
+                                    <script>
+                                        function chooseFile(fileInput) {
+                                            if (fileInput.files
+                                                && fileInput.files[0]) {
+                                                var reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    $('#image').attr(
+                                                        'src',
+                                                        e.target.result);
+                                                }
+
+                                                reader
+                                                    .readAsDataURL(fileInput.files[0])
+                                            }
+                                        }
+                                    </script>
+
+                                    <div class="box-img">
+
+
+                                        <img id="image" th:src="${'/assets/img/product/main-product/product1.webp'}" width="80%" height="80%" alt="">
+
+                                        <input type="file" onchange="chooseFile(this)" name="imageFile"
+                                               id="img" placeholder="productImage">
+
+                                    </div>
+
+
+
+                                </div>
+                                <hr>
                              <button class="btn-register">Đăng kí</button>
                          </div>
                      </form>

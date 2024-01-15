@@ -33,6 +33,7 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Họ và tên</th>
                                     <th scope="col">SĐT</th>
+                                    <th scope="col">CCCD</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
@@ -42,6 +43,7 @@
                                     <th scope="row" th:text="${item.driverID}"></th>
                                     <td scope="row" th:text="${item.name}"></td>
                                     <td scope="row" th:text="${item.phoneNumber}"></td>
+                                    <td scope="row" th:text="${item.identificationCard}"></td>
                                     <td th:text="${item.email}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/driver/edit/' +${item.driverID}} ">Edit</a>
                                         | <a th:href="@{'/tfive/admin/driver/delete/' +${item.driverID}} "
@@ -58,6 +60,7 @@
                                     <th scope="col">Họ và tên</th>
                                     <th scope="col">SĐT</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Ảnh CCCD</th>
                                     <th scope="col">CCCD</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
@@ -67,6 +70,7 @@
                                     <td scope="row" th:text="${item.name}"></td>
                                    <td th:text="${item.phoneNumber}"></td>
                                     <td th:text="${item.email}"></td>
+                                    <td scope="row"><img th:src="${item.img != null ? '/assets/img/uploads/' + item.img : '/assets/img/product/main-product/product1.webp'}"  width="100" height="60"/></td>
                                     <td th:text="${item.identificationCard}"></td>
                                     <td><a class="edit" th:href="@{'/tfive/admin/driver/confirm/'+${item.phoneNumber}}">Xác nhận</a>
                                         | <a th:href="@{'/tfive/admin/driver/cancel-driver/' +${item.phoneNumber}} ">Từ chối</a>

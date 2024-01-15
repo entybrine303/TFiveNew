@@ -25,4 +25,5 @@ public class DriverRegister implements Serializable{
 	private String email;
 	@Column(length = 12)
 	private String identificationCard;
+	private String img;
 }

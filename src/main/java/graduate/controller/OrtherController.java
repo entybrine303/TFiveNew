@@ -1,12 +1,14 @@
 package graduate.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import graduate.domain.Driver;
+import graduate.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import graduate.domain.DriverRegister;
 import graduate.dto.DriverDTO;
 import graduate.dto.DriverRegisterDTO;
-import graduate.service.AccountService;
-import graduate.service.DriverRegisterService;
-import graduate.service.DriverService;
-import graduate.service.MailSenderService;
 
 @Controller
 @RequestMapping("tfive")
@@ -41,6 +39,8 @@ public class OrtherController {
 	
 	@Autowired
 	private HttpServletRequest request;
+	@Autowired
+	private StorageService storageService;
 	
 	
 	@GetMapping("blog")
@@ -102,9 +102,17 @@ public class OrtherController {
 				}else {
 					DriverRegister entity = new DriverRegister();
 					BeanUtils.copyProperties(dto, entity);
-					driverRegisterService.save(entity);
+					if (!dto.getImageFile().isEmpty()) {
+						UUID uuid = UUID.randomUUID();
+						String uuString = uuid.toString();
+						entity.setImg(storageService.getStoredFileName(dto.getImageFile(), uuString));
+						storageService.storeImageWithResize(dto.getImageFile(), entity.getImg(), 209, 171);
+					}else if (dto.getImageFile().isEmpty()) {
+						entity.setImg(dto.getImg());
+					}
 					model.addAttribute("mess", "Tài khoản đã được lưu thành công");
 					model.addAttribute("driver", new DriverDTO());
+					driverRegisterService.save(entity);
 				}
 			}
 		}

@@ -123,6 +123,7 @@ public class ManagementDriverController {
 			driver.setPhoneNumber(opt.get().getPhoneNumber());
 			driver.setEmail(opt.get().getEmail());
 			driver.setName(opt.get().getName());
+			driver.setImg(opt.get().getImg());
 			driver.setIdentificationCard(opt.get().getIdentificationCard());
 			driver.setAccount(account);	
 			driverService.save(driver);
@@ -150,7 +151,11 @@ public class ManagementDriverController {
 	
 	@GetMapping("cancel-driver/{phoneNumber}")
 	public ModelAndView cancelDriver(ModelMap model, @PathVariable("phoneNumber") String phoneNumber) {
+		Optional<DriverRegister> opt = driverRegisterService.findById(phoneNumber);
 		driverRegisterService.deleteById(phoneNumber);
+		String contentInMail="Chào "+ opt.get().getName()+", \n"
+				+ "Đơn đăng kí trở thành đối tác tài xế của bạn đã bị từ chối.";
+		mailSenderService.sendEmail(opt.get().getEmail(), "ĐĂNG KÍ KHÔNG THÀNH CÔNG", contentInMail);
 		return RedirectHelper.redirectTo("/tfive/admin/driver/view");
 	}
 
