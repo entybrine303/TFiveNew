@@ -11,76 +11,98 @@
         <main>
             <div class="container box-main">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#management-voucher" role="tab"
+                    <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#management-voucher" role="tab"
                             aria-controls="management-voucher" aria-selected="true">Quản lý voucher</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#list-voucher" role="tab"
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#list-voucher" role="tab"
                             aria-controls="list-voucher" aria-selected="false">Danh sách voucher</a></li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="management-voucher" role="tabpanel" aria-labelledby="home-tab">
-                        <form action="/admin/products/saveOrUpdate" method="post" class="card container form-management"
-                            enctype="multipart/form-data">
+                    <div class="tab-pane fade" id="management-voucher" role="tabpanel" aria-labelledby="home-tab">
+                        <form th:action="@{/tfive/admin/voucher/saveOrUpdate}" method="post" class="card container form-management"
+                            enctype="multipart/form-data" th:object="${voucher}">
                             <div class="row">
                                 <div class="box-l col-sm-7">
-                                    <label for="voucher-id">Mã voucher </label>
-                                    <input type="text" id="voucher-id" class="form-control" name="productId"
-                                        >
+
+                                    <input type="hidden" th:field="*{isEdit}" name="isEdit" >
+                                    <label for="voucherID">Mã voucher </label>
+                                    <input type="text" readonly th:field="*{voucherID}" id="voucherID" class="form-control" name="voucherID">
+
                                     <label for="reducedPrice">Voucher giảm</label>
-                                    <input type="number" id="reducedPrice" class="form-control" name="price" >
+                                    <input type="number" th:field="*{reducedPrice}" id="reducedPrice" class="form-control" name="price" >
                                     <label for="minimumPrice">Giá tối thiểu</label>
-                                    <input type="number" id="minimumPrice" class="form-control" name="price" >
-                                    <input type="radio" name="isShare" id="public">
-                                    <label for="public">Công khai</label>
-                                    <input type="radio" name="isShare" id="private">
-                                    <label for="private">Không công khai</label> <br>
-                                    <label for="">Loại voucher</label> <br>
-                                    <input type="radio" name="voucherType" id="dish-voucher">
+                                    <input type="number" th:field="*{minimumPrice}" id="minimumPrice" class="form-control" name="price" >
+                                    <label for="quantity">Số lượng</label>
+                                    <input type="number" th:field="*{quantity}" id="quantity" class="form-control" name="quantity" >
+                                    <label>Loại voucher</label> <br>
+                                    <input type="radio" th:field="*{voucherType}" value="true" name="voucherType" id="dish-voucher">
                                     <label for="dish-voucher">Món</label>
-                                    <input type="radio" name="voucherType" id="delivery-voucher">
+                                    <input type="radio" th:field="*{voucherType}" value="false" name="voucherType" id="delivery-voucher">
                                     <label for="delivery-voucher">Vận chuyển</label>
-                                    <label for="description" class="w-100">Mô tả của voucher
+
+
+                                    <label for="description"  class="w-100">Mô tả của voucher
                                     </label>
-                                    <textarea class="w-100" id="description" rows="4" name="description"
+                                    <textarea th:field="*{description}" class="w-100" id="description" rows="4" name="description"
                                         ></textarea>
                                 </div>
     
                             </div>
-    
                             <div class="box-btn">
-    
-                                <button class="btn btn-info">Save</button>
-    
-                                <a><button type="reset" class="btn btn-primary">Reset</button></a>
-    
+
+                                <button class="btn btn-info" th:text="${voucher.isEdit? 'Update' : 'Save'}">Save</button>
+                                <a><button th:if="${voucher.isEdit==false}" type="reset" class="btn btn-primary" >Reset</button></a>
+                                <a th:if="${voucher.isEdit==true}" type="button" class="btn btn-primary" th:href="@{/tfive/admin/voucher/view}">Reset</a>
+                                <a style="background-color:#ED1D24" th:if="${voucher.isEdit==true}" 
+                                 onclick="showConfirmationBox(event, this, 'Bạn muốn xoá voucher này?')"
+                                class="btn btn-primary" th:href="@{'/tfive/admin/voucher/delete/' + ${voucher.voucherID}}">Delete</a>
+
                             </div>
                         </form>
                     </div>
     
-                    <div class="tab-pane fade" id="list-voucher" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade show active" id="list-voucher" role="tabpanel" aria-labelledby="profile-tab">
                         <table class="table tbl-cart">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Mã voucher</th>
                                     <th scope="col">Voucher giảm</th>
                                     <th scope="col">Giá tối thiểu</th>
-                                    <th scope="col">Chia sẻ</th>
+                                    <th scope="col">Số lượng</th>
                                     <th scope="col">Loại voucher</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr >
-                                    <td scope="row">V123</td>
-                                    <td scope="row">20.000đ</td>
-                                    <td>10.000đ</td>
-                                    <td>Công khai</td>
-                                    <td>Vận chuyển</td>
-                                    <td><a class="edit" >Edit</a>
-                                        | <a >Delete</a>
+                                <tr th:each="item : ${vouchers}">
+                                    <td scope="row" th:text="${item.voucherID}"></td> 
+                                    <td th:text="${#numbers.formatDecimal(item.reducedPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                                    <td th:text="${#numbers.formatDecimal(item.minimumPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                                    <td th:text="${item.quantity}"></td>
+                                    <td th:text="${item.voucherType ? 'Món' : 'Vận chuyển'}"></td>
+                                    <td><a class="edit" th:href="@{'/tfive/admin/voucher/edit/' + ${item.voucherID}}">Edit</a>
+                                        | <a th:href="@{'/tfive/admin/voucher/delete/' + ${item.voucherID}}"
+                                         onclick="showConfirmationBox(event, this, 'Bạn muốn xoá voucher này?')">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+							  <ul class="pagination" style="justify-content: center">
+							    <li class="page-item" th:classappend="${currentPage==1 ? 'disabled':''}">
+							      <a class="page-link" th:href="@{'?pageNo='+${currentPage-1}}" aria-label="Previous">
+							        <span aria-hidden="true">&laquo;</span>
+							        <span class="sr-only">Previous</span>
+							      </a>
+							    </li>
+							    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage==i? 'active':''}"><a class="page-link" th:href="@{'?pageNo='+${i}}" th:text="${i}">1</a></li>
+							    <li class="page-item" th:classappend="${currentPage==totalPage ? 'disabled':''}">
+							      <a class="page-link" th:href="@{'?pageNo='+${currentPage+1}}" aria-label="Next">
+							        <span aria-hidden="true">&raquo;</span>
+							        <span class="sr-only">Next</span>
+							      </a>
+							    </li>
+							  </ul>
+							</nav>
                     </div>
                 </div>
     

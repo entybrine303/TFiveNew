@@ -5,7 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,28 +26,39 @@ import lombok.NoArgsConstructor;
 @Table(name = "delivery")
 public class Delivery implements Serializable{
 	@Id
-	@Column(length = 10)
-	private String delyveryID;
-	@Column(length = 10)
-	private String orderID;
-	@Column(length = 10)
-	private String driverID;
-	private int DeliveryTime;
-	private double RestaurantPayment;
-	private double CustomerFees;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long deliveryID;
+//	Thời gian giao hàng
+	private Integer DeliveryTime;
 	
 //	Tạo trường dữ liệu có kiểu dữ liệu là datetime
+	
+//	Xác nhận đơn
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ConfimedOrder;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date ReceivedOrder;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date ArrivedRestaurant;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tookOrder;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date arrivedCustomer;
+//	Làm xong đơn
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date FinishedOrder;
-	private String noteForDriver;
+	// Tài xế nhận đơn
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date ReceivedOrder;
+//	Tài xế lấy đơn
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date TookOrder;
+//	Huỷ đơn
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date CanceledOrder;
+//	Tài xế giao xong đơn
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date CompleteOrder;
+	
+
+	@ManyToOne
+	@JoinColumn(name = "driverID", referencedColumnName = "driverID")
+	private Driver driver;	
+	
+	@OneToOne
+    @JoinColumn(name = "orderID", referencedColumnName = "orderID")
+//	Khi join bảng, cần đặt tên trường trùng với tên bảng cần join *****
+    private Order orders;
 }

@@ -131,6 +131,7 @@
 }
 
 .btn-status{
+    display: block;
     width: 90%;
     background-color: red;
     color: #fff;
@@ -139,9 +140,15 @@
     margin: 6px 0;
 }
 
+.btn-status:hover{
+    text-decoration: none;
+    color: white;
+}
+
 /* CONTENT */
 .ctn-order{
     margin-top: 214px;
+    margin-bottom: 134px;
     padding: 4px 8px;
     background-color: #F5F5F5;
 }

@@ -17,3 +17,7 @@ function closeFunc(evt) {
   var ul = button.parentNode.parentNode.parentNode;
   ul.style.display = "none";
 }
+
+function redirectToPage(url) {
+	window.location.href = url;
+}

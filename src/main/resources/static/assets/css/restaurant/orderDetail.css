@@ -1,39 +1,42 @@
-.box-detail .box-order-detail{
-    padding: 20px;
+.box-detail .box-order-detail {
+	padding: 20px 44px 30px;
+	margin-bottom: 70px;
 }
 
-.box-order-id{
-    text-align: center;
+.box-order-id {
+	text-align: center;
 }
 
-.box-driver-info,
-.box-customer-info{
-    align-items: center;
-    padding: 10px;
+.box-driver-info, .box-customer-info {
+	align-items: center;
+	padding: 10px;
 }
 
-.box-driver-info img,
-.box-customer-info img{
-    border-radius: 60%;
+.box-driver-info img, .box-customer-info img {
+	border-radius: 60%;
 }
 
 .head-info {
-    display: flex; /* Sử dụng Flexbox để sắp xếp các phần tử ngang */
-    align-items: center; /* Canh giữa theo chiều dọc */
+	display: flex; /* Sử dụng Flexbox để sắp xếp các phần tử ngang */
+	align-items: center; /* Canh giữa theo chiều dọc */
 }
 
 .box-info {
-    margin-left: 10px; /* Tạo khoảng cách bên trái giữa img và box-info */
+	margin-left: 10px; /* Tạo khoảng cách bên trái giữa img và box-info */
 }
 
-.box-btn-alarm{
-    text-align: center;
-    margin-top: 20px;
+.box-btn-status {
+	box-shadow: 8px 0 20px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	width: 100%;
+	background: #FFFFFF;
+	position: fixed;
+	bottom: 0;
+	left: 60px;
+	padding: 14px 0;
+	z-index: 10;
 }
 
-.box-btn-alarm .btn-alarm{
-    border: none;
-    border-radius: 8px;
-    width: 90%;
-    padding: 14px 0;
+.box-btn-status .btn-status{
+	padding: 10px 100px;
 }

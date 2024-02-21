@@ -1,10 +1,15 @@
 package graduate.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,12 +25,29 @@ public class Restaurant implements Serializable{
 	@Id
 	@Column(length = 10)
 	private String restaurantID;
-	@Column(length = 20)
-	private String username;
+	@Column(columnDefinition = "nvarchar(max)")
 	private String address;
 	@Column(length = 10)
 	private String phoneNumber;
 	private String email;
 	private String img;
+	
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Dish> dishes;
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Voucher> vouchers;
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Order> orders;
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Category> categories;
+	
+	@OneToOne
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private Account account;
+
+	public Restaurant(String restaurantID) {
+		this.restaurantID = restaurantID;
+	}
+
 	
 }

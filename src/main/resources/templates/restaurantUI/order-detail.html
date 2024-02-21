@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,57 +24,56 @@
 
 
 <body>
-    <aside>
-        <div class="list-group list-tabs list-tabs-off" id="list-tabs-off">
+<aside> 
+            <div class="list-group list-tabs list-tabs-off" id="list-tabs-off">
             <a href="#" onclick="displayTabs()">
                 <i class="fa-solid fa-bars"></i>
             </a>
-        </div>
+            </div>
         <div class="box-tabs" id="box-tabs" onclick="hideTabs(event)">
             <div class="list-group list-tabs list-tabs-on" id="list-tabs-on">
-                <a href="#" class="list-group-item list-group-item-action" style="border-radius: 0;">
-
-                    <div class="main__logo--container" style=" display: flex;
+                <a th:href="@{#}" class="list-group-item list-group-item-action" style="border-radius: 0;">
+                    
+                            <div class="main__logo--container" style=" display: flex;
                             align-items: center;">
-                        <img class="main__logo--img" style="height: 60px;"
-                            src="/assets/img/logo/logo-none-background.png" alt="logo-img">
-                        <span class="main__logo--text bold" style="font-size: 26px;">TFive</span>
-                    </div>
+                                <img class="main__logo--img" style="height: 60px;" src="/assets/img/logo/logo-none-background.png" alt="logo-img">
+                                <span class="main__logo--text bold" style="font-size: 26px;">TFive</span>
+                            </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">Hồ sơ quán</a>
-                <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#subTabDish"
-                    role="button" aria-expanded="false" aria-controls="collapseExample">Quản lý thực đơn
+                
+                <a th:href="@{/tfive/admin/profile}" class="list-group-item list-group-item-action">Hồ sơ quán</a>
+                <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#subTabDish" role="button" aria-expanded="false" aria-controls="collapseExample">Quản lý thực đơn
                     <i class="fa-solid fa-angle-down icon-angle"></i>
                 </a>
                 <div class="collapse" id="subTabDish">
-                    <a href="#" class="list-group-item list-group-item-action sub-tabs">Quản lý danh mục món</a>
-                    <a href="#" class="list-group-item list-group-item-action sub-tabs">Quản lý món</a>
-                    <a href="#" class="list-group-item list-group-item-action sub-tabs">Quản lý voucher</a>
-                </div>
-                <a href="#" class="list-group-item list-group-item-action">Quản lý đơn hàng</a>
-                <a href="#" class="list-group-item list-group-item-action">Quản lý khách hàng</a>
-                <a href="#" class="list-group-item list-group-item-action">Quản lý tài xế</a>
+                    <a th:href="@{/tfive/admin/category/view}" class="list-group-item list-group-item-action sub-tabs">Quản lý danh mục món</a>
+                    <a th:href="@{/tfive/admin/dish/view}" class="list-group-item list-group-item-action sub-tabs">Quản lý món</a>
+                    <a th:href="@{/tfive/admin/voucher/view}" class="list-group-item list-group-item-action sub-tabs">Quản lý voucher</a>
+            </div>
+                <a th:href="@{/tfive/admin/order/view}" class="list-group-item list-group-item-action">Quản lý đơn hàng</a>
+                <a th:href="@{/tfive/admin/customer/view}" class="list-group-item list-group-item-action">Quản lý khách hàng</a>
+                <a th:href="@{/tfive/admin/driver/view}" class="list-group-item list-group-item-action">Quản lý tài xế</a>
                 <a href="#" class="list-group-item list-group-item-action">Thống kê</a>
-                <a href="#" class="list-group-item list-group-item-action">Đăng xuất</a>
+                <a th:href="@{/tfive/account/logout}" class="list-group-item list-group-item-action">Đăng xuất</a>
             </div>
         </div>
-    </aside>
+        </aside>
 
 
     <main>
-        <div class="box-detail card">
+        <div class="box-detail card" th:object="${order}">
             <div class="box-order-detail">
                 <div class="head-order-detail">
                     <div class="box-order-id">
-                        <p>Mã đơn hàng: <span class="order-id">123456</span></p>
+                        <p>Mã đơn hàng: <span class="order-id bold" th:text="*{orderID}">123456</span></p>
                     </div>
                     <hr>
                     <div class="row box-customer-info">
                         <div class="head-info col-8">
                             <img src="/assets/img/product/small-product/product1.webp" alt="Img-driver">
                             <div class="box-info">
-                                <p class="bold customer-name">Tên khách</p>
-                                <p class="bland customer-address">Địa chỉ khách</p>
+                                <p class="bold customer-name" th:text="*{customer.name}">Tên khách</p>
+                                <p class="bland customer-address" th:text="*{customer.address}">Địa chỉ khách</p>
                             </div>
                         </div>
                         <div class="box-btn-contact col-4">
@@ -90,8 +88,8 @@
                         <div class="head-info col-8">
                             <img src="/assets/img/product/small-product/product1.webp" alt="Img-driver">
                             <div class="box-info">
-                                <p class="bold driver-name">Tên tài xế</p>
-                                <small class="bland driver-id">Mã tài xế</small>
+                                <p class="bold driver-name" >Tên tài xế</p>
+                                <small class="bland driver-id" >Mã tài xế</small>
                             </div>
                         </div>
                         <div class="box-btn-contact col-4">
@@ -106,12 +104,20 @@
                     <hr>
                     <div class="box-time">
                         <p>Lấy đơn trong <span class="delivevy-time bold" style="color: green;">29 phút</span></p>
-                        <p>Thời gian còn lại: <span class="time-left bold" style="color: red;">29 phút</span></p>
+                        <small>Trạng thái đơn hàng: <span th:text="*{status}"></span> </small> <br>
+                        <small class="bland"><span class="receiving-time" th:text="${#dates.format(time, 'hh:mm dd/MM/yyyy')}">00:00 10/10/2020</span></small>
                     </div>
                     <hr>
                     <div class="box-dish-list">
                         <p class="bold">Chi tiết đơn hàng</p>
                         <hr>
+                        <div  th:if="${displayNote}">
+                        <div class="box-note container">
+                              <p class="bold">Ghi chú của khách</p>
+                              <p class="note" th:text="*{noteForRestaurant}"></p>
+                          </div>
+                        <hr>
+                        </div>
                         <p class="bold">Menu</p>
                         <table class="table">
                             <thead>
@@ -122,41 +128,46 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">01. <span class="dish-name">Bánh mì</span>
-                                    </th>
-                                    <td class="quantity">4</td>
-                                    <td class="total-amount">12.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">01. <span class="dish-name">Bánh mì</span>
-                                    </th>
-                                    <td class="quantity">4</td>
-                                    <td class="total-amount">12.000 đ</td>
-                                </tr>
+                                <tr  th:each="item : ${listOrder}">
+                                            <th scope="row"><span class="dish-name" th:text="${itemStat.index + 1  + '. '+ item.dish.name}">Bánh mì</span></th>
+                                            <td class="quantity" th:text="${item.quantity}">4</td>
+                                            <td class="total-amount" th:text="${#numbers.formatDecimal(item.totalAmount, 0, 'COMMA', 0, 'POINT')} + 'đ'">12.000 đ</td>
+                                          </tr>
                             </tbody>
                         </table>
                         <div class="order-bill">
                             <table class="w-50">
                                 <tbody>
-                                    <tr>
-                                        <th>Tổng tiền hàng</th>
-                                        <td>24.000đ</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Voucher từ cửa hàng</th>
-                                        <td>-6.000đ</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Thành tiền</th>
-                                        <td>20.000đ</td>
-                                      </tr>
-                                </tbody>
+                                        <tr>
+                                            <th scope="col">Tổng tiền hàng</th>
+                                            <td th:text="*{#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">24.000đ</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">Phí ship</th>
+                                            <td th:text="*{#numbers.formatDecimal(shipMoney, 0, 'COMMA', 0, 'POINT')} + 'đ'">15.000đ</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">Giảm giá</th>
+                                            <td th:text="*{voucher==null ? '0đ' : '-'+#numbers.formatDecimal(voucher.reducedPrice, 0, 'COMMA', 0, 'POINT')+'đ' }">0đ</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">Thành tiền</th>
+                                            <td th:text="${#numbers.formatDecimal(totalMoney, 0, 'COMMA', 0, 'POINT')} + 'đ'">20.000đ</td>
+                                          </tr>
+                                    </tbody>
                               </table>
                         </div>
-                        <div class="box-btn-alarm">
-                            <button class="btn-alarm btn-danger"><i class="fa-regular fa-bell"></i> Báo tài xế</button>
-                        </div>
+                        
+                       <div th:if="*{status!='Đã huỷ' and status!='Đã xong'}" class="box-btn-status">
+	                       <div th:if="*{status=='Đã đặt'}">
+	                       	<a id="a-received" th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Xác nhận'}" class="btn btn-success btn-status">Nhận đơn</a>
+	                       	<a id="a-canceled"  onclick="showConfirmationBox(event, this, 'Bạn muốn huỷ đơn hàng này?')"
+	                       	th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Đã huỷ'}" class="btn btn-danger btn-status">Huỷ đơn</a>
+	                       </div>
+	                       <div th:if="*{status=='Xác nhận'}">
+	                       	<a id="a-finished" th:href="@{'/tfive/admin/order/updateStatus/'+*{orderID}+'/Đã xong'}" class="btn btn-primary btn-status">Đã xong món</a>
+	                       </div>
+                       </div>
                     </div>
                 </div>
                 

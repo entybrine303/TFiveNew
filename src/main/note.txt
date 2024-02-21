@@ -1,0 +1,15 @@
+Đơn hàng gồm có 6 trạng thái: 
++Đã đặt
++Xác nhận
++Đã xong
++Đã nhận
++Đã lấy
++Đã huỷ
++Hoàn thành
+
+Làm thông báo 
+Xét giá (discountPrice), nhớ mk, fix voucher(quantity==0) - thồn lành
+Thêm hình cccd, gp lái xe - thành đô
+Sửa, xoá khách hàng
+viết test case - trung
+

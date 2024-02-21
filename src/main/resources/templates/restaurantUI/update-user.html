@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{restaurantForm.html}">
+<head>
+  <title>THÔNG TIN CHI TIẾT</title>
+</head>
+
+<body>
+<section layout:fragment="body" style="margin-top: 20px">
+<main>
+  <div class="container box-form" >
+    <!-- Tạo biểu mẫu ngang -->
+    <form th:action="@{/tfive/admin/customer/update}" method="post"
+         th:object="${customer}">
+      <!-- Tiêu đề biểu mẫu -->
+      <h2 class="text-center" style="margin-bottom: 30px;">Quản Lý Thông Tin khách hàng</h2>
+      <!-- Nhóm các trường nhập liệu và nhãn -->
+      <input type="hidden" th:field="*{username}" name="username">
+      <input type="hidden" th:field="*{img}" name="img">
+      <div class="form-group row">
+        <!-- Nhãn cho trường họ và tên -->
+        <label class="col-sm-2 col-form-label">Mã khách hàng: </label>
+        <!-- Trường nhập liệu cho họ và tên -->
+        <div class="col-sm-10">
+          <input th:field="*{customerID}" name="customerID" type="text" class="form-control" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <!-- Nhãn cho trường họ và tên -->
+        <label for="name" class="col-sm-2 col-form-label">Họ và tên:</label>
+        <!-- Trường nhập liệu cho họ và tên -->
+        <div class="col-sm-10">
+          <input th:field="*{name}" name="name" type="text" class="form-control" id="name" placeholder="Nhập họ và tên">
+        </div>
+      </div>
+      <div class="form-group row">
+        <!-- Nhãn cho trường email -->
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <!-- Trường nhập liệu cho email -->
+        <div class="col-sm-10">
+          <input th:field="*{email}" name="email" type="email" class="form-control" id="email" placeholder="Nhập email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <!-- Nhãn cho trường Số điện thoại -->
+        <label for="phoneNumber" class="col-sm-2 col-form-label">Số điện thoại:</label>
+        <!-- Trường nhập liệu số điện thoại -->
+        <div class="col-sm-10">
+          <input th:field="*{phoneNumber}" name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Nhập SDT">
+        </div>
+      </div>
+      <div class="form-group row">
+        <!-- Nhãn cho trường giới tính -->
+        <label class="col-sm-2 col-form-label">Giới tính:</label>
+        <!-- Trường nhập liệu cho giới tính -->
+        <div class="col-sm-10">
+          <label for="male"><input th:checked="*{sex}" th:value="True" type="radio" id="male" name="sex"> Nam</label>
+          <label for="female"><input th:checked="*{!sex}" th:value="False" type="radio" id="female" name="sex"> Nữ</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <!-- Nhãn cho trường email -->
+        <label for="address" class="col-sm-2 col-form-label">Địa chỉ:</label>
+        <!-- Trường nhập liệu cho email -->
+        <div class="col-sm-10">
+          <input th:field="*{address}" name="address" type="text" class="form-control" id="address" placeholder="Nhập địa chỉ">
+        </div>
+      </div>
+
+
+
+      <!-- Nhóm các nút chức năng -->
+<hr>
+      <div class="user-btn " style="display: flex; justify-content: flex-end;">
+        <button style="margin-right: 11px;" class="btn btn-danger" th:href="@{/tfive/admin/customer/view}">Hủy</button>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+      </div>
+
+    </form>
+  </div>
+</main>
+</section>
+
+</body>
+
+</html>

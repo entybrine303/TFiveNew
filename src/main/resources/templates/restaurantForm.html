@@ -18,18 +18,31 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/restaurant/form.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/restaurant/management.css">
 
     <!-- JAVASCRIPT -->
     <script src="/assets/js/restaurantUI/management.js"></script>
+    <script src="/assets/js/common.js"></script>
 </head>
 
 <body>
     <section class="view-body">
-        <!-- <div th:if="${mess!=null}"
-				class="alert alert-primary container box-mess" role="alert">
-				<i>[[${mess}]]</i>
-			</div> -->
+        <!-- Thông báo xác nhận -->
+<div class="box-noti" id="box-confirm">
+        <div class="box-confirm">
+            <div class="noti-header">
+                <p class="confirm-title">Thông báo</p>
+            </div>
+            <div class="noti-body">
+                <p id="test" class="confirm-content" >Nội dung thông báo</p>
+            </div>
+            <div class="noti-footer">
+                <button class="btn-confirm w-50" onclick="offNoti('confirm')">Huỷ</button>
+                <button class="btn-confirm w-50" onclick="confirmAndRedirect()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
         <aside> 
             <div class="list-group list-tabs list-tabs-off" id="list-tabs-off">
             <a href="#" onclick="displayTabs()">
@@ -38,7 +51,7 @@
             </div>
         <div class="box-tabs" id="box-tabs" onclick="hideTabs(event)">
             <div class="list-group list-tabs list-tabs-on" id="list-tabs-on">
-                <a th:href="@{/tfive/}" class="list-group-item list-group-item-action" style="border-radius: 0;">
+                <a th:href="@{#}" class="list-group-item list-group-item-action" style="border-radius: 0;">
                     
                             <div class="main__logo--container" style=" display: flex;
                             align-items: center;">
@@ -46,19 +59,21 @@
                                 <span class="main__logo--text bold" style="font-size: 26px;">TFive</span>
                             </div>
                 </a>
+                
+                <a th:href="@{/tfive/admin/profile}" class="list-group-item list-group-item-action">Hồ sơ quán</a>
                 <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#subTabDish" role="button" aria-expanded="false" aria-controls="collapseExample">Quản lý thực đơn
                     <i class="fa-solid fa-angle-down icon-angle"></i>
                 </a>
                 <div class="collapse" id="subTabDish">
-                    <a th:href="@{/tfive/admin/management-categories}" class="list-group-item list-group-item-action sub-tabs">Quản lý danh mục món</a>
-                    <a th:href="@{/tfive/admin/management-dish}" class="list-group-item list-group-item-action sub-tabs">Quản lý món</a>
-                    <a th:href="@{/tfive/admin/management-voucher}" class="list-group-item list-group-item-action sub-tabs">Quản lý voucher</a>
+                    <a th:href="@{/tfive/admin/category/view}" class="list-group-item list-group-item-action sub-tabs">Quản lý danh mục món</a>
+                    <a th:href="@{/tfive/admin/dish/view}" class="list-group-item list-group-item-action sub-tabs">Quản lý món</a>
+                    <a th:href="@{/tfive/admin/voucher/view}" class="list-group-item list-group-item-action sub-tabs">Quản lý voucher</a>
             </div>
-                <a th:href="@{/tfive/admin/management-order}" class="list-group-item list-group-item-action">Quản lý đơn hàng</a>
-                <a th:href="@{/tfive/admin/management-customer}" class="list-group-item list-group-item-action">Quản lý khách hàng</a>
-                <a th:href="@{/tfive/admin/management-driver}" class="list-group-item list-group-item-action">Quản lý tài xế</a>
+                <a th:href="@{/tfive/admin/order/view}" class="list-group-item list-group-item-action">Quản lý đơn hàng</a>
+                <a th:href="@{/tfive/admin/customer/view}" class="list-group-item list-group-item-action">Quản lý khách hàng</a>
+                <a th:href="@{/tfive/admin/driver/view}" class="list-group-item list-group-item-action">Quản lý tài xế</a>
                 <a href="#" class="list-group-item list-group-item-action">Thống kê</a>
-                <a th:href="@{#}" class="list-group-item list-group-item-action">Đăng xuất</a>
+                <a th:href="@{/tfive/account/logout}" class="list-group-item list-group-item-action">Đăng xuất</a>
             </div>
         </div>
         </aside>

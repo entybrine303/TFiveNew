@@ -20,45 +20,50 @@
     <script src="/assets/js/driverUI/orderDetail.js"></script>
 </head>
 <body>
-    <div class="body">
+    <div class="body" th:object="${order}">
         <div class="box-sub-func">
             <ul class="sub-func func-number-phone" id="func-number-phone">
                 <li style="padding-right: 0;"><strong style="line-height: 50px;">Số điện thoại</strong> <button class="btn-close" onclick="closeFunc(event)"><i class="fa-solid fa-xmark"></i></button></li>
-                <li><p>Quán: <a href="#" class="hover-none restaurant-number-phone">0987654321</a></p></li>
-                <li><p>Khách hàng: <a href="#" class="hover-none customer-number-phone">0987654321</a></p></li>
+                <li><p>Quán: <a href="#" class="hover-none restaurant-number-phone" th:text="*{restaurant.phoneNumber}">0987654321</a></p></li>
+                <li><p>Khách hàng: <a href="#" class="hover-none customer-number-phone" th:text="*{customer.phoneNumber}">0987654321</a></p></li>
             </ul>
             <ul class="sub-func func-cancel-order" id="func-cancel-order">
               <li style="padding-right: 0;"><strong style="line-height: 50px;">Lý do huỷ đơn</strong> <button class="btn-close" onclick="closeFunc(event)"><i class="fa-solid fa-xmark"></i></button></li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p><i class="fa-solid fa-shop-slash"></i> Quán đóng cửa </p>
+                <p ><a th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã huỷ'}" style="color: black"><i class="fa-solid fa-shop-slash"></i> Quán đóng cửa </a></p>
                 <i class="ti-angle-right"></i>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p><i class="fa-solid fa-user-slash"></i> Khách yêu cầu huỷ </p>
+                <p ><a th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã huỷ'}" style="color: black"><i class="fa-solid fa-user-slash"></i> Khách yêu cầu huỷ </a></p>
                 <i class="ti-angle-right"></i>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <p><i class="fa-solid fa-user-xmark"> </i> Lý do cá nhân </i></p>
+                <p><a th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã huỷ'}" style="color: black"><i class="fa-solid fa-user-xmark"> </i> Lý do cá nhân </i></a></p>
                 <i class="ti-angle-right"></i>
               </li>
           </ul>
         </div>
 
-        <div class="box-func-btn">
+        <div class="box-func-btn" th:if="*{status!='Đã huỷ' and status!='Hoàn thành'}">
             <ul>
                 <li class="list-func-btn" onclick="displayNumberPhone()"><button class="btn-func"><i class="fa-solid w-100 fa-phone"></i><span>Điện thoại</span> </button>                </li>
                 <li class="list-func-btn" ><button class="btn-func" ><i class="fa-solid w-100 fa-comment"></i><span>Chat</span></button></li>
                 <li class="list-func-btn" onclick="displayCancelOrder()"><button class="btn-func"><i class="fa-solid w-100 fa-circle-xmark"></i><span>Huỷ đơn</span></button></li>
                 <li class="list-func-btn"><button class="btn-func"><i class="fa-solid w-100 fa-file-pen"></i><span>Sửa đơn</span></button></li>
             </ul>
-            <button class="btn-status"><span>Trạng thái</span></button>
+            <div style="display: flex; justify-content: center;">
+            <a th:if="*{status=='Đã nhận'}" th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Đã lấy'}" 
+            class="btn-status"><span>Đã lấy hàng</span></a>
+            <a th:if="*{status=='Đã lấy'}" th:href="@{'/tfive/driver/updateStatus/'+*{orderID}+'/Hoàn thành'}" 
+            class="btn-status"><span>Đã giao xong</span></a>
+            </div>
         </div>
         <div class="tabs">
             <ul class="t-nav nav nav-tabs w-100" id="myTab" role="tablist">
                 <li class="t-nav-item nav-item w-50">
                   <a class="nav-link active restaurant-link" data-toggle="tab" href="#restaurant" role="tab" aria-controls="restaurant" aria-selected="true">
                     <p class="bold">Quán</p>
-                    <p class="order-id">123456789</p>
+                    <p class="order-id" th:text="*{orderID}">123456789</p>
                   </a>
                 </li>
                 <li class="t-nav-item nav-item w-50">
@@ -69,33 +74,32 @@
               </ul>
               <div class="tab-content box-ctn-info" id="myTabContent">
                 <div class="tab-pane fade show active" id="restaurant" role="tabpanel" >
-                    <p class="bland restaurant-name">Tên quán</p>
-                    <p class="bold restaurant-locate">Địa chỉ quán</p>
+                    <p class="bland restaurant-name">TFive - Foods and Drinks</p>
+                    <p class="bold restaurant-locate" th:text="*{restaurant.address}">Địa chỉ quán</p>
                     <hr>
-                    <p>Trả: <span class="payment">0</span></p>
-                    <hr style="margin-bottom: 0;">
                 </div>
                 <div class="tab-pane fade" id="customer" role="tabpanel">
-                    <p class="bland customer-name">Tên khách</p>
-                    <p class="bold customer-locate">Địa chỉ khách</p>
+                    <p class="bland customer-name" th:text="*{customer.name}">Tên khách</p>
+                    <p class="bold customer-locate" th:text="*{customer.address}">Địa chỉ khách</p>
                     <hr>
-                    <p>Thu: <span class="collect">0</span></p>
-                    <hr style="margin-bottom: 0;">
                 </div>
               </div>
         </div>
         <div class="ctn-order w-100">
             <div class="head-order">
-                <p class="w-100 status">Trạng thái: <span class="order-status">Đã nhận đơn hàng</span></p>
+            <div class="status">
+                <p class="w-100 ">Trạng thái: <span class="order-status" th:text="*{status}">Xác nhận đơn hàng</span></p>
+                <small class="bland" th:text="${#dates.format(time, 'hh:mm dd/MM/yyyy')}">00:00 10/10/2020</small>
+                </div>
                 <p class="w-100 time">Còn <span class="time-over bold">22 phút</span> để giao</p>
             </div>
             <div class="body-order">
                 <div class="box-order-detail">
                     <p class="bold">Chi tiết đơn hàng</p>
-                    <p>Số lượng: <span class="total-quantity">3</span></p>
+                    <p>Số lượng: <span class="total-quantity" th:text="*{totalQuantity}">3</span></p>
                     <hr>
                     <p class="bold">Menu</p>
-                    <table class="table">
+                    <table class="table" style="font-size: 14px;">
                         <thead>
                           <tr>
                             <th scope="col" class="bold">#Tên món</th>
@@ -104,34 +108,16 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">01. <span class="dish-name">Bánh mì</span></th>
-                            <td class="quantity">4</td>
-                            <td class="total-amount">12.000 đ</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">01. <span class="dish-name">Bánh mì</span></th>
-                            <td class="quantity">4</td>
-                            <td class="total-amount">12.000 đ</td>
+                          <tr  th:each="item : ${listOrder}">
+                            <th scope="row">01. <span class="dish-name" th:text="${item.dish.name}">Bánh mì</span></th>
+                            <td class="quantity" th:text="${item.quantity}">4</td>
+                            <td class="total-amount" th:text="${#numbers.formatDecimal(item.totalAmount, 0, 'COMMA', 0, 'POINT')} + 'đ'">12.000 đ</td>
                           </tr>
                         </tbody>
                       </table>
+                      <p class="fs-14 bold" style="text-align: right">Tổng tiền: <span th:text="*{#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">180.000 đ</span></p>
                 </div>
-                <div class="box-bill restaurant-bill">
-                    <p class="bold">Hoá đơn quán</p>
-                    <p class="bland">Tổng đơn hàng <span class="price">200.000 đ</span></p>
-                    <p class="bland">Chiếu khấu quán <span class="discount">20.000 đ</span></p>
-                    <p class="bland">Trả quán <span class="payment">180.000 đ</span></p>
-                    <hr>
-                    <p class="payment-method bold" style="color: orange;"><i class="dollar-icon fa-solid fa-dollar-sign"></i><span style=" float: none"> Trả tiền mặt</span></p>
-                </div>
-                <div class="box-bill customer-bill">
-                    <p class="bold">Hoá đơn khách</p>
-                    <p class="bland">Thu tiền <span class="price">215.000 đ</span></p>
-                    <hr>
-                    <p class="payment-method bold" style="color: orange;"><i class="dollar-icon fa-solid fa-dollar-sign"></i><span style=" float: none"> Trả tiền mặt</span></p>
-                </div>
-            </div>
+               </div>
         </div>
     </div>
     

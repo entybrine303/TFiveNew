@@ -4,12 +4,13 @@
 	layout:decorate="~{customerForm.html}">
 <head>
 <title>ĐĂNG NHẬP</title>
-
 </head>
 
+
 <body>
-    <section layout:fragment="body">
-        <main class="main__content_wrapper">
+<section layout:fragment="body">
+
+<main class="main__content_wrapper">
             
             <!-- Start breadcrumb section -->
             <section class="breadcrumb__section breadcrumb__bg">
@@ -18,8 +19,8 @@
                         <div class="col">
                             <div class="breadcrumb__content text-center">
                                 <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                                    <li class="breadcrumb__content--menu__items"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb__content--menu__items"><span>Account</span></li>
+                                    <li class="breadcrumb__content--menu__items"><a th:href="@{/tfive/}">Trang chủ</a></li>
+                                    <li class="breadcrumb__content--menu__items"><span>Đăng nhập</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -31,7 +32,6 @@
             <!-- Start login section  -->
             <div class="login__section section--padding">
                 <div class="container">
-                    <form action="#">
                         <div class="login__section--inner card-container">
                             <div class="row row-cols-md-2 row-cols-1 card-account">
                                 <div class="col  card-front">
@@ -40,11 +40,16 @@
                                             <h2 class="account__login--header__title mb-10">Đăng nhập</h2>
                                         </div>
                                         <div class="account__login--inner">
+                                         <!-- Message -->
+						<div th:if="${messL}" th:text="${messL}" class="alert alert-primary" role="alert"></div>
+                                        <form th:action="@{/tfive/account/pLogin}" method="post" th:object=${register}>
                                             <label>
-                                                <input class="account__login--input" placeholder="Username, email hoặc số điện thoại" type="text">
+                                                <input name="username" required maxlength="20"
+                                                 class="account__login--input" placeholder="Username hoặc số điện thoại" type="text">
                                             </label>
                                             <label>
-                                                <input class="account__login--input" placeholder="Mật khẩu" type="password">
+                                                <input name="password" required maxlength="20"
+                                                 class="account__login--input" placeholder="Mật khẩu" type="password">
                                             </label>
                                             <div class="account__login--remember__forgot mb-15 d-flex justify-content-between align-items-center">
                                                 <div class="account__login--remember position__relative">
@@ -53,7 +58,7 @@
                                                     <label class="checkout__checkbox--label login__remember--label" for="check1">
                                                         Ghi nhớ đăng nhập</label>
                                                 </div>
-                                                <button class="account__login--forgot"  type="submit">Quên mật khẩu</button>
+                                                <a th:href="@{/tfive/account/forgot-password}" class="account__login--forgot" >Quên mật khẩu</a>
                                             </div>
                                             <button class="account__login--btn primary__btn" type="submit">Đăng nhập</button>
                                             <div class="account__login--divide">
@@ -65,6 +70,7 @@
                                                 <a class="account__social--link twitter" target="_blank" href="https://twitter.com">Twitter</a>
                                             </div>
                                             <p class="account__login--signup__text">Không có tài khoản ? <button onclick="flipCard()" type="button">Đăng kí ngay</button></p>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -75,33 +81,32 @@
                                             <p class="account__login--header__desc">Đăng kí tại đây để trở thành khách hàng mới của chúng tôi</p>
                                         </div>
                                         <div class="account__login--inner">
+                                         <!-- Message -->
+						<div th:if="${messR}" th:text="${messR}" class="alert alert-primary" role="alert"></div>
+                                        <form  th:action="@{/tfive/account/pRegister}" method="post" th:object=${register}>
                                             <label>
-                                                <input class="account__login--input" placeholder="Username" type="text">
+                                                <input class="account__login--input" placeholder="Username" maxlength="20" id="username" name="username" required>
                                             </label>
                                             <label>
-                                                <input class="account__login--input" placeholder="Email" type="email">
+                                                <input class="account__login--input" placeholder="Mật khẩu" maxlength="20"  type="password" id="password" name="password" required>
                                             </label>
                                             <label>
-                                                <input class="account__login--input" placeholder="Mật khẩu" type="password">
+                                                <input class="account__login--input" placeholder="Nhập lại mật khẩu" maxlength="20" type="password" id="password" name="confirmPassword" required>
                                             </label>
-                                            <label>
-                                                <input class="account__login--input" placeholder="Nhập lại mật khẩu" type="password">
-                                            </label>
+                                            
                                             <button class="account__login--btn primary__btn mb-10" type="submit">Xác nhận & Đăng kí</button>
                                             <p class="account__login--signup__text">Đã có tài khoản ? <button onclick="flipCard()" type="button">Đăng nhập ngay</button></p>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>     
             </div>
             <!-- End login section  -->
     
         </main>
-        
-    </section>
-	
+</section>
 </body>
 </html>
