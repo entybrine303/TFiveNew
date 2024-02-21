@@ -7,12 +7,9 @@
 +Đã huỷ
 +Hoàn thành
 
+Làm thông báo 
+Xét giá (discountPrice), nhớ mk, fix voucher(quantity==0) - thồn lành
+Thêm hình cccd, gp lái xe - thành đô
+Sửa, xoá khách hàng
+viết test case - trung
 
-Làm thông báo - xong bước đầu
-
-
-`đã xong:
-Tìm kiếm sản phẩm -
-Check id có trùng hay không khi tạo mới một bảng -
-Làm chức năng lọc theo giá, sắp xếp ở page menu -
-Fill sản phẩm theo đk page menu -
